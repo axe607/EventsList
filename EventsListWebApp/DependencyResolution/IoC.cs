@@ -16,12 +16,18 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+
 namespace EventsListWebApp.DependencyResolution {
     using StructureMap;
+    using EventsListBL;
 	
     public static class IoC {
         public static IContainer Initialize() {
-            return new Container(c => c.AddRegistry<DefaultRegistry>());
+            return new Container(c =>
+            {
+                c.AddRegistry<DefaultRegistry>();
+                c.For<ITestServiceProvider>().Use<Service>();
+            });
         }
     }
 }
