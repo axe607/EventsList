@@ -15,11 +15,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace EventsListWebApp.DependencyResolution {
+
+
+namespace EventsListWebApp.DependencyResolution
+{
+    using EventsListData.Repositories;
     using StructureMap;
-    using StructureMap.Configuration.DSL;
-    using StructureMap.Graph;
-	
+
     public class DefaultRegistry : Registry {
         #region Constructors and Destructors
 
@@ -30,7 +32,7 @@ namespace EventsListWebApp.DependencyResolution {
                     scan.WithDefaultConventions();
 					scan.With(new ControllerConvention());
                 });
-            //For<IExample>().Use<Example>();
+            For<IDataProvider>().Use<Data>();
         }
 
         #endregion

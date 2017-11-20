@@ -99,7 +99,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\categoriesbar.css" />
+    <Content Include="Content\event-block.css" />
+    <Content Include="Content\event-detail.css" />
+    <Content Include="Content\Images\no-image.png" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -114,14 +128,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Log.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\CategoriesBar.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Events.cshtml" />
+    <Content Include="Views\Home\DetailEvent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -131,11 +153,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventsListBL\EventsListBL.csproj">
       <Project>{ea1a22f5-3035-4a3b-b75c-0ae6d3f9cef0}</Project>
       <Name>EventsListBL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventsListCommon\EventsListCommon.csproj">
+      <Project>{B5BE79B6-753E-4E41-B79F-C2F5066DCE71}</Project>
+      <Name>EventsListCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventsListData\EventsListData.csproj">
+      <Project>{c3789ef9-130d-4f1f-bc53-ec721fa7c3a8}</Project>
+      <Name>EventsListData</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

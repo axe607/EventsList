@@ -1,0 +1,9 @@
+﻿    .event-detail {
+      font-family: "Century Gothic";
+      font-size: 16px;
+    }
+
+    .event-detail-email,
+    .event-detail-phone {
+      margin-left: 50px;
+    }

@@ -1,19 +1,14 @@
-﻿@model EventsListWebApp.Models.HomeViewModel
+﻿
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Events List</title>
-</head>
-<body>
-    <div> 
-        <h2>Events List</h2>
-        <h3>@Model.Message</h3>
-    </div>
-</body>
-</html>
+<h2>Главная</h2>
+<div class="main-content">
+    
+</div>
+<script>
+    function getEventById(id) {
+        $(".body-content").load('@Url.Action("DetailEvent","Home")?Id=' + id);
+    }
+</script>

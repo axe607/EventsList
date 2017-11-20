@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using EventsListBL;
-using EventsListWebApp.Models;
+﻿using EventsListBL.Providers;
 using log4net;
+using System.Web.Mvc;
 
 namespace EventsListWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ITestServiceProvider _provider;
-        private static readonly ILog log = LogManager.GetLogger("HomeController");
+        private readonly IProvider _provider;
+        private static readonly ILog Log = LogManager.GetLogger("HomeController");
 
-        public HomeController(ITestServiceProvider providerInput)
+        public HomeController(IProvider providerInput)
         {
             _provider = providerInput;
         }
@@ -22,9 +17,31 @@ namespace EventsListWebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            HomeViewModel model = new HomeViewModel{Message = _provider.GetMessage()};
-            log.Debug("Test Log");
-            return View(model);
+            Log.Debug("Test Log");
+            return View();
+        }
+
+        public PartialViewResult CategoriesBar()
+        {
+            return PartialView(_provider.GetCategories());
+        }
+
+        public PartialViewResult Events(int categoryId, bool isCategory)
+        {
+            if (isCategory)
+            {
+                return PartialView(_provider.GetEventsByCategoryId(categoryId));
+            }
+            return PartialView(_provider.GetEventsBySubcategoryId(categoryId));
+        }
+
+        public PartialViewResult DetailEvent(int Id)
+        {
+            var detailEvent = _provider.GetEventById(Id);
+            ViewBag.Organizer = _provider.GetOrganizerById(detailEvent.OrganizerId);
+            ViewBag.Category = _provider.GetCategoryBySubcategoryId(detailEvent.SubcategoryId);
+            ViewBag.Subcategory = _provider.GetSubcategoryBySubcategoryId(detailEvent.SubcategoryId);
+            return PartialView(detailEvent);
         }
     }
 }

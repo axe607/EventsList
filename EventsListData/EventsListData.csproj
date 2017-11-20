@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EA1A22F5-3035-4A3B-B75C-0AE6D3F9CEF0}</ProjectGuid>
+    <ProjectGuid>{C3789EF9-130D-4F1F-BC53-EC721FA7C3A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EventsListBL</RootNamespace>
-    <AssemblyName>EventsListBL</AssemblyName>
+    <RootNamespace>EventsListData</RootNamespace>
+    <AssemblyName>EventsListData</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,18 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Providers\Provider.cs" />
-    <Compile Include="Providers\IProvider.cs" />
+    <Compile Include="Repositories\Data.cs" />
+    <Compile Include="Repositories\IDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventsListCommon\EventsListCommon.csproj">
       <Project>{B5BE79B6-753E-4E41-B79F-C2F5066DCE71}</Project>
       <Name>EventsListCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EventsListData\EventsListData.csproj">
-      <Project>{C3789EF9-130D-4F1F-BC53-EC721FA7C3A8}</Project>
-      <Name>EventsListData</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

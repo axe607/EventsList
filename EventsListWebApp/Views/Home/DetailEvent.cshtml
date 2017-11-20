@@ -1,0 +1,43 @@
+﻿@model EventsListCommon.Models.Event
+
+@if (Model != null)
+{
+    //ImageURL
+    <div class="event-detail">
+        <div>
+            <p>Название: @Model.Name</p>
+        </div>
+        <div>
+            <p>Дата: @Model.Date</p>
+        </div>
+        <div>
+            <p>Организатор: @ViewBag.Organizer.Name</p>
+            @if (ViewBag.Organizer.Emails.Count > 0)
+            {
+                <p>Emails:</p>
+                foreach (var email in ViewBag.Organizer.Emails)
+                {
+                    <p class="event-detail-email">@email</p>
+                }
+            }
+            @if (ViewBag.Organizer.Phones.Count > 0)
+            {
+                <p>Телефоны:</p>
+                foreach (var phone in ViewBag.Organizer.Phones)
+                {
+                    <p class="event-detail-phone">@phone</p>
+                }
+            }
+        </div>
+        <div>
+            <p>Категория: @ViewBag.Category.Name, @ViewBag.Subcategory.Name</p>
+
+        </div>
+        <div>
+            <p>Адрес: @Model.Address</p>
+        </div>
+        <div>
+            <p>Описание: @Model.Description</p>
+        </div>
+    </div>
+}
