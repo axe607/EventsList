@@ -164,9 +164,9 @@
       <Project>{B5BE79B6-753E-4E41-B79F-C2F5066DCE71}</Project>
       <Name>EventsListCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EventsListData\EventsListData.csproj">
-      <Project>{c3789ef9-130d-4f1f-bc53-ec721fa7c3a8}</Project>
-      <Name>EventsListData</Name>
+    <ProjectReference Include="..\EventsListDependencies\EventsListDependencies.csproj">
+      <Project>{d0f8cca4-dade-4bbe-bc54-a63bf8814f4a}</Project>
+      <Name>EventsListDependencies</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

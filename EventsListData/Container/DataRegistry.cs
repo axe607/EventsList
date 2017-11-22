@@ -1,4 +1,5 @@
-﻿using EventsListData.Repositories;
+﻿using EventsListData.Clients;
+using EventsListData.Repositories;
 using StructureMap;
 
 namespace EventsListData.Container
@@ -7,7 +8,8 @@ namespace EventsListData.Container
     {
         public DataRegistry()
         {
-            For<IDataProvider>().Use<Data>();
+            For<IDataRepository>().Use<DataRepository>();
+            For<IClient>().Use<Client>();
         }
     }
 }

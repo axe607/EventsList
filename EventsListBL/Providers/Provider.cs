@@ -7,9 +7,9 @@ namespace EventsListBL.Providers
 {
     public class Provider : IProvider
     {
-        IDataProvider _dataProvider;
+        IDataRepository _dataProvider;
 
-        public Provider(IDataProvider provider)
+        public Provider(IDataRepository provider)
         {
             _dataProvider = provider;
         }
@@ -52,7 +52,7 @@ namespace EventsListBL.Providers
         public IReadOnlyList<Event> GetEventsByCategoryId(int id)
         {
             return _dataProvider.GetEvents().Where(x =>
-                _dataProvider.GetCategories().SingleOrDefault(z => z.Id == id).Subcategories.Exists(y => y.Id == x.SubcategoryId)).ToList();
+                _dataProvider.GetCategories().First(z => z.Id == id).Subcategories.Exists(y => y.Id == x.SubcategoryId)).ToList();
         }
 
         public Event GetEventById(int id)

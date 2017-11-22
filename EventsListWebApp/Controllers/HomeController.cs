@@ -35,9 +35,9 @@ namespace EventsListWebApp.Controllers
             return PartialView(_provider.GetEventsBySubcategoryId(categoryId));
         }
 
-        public PartialViewResult DetailEvent(int Id)
+        public PartialViewResult DetailEvent(int id)
         {
-            var detailEvent = _provider.GetEventById(Id);
+            var detailEvent = _provider.GetEventById(id);
             ViewBag.Organizer = _provider.GetOrganizerById(detailEvent.OrganizerId);
             ViewBag.Category = _provider.GetCategoryBySubcategoryId(detailEvent.SubcategoryId);
             ViewBag.Subcategory = _provider.GetSubcategoryBySubcategoryId(detailEvent.SubcategoryId);

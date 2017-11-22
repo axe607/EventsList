@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using EventsListCommon.Models;
 
-namespace EventsListData.Repositories
+namespace EventsListData.Clients
 {
-    public interface IDataProvider
+    public interface IClient
     {
         IReadOnlyList<Event> GetEvents();
         IReadOnlyList<Category> GetCategories();

@@ -4,15 +4,15 @@ using StructureMap;
 
 namespace EventsListDependencies.Registries
 {
-    class CommonRegistry:Registry
+    public class CommonRegistry:Registry
     {
         public CommonRegistry()
         {
             Scan(scan =>
             {
-                scan.Assembly(typeof(DataRegistry).Assembly);
-                scan.Assembly(typeof(BusinessRegistry).Assembly);
                 scan.WithDefaultConventions();
+                scan.Assembly(typeof(BusinessRegistry).Assembly);
+                scan.Assembly(typeof(DataRegistry).Assembly);
             });
         }
     }

@@ -1,15 +1,16 @@
-﻿using System;
+﻿using EventsListService.Contracts.Models.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using EventsListCommon.Models;
 
-namespace EventsListData.Repositories
+namespace EventsListService.Contracts.Contracts
 {
-    public class Data:IDataProvider
+    public class EventService : IEventService
     {
-        public List<Event> Events = new List<Event>
+
+        public List<EventDto> Events = new List<EventDto>
         {
-            new Event
+            new EventDto
             {
                 Id = 1,
                 Name = "Творческая встреча 1",
@@ -20,7 +21,7 @@ namespace EventsListData.Repositories
                 Description = "Творческая встреча творческих людей",
                 ImageUrl = ""
             },
-            new Event
+            new EventDto
             {
                 Id = 2,
                 Name = "Творческая встреча 2",
@@ -31,7 +32,7 @@ namespace EventsListData.Repositories
                 Description = "Творческая встреча творческих людей",
                 ImageUrl = ""
             },
-            new Event
+            new EventDto
             {
                 Id = 3,
                 Name = "Что?Где?Когда?",
@@ -42,7 +43,7 @@ namespace EventsListData.Repositories
                 Description = "Интелектуальная игра \"Что?Где?Когда?\"",
                 ImageUrl = ""
             },
-            new Event
+            new EventDto
             {
                 Id = 4,
                 Name = "Что?Где?Когда?",
@@ -53,7 +54,7 @@ namespace EventsListData.Repositories
                 Description = "Интелектуальная игра \"Что?Где?Когда?\"",
                 ImageUrl = ""
             },
-            new Event
+            new EventDto
             {
                 Id = 5,
                 Name = "Конференция по блокчейну",
@@ -66,16 +67,16 @@ namespace EventsListData.Repositories
             }
         };
 
-        public List<Organizer> Organizers = new List<Organizer>
+        public List<OrganizerDto> Organizers = new List<OrganizerDto>
         {
-            new Organizer
+            new OrganizerDto
             {
                 Id = 1,
                 Name = "ШоуМастер",
                 Emails = new List<string> {@"show.master@yandex.by"},
                 Phones = new List<string> {"+375-29-111-11-11", "+375-29-123-12-21"}
             },
-            new Organizer
+            new OrganizerDto
             {
                 Id = 2,
                 Name = "Conference",
@@ -84,34 +85,34 @@ namespace EventsListData.Repositories
             }
         };
 
-        public List<Category> Categories = new List<Category>
+        public List<CategoryDto> Categories = new List<CategoryDto>
         {
-            new Category {Id = 1, Name = "Творческие",Subcategories =
+            new CategoryDto {Id = 1, Name = "Творческие",Subcategories =
             {
-                new Subcategory {Id = 1, CategoryId = 1, Name = "Творческая встреча"},
-                new Subcategory {Id = 2, CategoryId = 1, Name = "Творческий вечер"},
-                new Subcategory {Id = 3, CategoryId = 1, Name = "Творческий проект"}
+                new SubcategoryDto {Id = 1, CategoryId = 1, Name = "Творческая встреча"},
+                new SubcategoryDto {Id = 2, CategoryId = 1, Name = "Творческий вечер"},
+                new SubcategoryDto {Id = 3, CategoryId = 1, Name = "Творческий проект"}
             }},
-            new Category {Id = 2, Name = "Досуг",Subcategories =
+            new CategoryDto {Id = 2, Name = "Досуг",Subcategories =
             {
-                new Subcategory {Id = 7,CategoryId = 2, Name = "Досуговая программа"},
-                new Subcategory {Id = 8,CategoryId = 2, Name = "Интеллектуальная игра"},
+                new SubcategoryDto {Id = 7,CategoryId = 2, Name = "Досуговая программа"},
+                new SubcategoryDto {Id = 8,CategoryId = 2, Name = "Интеллектуальная игра"},
             }},
-            new Category {Id = 3, Name = "Конференция", Subcategories =
+            new CategoryDto {Id = 3, Name = "Конференция", Subcategories =
             {
-                new Subcategory {Id = 4, CategoryId = 3, Name = "Бизнесс конференция"},
-                new Subcategory {Id = 5, CategoryId = 3, Name = "IT конференция"},
-                new Subcategory {Id = 6, CategoryId = 3, Name = "Форум"}
+                new SubcategoryDto {Id = 4, CategoryId = 3, Name = "Бизнесс конференция"},
+                new SubcategoryDto {Id = 5, CategoryId = 3, Name = "IT конференция"},
+                new SubcategoryDto {Id = 6, CategoryId = 3, Name = "Форум"}
             }},
-            new Category {Id = 4, Name = "Музыкальные",Subcategories =
+            new CategoryDto {Id = 4, Name = "Музыкальные",Subcategories =
             {
-                new Subcategory {Id = 10,CategoryId = 4, Name = "Фестиваль"},
-                new Subcategory {Id = 11,CategoryId = 4, Name = "Концерт"}
+                new SubcategoryDto {Id = 10,CategoryId = 4, Name = "Фестиваль"},
+                new SubcategoryDto {Id = 11,CategoryId = 4, Name = "Концерт"}
             }},
-            new Category {Id = 5, Name = "На открытом воздухе",Subcategories =
+            new CategoryDto {Id = 5, Name = "На открытом воздухе",Subcategories =
             {
-                new Subcategory {Id = 10,CategoryId = 5, Name = "Велособытие"},
-                new Subcategory {Id = 11,CategoryId = 5, Name = "Салют"}
+                new SubcategoryDto {Id = 10,CategoryId = 5, Name = "Велособытие"},
+                new SubcategoryDto {Id = 11,CategoryId = 5, Name = "Салют"}
             }}
 
         };
@@ -129,22 +130,22 @@ namespace EventsListData.Repositories
         //new Category {Id = 18, Name = "Экскурсия"},
         //new Category {Id = 19, Name = "Ярмарка"}
 
-        public IReadOnlyList<Event> GetEvents()
+        public List<EventDto> GetEvents()
         {
             return Events;
         }
 
-        public IReadOnlyList<Category> GetCategories()
+        public List<CategoryDto> GetCategories()
         {
             return Categories;
         }
 
-        public IReadOnlyList<Subcategory> GetSubcategories()
+        public List<SubcategoryDto> GetSubcategories()
         {
-            return Categories.SelectMany(x => x.Subcategories.Select(z=>z)).ToList();
+            return Categories.SelectMany(x => x.Subcategories.Select(z => z)).ToList();
         }
 
-        public IReadOnlyList<Organizer> GetOrganizers()
+        public List<OrganizerDto> GetOrganizers()
         {
             return Organizers;
         }

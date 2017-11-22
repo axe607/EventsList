@@ -16,10 +16,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using EventsListBL.Providers;
 
 namespace EventsListWebApp.DependencyResolution
 {
-    using EventsListData.Repositories;
     using StructureMap;
 
     public class DefaultRegistry : Registry {
@@ -32,7 +32,7 @@ namespace EventsListWebApp.DependencyResolution
                     scan.WithDefaultConventions();
 					scan.With(new ControllerConvention());
                 });
-            For<IDataProvider>().Use<Data>();
+            
         }
 
         #endregion
