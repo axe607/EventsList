@@ -1,15 +1,42 @@
-﻿    .eventBlock {
-      cursor: pointer;
-      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-      transition: 0.3s;
-    }
+﻿.event-block {
+  background: linear-gradient(235deg, #ffefd9,#c1ffef);
+  border: 2px dashed #c0c0c0;
+  height: 200px;
+  overflow: hidden;
+  padding: 2px 5px;
+  position: relative;
+  transition: 0.4s;
+  margin: 0 0 20px 10px;
+  cursor: pointer;
+}
 
-    .eventBlock:hover {
-      box-shadow: 0 20px 20px 0 rgba(0,0,0,0.2);
-    }
+  .event-block:hover {
+    background: linear-gradient(0, #ffefd9,#c1ffef);
+    box-shadow: 0 0 5px #000000;
+  }
 
-    .eventTitle {
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-bottom: 20px;
-    }
+.event-block-image {
+  height: 150px;
+  float: left;
+}
+
+  .event-block-image > img {
+    height: 100%;
+    max-width: 100%;
+  }
+
+.event-title {
+  padding-top: 10px;
+  text-align: center;
+  height: 100%;
+  width: 50%;
+  float: left;
+}
+
+  .event-title > p {
+    font-size: 16px;
+    overflow: hidden;
+    color: white;
+    text-shadow: 0 1px 3px #000;
+    font-family: "Verdana";
+  }
