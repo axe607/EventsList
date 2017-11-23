@@ -1,0 +1,30 @@
+﻿@model IEnumerable<EventsListCommon.Models.Event>
+<link href="~/Content/event-block.css" rel="stylesheet" />
+
+<div class="row">
+    @foreach (var itemEvent in Model)
+    {
+        <div onclick="getEventById(@itemEvent.Id)" class="col-sm-6 col-md-4">
+            <div class="event-block">
+                <div class="event-block-image">
+                @if (!string.IsNullOrEmpty(itemEvent.ImageUrl))
+                {
+                    <img src="@itemEvent.ImageUrl"/>
+                }
+                else
+                {
+                    <img src="~/Content/Images/no-image.png"/>
+                }
+                </div>
+                <div class="event-title">
+                    <p>@itemEvent.Name</p>
+                    <p>@itemEvent.Date.ToShortDateString()</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (!Model.Any())
+{
+    <p>Событий нет</p>
+}

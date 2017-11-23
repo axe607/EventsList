@@ -1,0 +1,15 @@
+﻿@model IEnumerable<EventsListCommon.Models.Category>
+
+<div class="category-div">
+    <p class="category-title" onclick="getAllEvents()"><b>Все категории</b></p>
+    @foreach (var category in Model)
+    {
+        <p class="category" id="@category.Id" onclick="getEventsByCategoryId(@category.Id)" >@category.Name</p>
+        <div class="subcategories">
+            @foreach (var subcategory in category.Subcategories)
+            {
+                <p id="@subcategory.Id" class="subcategory" onclick="getEventsBySubcategoryId(@subcategory.Id,false)">@subcategory.Name</p>
+            }
+        </div>
+    }
+</div>

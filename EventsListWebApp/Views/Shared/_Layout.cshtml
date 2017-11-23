@@ -10,6 +10,8 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/categoriesbar.js"></script>
+    <script src="~/Scripts/eventslist.js"></script>
 </head>
 <body>
 
@@ -17,8 +19,12 @@
     <div class="body-content">
         @RenderBody()
     </div>
-    <script>
-    $("#categories").load('@Url.Action("CategoriesBar","Home")');
-    </script>
+<script>
+    $(function() {
+        loadCategoriesBar();
+        getAllEvents();
+    });
+    
+</script>
 </body>
 </html>
