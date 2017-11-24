@@ -14,6 +14,11 @@ namespace EventsListData.Repositories
             _client = client;
         }
 
+        public Address GetAddressById(int id)
+        {
+            return _client.GetAddressById(id);
+        }
+
         public IReadOnlyList<Category> GetCategories()
         {
             return _client.GetCategories();
@@ -22,6 +27,11 @@ namespace EventsListData.Repositories
         public IReadOnlyList<Event> GetEvents()
         {
             return _client.GetEvents();
+        }
+
+        public Organizer GetOrganizerById(int id)
+        {
+            return _client.GetOrganizerById(id);
         }
 
         public IReadOnlyList<Organizer> GetOrganizers()

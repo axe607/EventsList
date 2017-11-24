@@ -1,121 +1,13 @@
 ﻿using EventsListService.Contracts.Models.Dto;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace EventsListService.Contracts.Contracts
 {
     public class EventService : IEventService
     {
-
-        public List<EventDto> Events = new List<EventDto>
-        {
-            new EventDto
-            {
-                Id = 1,
-                Name = "Творческая встреча 1",
-                OrganizerId = 1,
-                SubcategoryId = 1,
-                Date = new DateTime(2017,11,15),
-                Address = "Кафе \"Огонёк\"",
-                Description = "Творческая встреча творческих людей",
-                ImageUrl = ""
-            },
-            new EventDto
-            {
-                Id = 2,
-                Name = "Творческая встреча 2",
-                OrganizerId = 1,
-                SubcategoryId = 1,
-                Date = new DateTime(2017,11,25),
-                Address = "Кафе \"Огонёк\"",
-                Description = "Творческая встреча творческих людей",
-                ImageUrl = ""
-            },
-            new EventDto
-            {
-                Id = 3,
-                Name = "Что?Где?Когда?",
-                OrganizerId = 1,
-                SubcategoryId = 8,
-                Date = new DateTime(2017,11,20),
-                Address = "Беларусь, Могилёвская область, Могилёв, Пушкинский просп., 7",
-                Description = "Интелектуальная игра \"Что?Где?Когда?\"",
-                ImageUrl = ""
-            },
-            new EventDto
-            {
-                Id = 4,
-                Name = "Что?Где?Когда?",
-                OrganizerId = 1,
-                SubcategoryId = 8,
-                Date = new DateTime(2017,11,02),
-                Address = "Беларусь, Могилёвская область, Могилёв, Пушкинский просп., 7",
-                Description = "Интелектуальная игра \"Что?Где?Когда?\"",
-                ImageUrl = ""
-            },
-            new EventDto
-            {
-                Id = 5,
-                Name = "Конференция по блокчейну",
-                OrganizerId = 1,
-                SubcategoryId = 5,
-                Date = new DateTime(2017,11,28),
-                Address = "Беларусь, Минск, просп. Победителей, 7А",
-                Description = "Конференция",
-                ImageUrl = ""
-            }
-        };
-
-        public List<OrganizerDto> Organizers = new List<OrganizerDto>
-        {
-            new OrganizerDto
-            {
-                Id = 1,
-                Name = "ШоуМастер",
-                Emails = new List<string> {@"show.master@yandex.by"},
-                Phones = new List<string> {"+375-29-111-11-11", "+375-29-123-12-21"}
-            },
-            new OrganizerDto
-            {
-                Id = 2,
-                Name = "Conference",
-                Emails = new List<string> {@"conference.minsk@yandex.by", @"conference.mogilev@yandex.by"},
-                Phones = new List<string> {"+375-29-909-01-14"}
-            }
-        };
-
-        public List<CategoryDto> Categories = new List<CategoryDto>
-        {
-            new CategoryDto {Id = 1, Name = "Творческие",Subcategories =
-            {
-                new SubcategoryDto {Id = 1, CategoryId = 1, Name = "Творческая встреча"},
-                new SubcategoryDto {Id = 2, CategoryId = 1, Name = "Творческий вечер"},
-                new SubcategoryDto {Id = 3, CategoryId = 1, Name = "Творческий проект"}
-            }},
-            new CategoryDto {Id = 2, Name = "Досуг",Subcategories =
-            {
-                new SubcategoryDto {Id = 7,CategoryId = 2, Name = "Досуговая программа"},
-                new SubcategoryDto {Id = 8,CategoryId = 2, Name = "Интеллектуальная игра"},
-            }},
-            new CategoryDto {Id = 3, Name = "Конференция", Subcategories =
-            {
-                new SubcategoryDto {Id = 4, CategoryId = 3, Name = "Бизнесс конференция"},
-                new SubcategoryDto {Id = 5, CategoryId = 3, Name = "IT конференция"},
-                new SubcategoryDto {Id = 6, CategoryId = 3, Name = "Форум"}
-            }},
-            new CategoryDto {Id = 4, Name = "Музыкальные",Subcategories =
-            {
-                new SubcategoryDto {Id = 10,CategoryId = 4, Name = "Фестиваль"},
-                new SubcategoryDto {Id = 11,CategoryId = 4, Name = "Концерт"}
-            }},
-            new CategoryDto {Id = 5, Name = "На открытом воздухе",Subcategories =
-            {
-                new SubcategoryDto {Id = 10,CategoryId = 5, Name = "Велособытие"},
-                new SubcategoryDto {Id = 11,CategoryId = 5, Name = "Салют"}
-            }}
-
-        };
 
 
         //new Category {Id = 1, Name = "Автограф-сессия"},
@@ -132,22 +24,250 @@ namespace EventsListService.Contracts.Contracts
 
         public List<EventDto> GetEvents()
         {
-            return Events;
+            List<EventDto> listResult = new List<EventDto>();
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectEvents";
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataTable dataSetTable in dataSet.Tables)
+                    {
+                        foreach (DataRow dataRow in dataSetTable.Rows)
+                        {
+                            listResult.Add(new EventDto { Id = (int)dataRow[0], Name = dataRow[1].ToString(), Date = (DateTime)dataRow[2], OrganizerId = (int)dataRow[3], SubcategoryId = (int)dataRow[4], ImageUrl = dataRow[5]?.ToString(), Description = dataRow[6].ToString(), AddressId = (int)dataRow[7] });
+                        }
+                    }
+                }
+            }
+            return listResult;
         }
 
         public List<CategoryDto> GetCategories()
         {
-            return Categories;
+            List<CategoryDto> listResult = new List<CategoryDto>();
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectCategories";
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataTable dataSetTable in dataSet.Tables)
+                    {
+                        foreach (DataRow dataRow in dataSetTable.Rows)
+                        {
+                            listResult.Add(new CategoryDto { Id = (int)dataRow[0], Name = dataRow[1].ToString(), Subcategories = GetSubcategoriesByCategoryId((int)dataRow[0]) });
+                        }
+                    }
+                }
+            }
+            return listResult;
         }
 
         public List<SubcategoryDto> GetSubcategories()
         {
-            return Categories.SelectMany(x => x.Subcategories.Select(z => z)).ToList();
+            List<SubcategoryDto> listResult = new List<SubcategoryDto>();
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectSubcategories";
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataTable dataSetTable in dataSet.Tables)
+                    {
+                        foreach (DataRow dataRow in dataSetTable.Rows)
+                        {
+                            listResult.Add(new SubcategoryDto { Id = (int)dataRow[0], CategoryId = (int)dataRow[1], Name = dataRow[2].ToString() });
+                        }
+                    }
+                }
+            }
+            return listResult;
+        }
+
+        public List<SubcategoryDto> GetSubcategoriesByCategoryId(int categoryId)
+        {
+            List<SubcategoryDto> listResult = new List<SubcategoryDto>();
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectSubcategoriesByCategoryId";
+
+                    SqlParameter param = new SqlParameter { DbType = DbType.Int32, ParameterName = "@categoryId", Value = categoryId };
+                    command.Parameters.Add(param);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataTable dataSetTable in dataSet.Tables)
+                    {
+                        foreach (DataRow dataRow in dataSetTable.Rows)
+                        {
+                            listResult.Add(new SubcategoryDto { Id = (int)dataRow[0], CategoryId = (int)dataRow[1], Name = dataRow[2].ToString() });
+                        }
+                    }
+                }
+            }
+            return listResult;
         }
 
         public List<OrganizerDto> GetOrganizers()
         {
-            return Organizers;
+            List<OrganizerDto> listResult = new List<OrganizerDto>();
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectOrganizers";
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataTable dataSetTable in dataSet.Tables)
+                    {
+                        foreach (DataRow dataRow in dataSetTable.Rows)
+                        {
+                            listResult.Add(new OrganizerDto { Id = (int)dataRow[0], Name = dataRow[1].ToString(), Emails = GetEmailsByOrganizerId((int)dataRow[0]), Phones = GetPhonesByOrganizerId((int)dataRow[0]) });
+                        }
+                    }
+                }
+            }
+            return listResult;
+        }
+
+        public OrganizerDto GetOrganizerById(int id)
+        {
+            OrganizerDto result;
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectOrganizerById";
+
+                    SqlParameter param = new SqlParameter { DbType = DbType.Int32, ParameterName = "@id", Value = id };
+                    command.Parameters.Add(param);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    result = new OrganizerDto { Id = (int)dataSet.Tables[0].Rows[0][0], Name = dataSet.Tables[0].Rows[0][1].ToString(), Emails = GetEmailsByOrganizerId((int)dataSet.Tables[0].Rows[0][0]), Phones = GetPhonesByOrganizerId((int)dataSet.Tables[0].Rows[0][0]) };
+
+                }
+            }
+            return result;
+        }
+
+        public List<EmailDto> GetEmailsByOrganizerId(int organizerId)
+        {
+            List<EmailDto> listResult = new List<EmailDto>();
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectEmailsByOrganizerId";
+
+                    SqlParameter param = new SqlParameter { DbType = DbType.Int32, ParameterName = "@organizerId", Value = organizerId };
+                    command.Parameters.Add(param);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataTable dataSetTable in dataSet.Tables)
+                    {
+                        foreach (DataRow dataRow in dataSetTable.Rows)
+                        {
+                            listResult.Add(new EmailDto { Id = (int)dataRow[0], OrganizerId = (int)dataRow[1], Email = dataRow[2].ToString() });
+                        }
+                    }
+                }
+            }
+            return listResult;
+        }
+
+        public List<PhoneDto> GetPhonesByOrganizerId(int organizerId)
+        {
+            List<PhoneDto> listResult = new List<PhoneDto>();
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectPhonesByOrganizerId";
+
+                    SqlParameter param = new SqlParameter { DbType = DbType.Int32, ParameterName = "@organizerId", Value = organizerId };
+                    command.Parameters.Add(param);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataTable dataSetTable in dataSet.Tables)
+                    {
+                        foreach (DataRow dataRow in dataSetTable.Rows)
+                        {
+                            listResult.Add(new PhoneDto { Id = (int)dataRow[0], OrganizerId = (int)dataRow[1], PhoneNumber = dataRow[2].ToString() });
+                        }
+                    }
+                }
+            }
+            return listResult;
+        }
+
+        public AddressDto GetAddressById(int id)
+        {
+            AddressDto result;
+            using (SqlConnection connection = new SqlConnection(@"Data Source=AXE-PC\SQLEXPRESS;Initial Catalog=EventsListDB;User ID=Test;Password=test"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "SelectAddressById";
+
+                    SqlParameter param = new SqlParameter { DbType = DbType.Int32, ParameterName = "@id", Value = id };
+                    command.Parameters.Add(param);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    result = new AddressDto { Id = (int)dataSet.Tables[0].Rows[0][0], Address = dataSet.Tables[0].Rows[0][1].ToString() };
+
+                }
+            }
+            return result;
         }
     }
 }

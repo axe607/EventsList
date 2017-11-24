@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace EventsListCommon.Models
 {
-    public class Organizer
+    public class Address
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public List<Phone> Phones { get; set; }
-        public List<Email> Emails { get; set; }
+        public string AddressString { get; set; }
     }
 }

@@ -8,7 +8,7 @@
             <p>Название: @Model.Name</p>
         </div>
         <div>
-            <p>Дата: @Model.Date</p>
+            <p>Дата: @Model.Date.ToShortDateString()</p>
         </div>
         <div>
             <p>Организатор: @ViewBag.Organizer.Name</p>
@@ -17,7 +17,7 @@
                 <p>Emails:</p>
                 foreach (var email in ViewBag.Organizer.Emails)
                 {
-                    <p class="event-detail-email">@email</p>
+                    <p class="event-detail-email">@email.EmailString</p>
                 }
             }
             @if (ViewBag.Organizer.Phones.Count > 0)
@@ -25,7 +25,7 @@
                 <p>Телефоны:</p>
                 foreach (var phone in ViewBag.Organizer.Phones)
                 {
-                    <p class="event-detail-phone">@phone</p>
+                    <p class="event-detail-phone">@phone.PhoneNumber</p>
                 }
             }
         </div>
@@ -34,7 +34,7 @@
 
         </div>
         <div>
-            <p>Адрес: @Model.Address</p>
+            <p>Адрес: @ViewBag.Address.AddressString</p>
         </div>
         <div>
             <p>Описание: @Model.Description</p>

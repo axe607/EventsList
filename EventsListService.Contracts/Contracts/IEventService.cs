@@ -5,7 +5,7 @@ using System.ServiceModel;
 namespace EventsListService.Contracts.Contracts
 {
     [ServiceContract]
-   public interface IEventService
+    public interface IEventService
     {
         [OperationContract]
         List<EventDto> GetEvents();
@@ -14,6 +14,16 @@ namespace EventsListService.Contracts.Contracts
         [OperationContract]
         List<SubcategoryDto> GetSubcategories();
         [OperationContract]
+        List<SubcategoryDto> GetSubcategoriesByCategoryId(int categoryId);
+        [OperationContract]
         List<OrganizerDto> GetOrganizers();
+        [OperationContract]
+        OrganizerDto GetOrganizerById(int id);
+        [OperationContract]
+        List<EmailDto> GetEmailsByOrganizerId(int organizerId);
+        [OperationContract]
+        List<PhoneDto> GetPhonesByOrganizerId(int organizerId);
+        [OperationContract]
+        AddressDto GetAddressById(int id);
     }
 }

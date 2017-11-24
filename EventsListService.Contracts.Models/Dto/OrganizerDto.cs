@@ -11,8 +11,8 @@ namespace EventsListService.Contracts.Models.Dto
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public List<string> Phones { get; set; }
+        public List<PhoneDto> Phones { get; set; }
         [DataMember]
-        public List<string> Emails { get; set; }
+        public List<EmailDto> Emails { get; set; }
     }
 }

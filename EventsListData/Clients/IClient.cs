@@ -9,5 +9,7 @@ namespace EventsListData.Clients
         IReadOnlyList<Category> GetCategories();
         IReadOnlyList<Subcategory> GetSubcategories();
         IReadOnlyList<Organizer> GetOrganizers();
+        Organizer GetOrganizerById(int id);
+        Address GetAddressById(int id);
     }
 }

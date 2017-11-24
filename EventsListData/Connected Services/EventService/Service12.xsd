@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="ArrayOfEventDto">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="EventDto" nillable="true" type="tns:EventDto" />
@@ -9,7 +8,7 @@
   <xs:element name="ArrayOfEventDto" nillable="true" type="tns:ArrayOfEventDto" />
   <xs:complexType name="EventDto">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AddressId" type="xs:int" />
       <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
@@ -56,11 +55,46 @@
   <xs:element name="ArrayOfOrganizerDto" nillable="true" type="tns:ArrayOfOrganizerDto" />
   <xs:complexType name="OrganizerDto">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Emails" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Emails" nillable="true" type="tns:ArrayOfEmailDto" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Phones" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Phones" nillable="true" type="tns:ArrayOfPhoneDto" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="OrganizerDto" nillable="true" type="tns:OrganizerDto" />
+  <xs:complexType name="ArrayOfEmailDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailDto" nillable="true" type="tns:EmailDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEmailDto" nillable="true" type="tns:ArrayOfEmailDto" />
+  <xs:complexType name="EmailDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmailDto" nillable="true" type="tns:EmailDto" />
+  <xs:complexType name="ArrayOfPhoneDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PhoneDto" nillable="true" type="tns:PhoneDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPhoneDto" nillable="true" type="tns:ArrayOfPhoneDto" />
+  <xs:complexType name="PhoneDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PhoneDto" nillable="true" type="tns:PhoneDto" />
+  <xs:complexType name="AddressDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddressDto" nillable="true" type="tns:AddressDto" />
 </xs:schema>

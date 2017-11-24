@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\AddressDto.cs" />
     <Compile Include="Dto\CategoryDto.cs" />
+    <Compile Include="Dto\EmailDto.cs" />
     <Compile Include="Dto\EventDto.cs" />
     <Compile Include="Dto\OrganizerDto.cs" />
+    <Compile Include="Dto\PhoneDto.cs" />
     <Compile Include="Dto\SubcategoryDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

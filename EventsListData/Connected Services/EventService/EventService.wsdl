@@ -5,7 +5,6 @@
       <xsd:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" />
-      <xsd:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IEventService_GetEvents_InputMessage">
@@ -26,11 +25,41 @@
   <wsdl:message name="IEventService_GetSubcategories_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSubcategoriesResponse" />
   </wsdl:message>
+  <wsdl:message name="IEventService_GetSubcategoriesByCategoryId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubcategoriesByCategoryId" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetSubcategoriesByCategoryId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubcategoriesByCategoryIdResponse" />
+  </wsdl:message>
   <wsdl:message name="IEventService_GetOrganizers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOrganizers" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetOrganizers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetOrganizersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetOrganizerById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrganizerById" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetOrganizerById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrganizerByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEmailsByOrganizerId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmailsByOrganizerId" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEmailsByOrganizerId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmailsByOrganizerIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetPhonesByOrganizerId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhonesByOrganizerId" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetPhonesByOrganizerId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhonesByOrganizerIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetAddressById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAddressById" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetAddressById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAddressByIdResponse" />
   </wsdl:message>
   <wsdl:portType name="IEventService">
     <wsdl:operation name="GetEvents">
@@ -45,9 +74,29 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetSubcategories" message="tns:IEventService_GetSubcategories_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetSubcategoriesResponse" message="tns:IEventService_GetSubcategories_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetSubcategoriesByCategoryId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetSubcategoriesByCategoryId" message="tns:IEventService_GetSubcategoriesByCategoryId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetSubcategoriesByCategoryIdResponse" message="tns:IEventService_GetSubcategoriesByCategoryId_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetOrganizers">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetOrganizers" message="tns:IEventService_GetOrganizers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetOrganizersResponse" message="tns:IEventService_GetOrganizers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrganizerById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetOrganizerById" message="tns:IEventService_GetOrganizerById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetOrganizerByIdResponse" message="tns:IEventService_GetOrganizerById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailsByOrganizerId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEmailsByOrganizerId" message="tns:IEventService_GetEmailsByOrganizerId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEmailsByOrganizerIdResponse" message="tns:IEventService_GetEmailsByOrganizerId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhonesByOrganizerId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetPhonesByOrganizerId" message="tns:IEventService_GetPhonesByOrganizerId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetPhonesByOrganizerIdResponse" message="tns:IEventService_GetPhonesByOrganizerId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetAddressById" message="tns:IEventService_GetAddressById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetAddressByIdResponse" message="tns:IEventService_GetAddressById_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEventService" type="tns:IEventService">
@@ -79,8 +128,53 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetSubcategoriesByCategoryId">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetSubcategoriesByCategoryId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetOrganizers">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetOrganizers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrganizerById">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetOrganizerById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailsByOrganizerId">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetEmailsByOrganizerId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhonesByOrganizerId">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetPhonesByOrganizerId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressById">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetAddressById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

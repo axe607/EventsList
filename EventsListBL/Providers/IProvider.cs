@@ -15,5 +15,6 @@ namespace EventsListBL.Providers
         Subcategory GetSubcategoryBySubcategoryId(int id);
 
         Organizer GetOrganizerById(int id);
+        Address GetAddressById(int id);
     }
 }

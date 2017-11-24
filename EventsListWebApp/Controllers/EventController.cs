@@ -36,6 +36,7 @@ namespace EventsListWebApp.Controllers
             ViewBag.Organizer = _provider.GetOrganizerById(detailEvent.OrganizerId);
             ViewBag.Category = _provider.GetCategoryBySubcategoryId(detailEvent.SubcategoryId);
             ViewBag.Subcategory = _provider.GetSubcategoryBySubcategoryId(detailEvent.SubcategoryId);
+            ViewBag.Address = _provider.GetAddressById(detailEvent.AddressId);
             return PartialView(detailEvent);
         }
     }

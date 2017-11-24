@@ -14,7 +14,7 @@ namespace EventsListCommon.Models
         public int OrganizerId { get; set; }
         public int SubcategoryId { get; set; }
         public string ImageUrl { get; set; }
-        public string Address { get; set; }
+        public int AddressId { get; set; }
         public string Description { get; set; }
     }
 }

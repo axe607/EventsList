@@ -1,11 +1,13 @@
 ﻿using EventsListCommon.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace EventsListData.Clients
 {
     public class Client : IClient
     {
+
         public IReadOnlyList<Category> GetCategories()
         {
             var result = new List<Category>();
@@ -39,7 +41,7 @@ namespace EventsListData.Clients
                 new Event
                 {
                     Id = x.Id,
-                    Address = x.Address,
+                    AddressId = x.AddressId,
                     Date = x.Date,
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,
@@ -47,6 +49,49 @@ namespace EventsListData.Clients
                     OrganizerId = x.OrganizerId,
                     SubcategoryId = x.SubcategoryId
                 }).ToList() ?? result;
+
+                client.Close();
+            }
+            return result;
+        }
+
+        public Organizer GetOrganizerById(int id)
+        {
+            var result = new Organizer();
+            using (var client = new EventService.EventServiceClient())
+            {
+                client.Open();
+                var data = client.GetOrganizerById(id);
+
+                result = data != null ?
+                    new Organizer
+                    {
+                        Id = data.Id,
+                        Name = data.Name,
+                        Emails = data.Emails.Select(z => new Email { Id = z.Id, OrganizerId = z.OrganizerId, EmailString = z.Email }).ToList(),
+                        Phones = data.Phones.Select(z => new Phone { Id = z.Id, OrganizerId = z.OrganizerId, PhoneNumber = z.PhoneNumber }).ToList()
+                    } :
+                result;
+
+                client.Close();
+            }
+            return result;
+        }
+        public Address GetAddressById(int id)
+        {
+            Address result = new Address();
+            using (var client = new EventService.EventServiceClient())
+            {
+                client.Open();
+                var data = client.GetAddressById(id);
+
+                result = data != null 
+                ?new Address
+                    {
+                        Id = data.Id,
+                        AddressString = data.Address
+                    }
+                :result;
 
                 client.Close();
             }
@@ -66,8 +111,8 @@ namespace EventsListData.Clients
                  {
                      Id = x.Id,
                      Name = x.Name,
-                     Emails = x.Emails.ToList(),
-                     Phones = x.Phones.ToList()
+                     Emails = x.Emails.Select(z => new Email { Id = z.Id, OrganizerId = z.OrganizerId, EmailString = z.Email }).ToList(),
+                     Phones = x.Phones.Select(z => new Phone { Id = z.Id, OrganizerId = z.OrganizerId, PhoneNumber = z.PhoneNumber }).ToList()
                  }).ToList() ?? result;
 
 

@@ -19,7 +19,7 @@ namespace EventsListService.Contracts.Models.Dto
         [DataMember]
         public string ImageUrl { get; set; }
         [DataMember]
-        public string Address { get; set; }
+        public int AddressId { get; set; }
         [DataMember]
         public string Description { get; set; }
     }

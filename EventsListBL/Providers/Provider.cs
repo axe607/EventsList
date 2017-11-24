@@ -2,6 +2,7 @@
 using EventsListData.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace EventsListBL.Providers
 {
@@ -31,7 +32,7 @@ namespace EventsListBL.Providers
 
         public Organizer GetOrganizerById(int id)
         {
-            return _dataProvider.GetOrganizers().SingleOrDefault(x => x.Id == id);
+            return _dataProvider.GetOrganizerById(id);
         }
 
         public IReadOnlyList<Event> GetEvents()
@@ -58,6 +59,11 @@ namespace EventsListBL.Providers
         public Event GetEventById(int id)
         {
             return _dataProvider.GetEvents().SingleOrDefault(x => x.Id == id);
+        }
+
+        public Address GetAddressById(int id)
+        {
+            return _dataProvider.GetAddressById(id);
         }
     }
 }

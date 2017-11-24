@@ -78,13 +78,22 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Connected Services\EventService\EventService.wsdl" />
+    <None Include="Connected Services\EventService\EventsListData.EventService.AddressDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\EventService\EventsListData.EventService.CategoryDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\EventsListData.EventService.EmailDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\EventService\EventsListData.EventService.EventDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\EventService\EventsListData.EventService.OrganizerDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventService\EventsListData.EventService.PhoneDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\EventService\EventsListData.EventService.SubcategoryDto.datasource">
@@ -97,9 +106,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\EventService\Service12.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\EventService\Service13.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
