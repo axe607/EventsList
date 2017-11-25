@@ -13,6 +13,24 @@
   <wsdl:message name="IEventService_GetEvents_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetEventsResponse" />
   </wsdl:message>
+  <wsdl:message name="IEventService_GetEventsBySubcategoryId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsBySubcategoryId" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEventsBySubcategoryId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsBySubcategoryIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEventsByCategoryId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsByCategoryId" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEventsByCategoryId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsByCategoryIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEventInfoDetailById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventInfoDetailById" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEventInfoDetailById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventInfoDetailByIdResponse" />
+  </wsdl:message>
   <wsdl:message name="IEventService_GetCategories_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCategories" />
   </wsdl:message>
@@ -66,6 +84,18 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEvents" message="tns:IEventService_GetEvents_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventsResponse" message="tns:IEventService_GetEvents_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetEventsBySubcategoryId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEventsBySubcategoryId" message="tns:IEventService_GetEventsBySubcategoryId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventsBySubcategoryIdResponse" message="tns:IEventService_GetEventsBySubcategoryId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsByCategoryId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEventsByCategoryId" message="tns:IEventService_GetEventsByCategoryId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventsByCategoryIdResponse" message="tns:IEventService_GetEventsByCategoryId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEventInfoDetailById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEventInfoDetailById" message="tns:IEventService_GetEventInfoDetailById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventInfoDetailByIdResponse" message="tns:IEventService_GetEventInfoDetailById_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetCategories">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetCategories" message="tns:IEventService_GetCategories_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetCategoriesResponse" message="tns:IEventService_GetCategories_OutputMessage" />
@@ -103,6 +133,33 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetEvents">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsBySubcategoryId">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetEventsBySubcategoryId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsByCategoryId">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetEventsByCategoryId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventInfoDetailById">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetEventInfoDetailById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

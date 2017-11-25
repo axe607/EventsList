@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using EventsListCommon.Models;
 
-namespace EventsListData.Clients
+namespace EventsListBL.Providers
 {
-    public interface IClient
+    public interface IBusinessProvider
     {
         IReadOnlyList<Event> GetEvents();
         IReadOnlyList<Event> GetEventsBySubcategoryId(int subcategoryId);
@@ -11,8 +11,5 @@ namespace EventsListData.Clients
         EventDetail GetEventInfoDetailById(int eventId);
         IReadOnlyList<Category> GetCategories();
         IReadOnlyList<Subcategory> GetSubcategories();
-        IReadOnlyList<Organizer> GetOrganizers();
-        Organizer GetOrganizerById(int id);
-        Address GetAddressById(int id);
     }
 }

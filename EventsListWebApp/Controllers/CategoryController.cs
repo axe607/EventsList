@@ -6,10 +6,10 @@ namespace EventsListWebApp.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IProvider _provider;
+        private readonly IBusinessProvider _provider;
         private static readonly ILog Log = LogManager.GetLogger("CategoryController");
 
-        public CategoryController(IProvider providerInput)
+        public CategoryController(IBusinessProvider providerInput)
         {
             _provider = providerInput;
         }

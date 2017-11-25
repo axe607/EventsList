@@ -13,6 +13,48 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetEventsBySubcategoryId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="subcategoryId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsBySubcategoryIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsBySubcategoryIdResult" nillable="true" type="q2:ArrayOfEventDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsByCategoryId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsByCategoryIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsByCategoryIdResult" nillable="true" type="q3:ArrayOfEventDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventInfoDetailById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="eventId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventInfoDetailByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventInfoDetailByIdResult" nillable="true" type="q4:EventDetailDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetCategories">
     <xs:complexType>
       <xs:sequence />
@@ -21,7 +63,7 @@
   <xs:element name="GetCategoriesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetCategoriesResult" nillable="true" type="q2:ArrayOfCategoryDto" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetCategoriesResult" nillable="true" type="q5:ArrayOfCategoryDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -33,7 +75,7 @@
   <xs:element name="GetSubcategoriesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetSubcategoriesResult" nillable="true" type="q3:ArrayOfSubcategoryDto" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetSubcategoriesResult" nillable="true" type="q6:ArrayOfSubcategoryDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -47,7 +89,7 @@
   <xs:element name="GetSubcategoriesByCategoryIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetSubcategoriesByCategoryIdResult" nillable="true" type="q4:ArrayOfSubcategoryDto" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetSubcategoriesByCategoryIdResult" nillable="true" type="q7:ArrayOfSubcategoryDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -59,7 +101,7 @@
   <xs:element name="GetOrganizersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetOrganizersResult" nillable="true" type="q5:ArrayOfOrganizerDto" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetOrganizersResult" nillable="true" type="q8:ArrayOfOrganizerDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -73,7 +115,7 @@
   <xs:element name="GetOrganizerByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetOrganizerByIdResult" nillable="true" type="q6:OrganizerDto" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetOrganizerByIdResult" nillable="true" type="q9:OrganizerDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -87,7 +129,7 @@
   <xs:element name="GetEmailsByOrganizerIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEmailsByOrganizerIdResult" nillable="true" type="q7:ArrayOfEmailDto" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEmailsByOrganizerIdResult" nillable="true" type="q10:ArrayOfEmailDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -101,7 +143,7 @@
   <xs:element name="GetPhonesByOrganizerIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetPhonesByOrganizerIdResult" nillable="true" type="q8:ArrayOfPhoneDto" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetPhonesByOrganizerIdResult" nillable="true" type="q11:ArrayOfPhoneDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -115,7 +157,7 @@
   <xs:element name="GetAddressByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetAddressByIdResult" nillable="true" type="q9:AddressDto" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetAddressByIdResult" nillable="true" type="q12:AddressDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

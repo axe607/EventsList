@@ -44,6 +44,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventDetail.cs" />
     <Compile Include="Models\Organizer.cs" />
     <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\Subcategory.cs" />

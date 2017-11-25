@@ -44,6 +44,7 @@
     <Compile Include="Dto\AddressDto.cs" />
     <Compile Include="Dto\CategoryDto.cs" />
     <Compile Include="Dto\EmailDto.cs" />
+    <Compile Include="Dto\EventDetailDto.cs" />
     <Compile Include="Dto\EventDto.cs" />
     <Compile Include="Dto\OrganizerDto.cs" />
     <Compile Include="Dto\PhoneDto.cs" />

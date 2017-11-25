@@ -6,10 +6,10 @@ namespace EventsListWebApp.Controllers
 {
     public class EventController : Controller
     {
-        private readonly IProvider _provider;
+        private readonly IBusinessProvider _provider;
         private static readonly ILog Log = LogManager.GetLogger("HomeController");
 
-        public EventController(IProvider providerInput)
+        public EventController(IBusinessProvider providerInput)
         {
             _provider = providerInput;
         }
@@ -32,12 +32,7 @@ namespace EventsListWebApp.Controllers
 
         public PartialViewResult DetailEvent(int id)
         {
-            var detailEvent = _provider.GetEventById(id);
-            ViewBag.Organizer = _provider.GetOrganizerById(detailEvent.OrganizerId);
-            ViewBag.Category = _provider.GetCategoryBySubcategoryId(detailEvent.SubcategoryId);
-            ViewBag.Subcategory = _provider.GetSubcategoryBySubcategoryId(detailEvent.SubcategoryId);
-            ViewBag.Address = _provider.GetAddressById(detailEvent.AddressId);
-            return PartialView(detailEvent);
+            return PartialView(_provider.GetEventInfoDetailById(id));
         }
     }
 }

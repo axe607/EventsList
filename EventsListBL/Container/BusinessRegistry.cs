@@ -8,7 +8,7 @@ namespace EventsListBL.Container
     {
         public BusinessRegistry()
         {
-            For<IProvider>().Use<Provider>();
+            For<IBusinessProvider>().Use<BusinessProvider>();
         }
     }
 }

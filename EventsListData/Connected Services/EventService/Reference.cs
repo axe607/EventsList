@@ -172,6 +172,365 @@ namespace EventsListData.EventService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EventDetailDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
+    [System.SerializableAttribute()]
+    public partial class EventDetailDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CategoryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int EventIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EventNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageUrlField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private EventsListData.EventService.EmailDto[] OrganizerEmailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OrganizerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private EventsListData.EventService.PhoneDto[] OrganizerPhonesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SubcategoryNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address {
+            get {
+                return this.AddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
+                    this.AddressField = value;
+                    this.RaisePropertyChanged("Address");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CategoryName {
+            get {
+                return this.CategoryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CategoryNameField, value) != true)) {
+                    this.CategoryNameField = value;
+                    this.RaisePropertyChanged("CategoryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Date {
+            get {
+                return this.DateField;
+            }
+            set {
+                if ((this.DateField.Equals(value) != true)) {
+                    this.DateField = value;
+                    this.RaisePropertyChanged("Date");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int EventId {
+            get {
+                return this.EventIdField;
+            }
+            set {
+                if ((this.EventIdField.Equals(value) != true)) {
+                    this.EventIdField = value;
+                    this.RaisePropertyChanged("EventId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EventName {
+            get {
+                return this.EventNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EventNameField, value) != true)) {
+                    this.EventNameField = value;
+                    this.RaisePropertyChanged("EventName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImageUrl {
+            get {
+                return this.ImageUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageUrlField, value) != true)) {
+                    this.ImageUrlField = value;
+                    this.RaisePropertyChanged("ImageUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public EventsListData.EventService.EmailDto[] OrganizerEmails {
+            get {
+                return this.OrganizerEmailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrganizerEmailsField, value) != true)) {
+                    this.OrganizerEmailsField = value;
+                    this.RaisePropertyChanged("OrganizerEmails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OrganizerName {
+            get {
+                return this.OrganizerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrganizerNameField, value) != true)) {
+                    this.OrganizerNameField = value;
+                    this.RaisePropertyChanged("OrganizerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public EventsListData.EventService.PhoneDto[] OrganizerPhones {
+            get {
+                return this.OrganizerPhonesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrganizerPhonesField, value) != true)) {
+                    this.OrganizerPhonesField = value;
+                    this.RaisePropertyChanged("OrganizerPhones");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SubcategoryName {
+            get {
+                return this.SubcategoryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubcategoryNameField, value) != true)) {
+                    this.SubcategoryNameField = value;
+                    this.RaisePropertyChanged("SubcategoryName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EmailDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
+    [System.SerializableAttribute()]
+    public partial class EmailDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int OrganizerIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int OrganizerId {
+            get {
+                return this.OrganizerIdField;
+            }
+            set {
+                if ((this.OrganizerIdField.Equals(value) != true)) {
+                    this.OrganizerIdField = value;
+                    this.RaisePropertyChanged("OrganizerId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PhoneDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
+    [System.SerializableAttribute()]
+    public partial class PhoneDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int OrganizerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PhoneNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int OrganizerId {
+            get {
+                return this.OrganizerIdField;
+            }
+            set {
+                if ((this.OrganizerIdField.Equals(value) != true)) {
+                    this.OrganizerIdField = value;
+                    this.RaisePropertyChanged("OrganizerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PhoneNumber {
+            get {
+                return this.PhoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhoneNumberField, value) != true)) {
+                    this.PhoneNumberField = value;
+                    this.RaisePropertyChanged("PhoneNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CategoryDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
     [System.SerializableAttribute()]
     public partial class CategoryDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -419,160 +778,6 @@ namespace EventsListData.EventService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EmailDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
-    [System.SerializableAttribute()]
-    public partial class EmailDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int OrganizerIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int OrganizerId {
-            get {
-                return this.OrganizerIdField;
-            }
-            set {
-                if ((this.OrganizerIdField.Equals(value) != true)) {
-                    this.OrganizerIdField = value;
-                    this.RaisePropertyChanged("OrganizerId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PhoneDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
-    [System.SerializableAttribute()]
-    public partial class PhoneDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int OrganizerIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PhoneNumberField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int OrganizerId {
-            get {
-                return this.OrganizerIdField;
-            }
-            set {
-                if ((this.OrganizerIdField.Equals(value) != true)) {
-                    this.OrganizerIdField = value;
-                    this.RaisePropertyChanged("OrganizerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PhoneNumber {
-            get {
-                return this.PhoneNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PhoneNumberField, value) != true)) {
-                    this.PhoneNumberField = value;
-                    this.RaisePropertyChanged("PhoneNumber");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AddressDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
     [System.SerializableAttribute()]
     public partial class AddressDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -641,6 +846,24 @@ namespace EventsListData.EventService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEvents", ReplyAction="http://tempuri.org/IEventService/GetEventsResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsBySubcategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsBySubcategoryIdResponse")]
+        EventsListData.EventService.EventDto[] GetEventsBySubcategoryId(int subcategoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsBySubcategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsBySubcategoryIdResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsBySubcategoryIdAsync(int subcategoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsByCategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsByCategoryIdResponse")]
+        EventsListData.EventService.EventDto[] GetEventsByCategoryId(int categoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsByCategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsByCategoryIdResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsByCategoryIdAsync(int categoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventInfoDetailById", ReplyAction="http://tempuri.org/IEventService/GetEventInfoDetailByIdResponse")]
+        EventsListData.EventService.EventDetailDto GetEventInfoDetailById(int eventId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventInfoDetailById", ReplyAction="http://tempuri.org/IEventService/GetEventInfoDetailByIdResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.EventDetailDto> GetEventInfoDetailByIdAsync(int eventId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetCategories", ReplyAction="http://tempuri.org/IEventService/GetCategoriesResponse")]
         EventsListData.EventService.CategoryDto[] GetCategories();
@@ -724,6 +947,30 @@ namespace EventsListData.EventService {
         
         public System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsAsync() {
             return base.Channel.GetEventsAsync();
+        }
+        
+        public EventsListData.EventService.EventDto[] GetEventsBySubcategoryId(int subcategoryId) {
+            return base.Channel.GetEventsBySubcategoryId(subcategoryId);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsBySubcategoryIdAsync(int subcategoryId) {
+            return base.Channel.GetEventsBySubcategoryIdAsync(subcategoryId);
+        }
+        
+        public EventsListData.EventService.EventDto[] GetEventsByCategoryId(int categoryId) {
+            return base.Channel.GetEventsByCategoryId(categoryId);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsByCategoryIdAsync(int categoryId) {
+            return base.Channel.GetEventsByCategoryIdAsync(categoryId);
+        }
+        
+        public EventsListData.EventService.EventDetailDto GetEventInfoDetailById(int eventId) {
+            return base.Channel.GetEventInfoDetailById(eventId);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.EventDetailDto> GetEventInfoDetailByIdAsync(int eventId) {
+            return base.Channel.GetEventInfoDetailByIdAsync(eventId);
         }
         
         public EventsListData.EventService.CategoryDto[] GetCategories() {

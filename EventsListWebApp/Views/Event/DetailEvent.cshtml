@@ -1,40 +1,40 @@
-﻿@model EventsListCommon.Models.Event
+﻿@model EventsListCommon.Models.EventDetail
 
 @if (Model != null)
 {
     //ImageURL
     <div class="event-detail">
         <div>
-            <p>Название: @Model.Name</p>
+            <p>Название: @Model.EventName</p>
         </div>
         <div>
             <p>Дата: @Model.Date.ToShortDateString()</p>
         </div>
         <div>
-            <p>Организатор: @ViewBag.Organizer.Name</p>
-            @if (ViewBag.Organizer.Emails.Count > 0)
+            <p>Организатор: @Model.OrganizerName</p>
+            @if (Model.OrganizerEmails.Count > 0)
             {
                 <p>Emails:</p>
-                foreach (var email in ViewBag.Organizer.Emails)
+                foreach (var email in Model.OrganizerEmails)
                 {
                     <p class="event-detail-email">@email.EmailString</p>
                 }
             }
-            @if (ViewBag.Organizer.Phones.Count > 0)
+            @if (Model.OrganizerPhones.Count > 0)
             {
                 <p>Телефоны:</p>
-                foreach (var phone in ViewBag.Organizer.Phones)
+                foreach (var phone in Model.OrganizerPhones)
                 {
                     <p class="event-detail-phone">@phone.PhoneNumber</p>
                 }
             }
         </div>
         <div>
-            <p>Категория: @ViewBag.Category.Name, @ViewBag.Subcategory.Name</p>
+            <p>Категория: @Model.CategoryName, @Model.SubcategoryName</p>
 
         </div>
         <div>
-            <p>Адрес: @ViewBag.Address.AddressString</p>
+            <p>Адрес: @Model.Address</p>
         </div>
         <div>
             <p>Описание: @Model.Description</p>

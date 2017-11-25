@@ -19,6 +19,50 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EventDto" nillable="true" type="tns:EventDto" />
+  <xs:complexType name="EventDetailDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CategoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EventId" type="xs:int" />
+      <xs:element minOccurs="0" name="EventName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrganizerEmails" nillable="true" type="tns:ArrayOfEmailDto" />
+      <xs:element minOccurs="0" name="OrganizerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrganizerPhones" nillable="true" type="tns:ArrayOfPhoneDto" />
+      <xs:element minOccurs="0" name="SubcategoryName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EventDetailDto" nillable="true" type="tns:EventDetailDto" />
+  <xs:complexType name="ArrayOfEmailDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailDto" nillable="true" type="tns:EmailDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEmailDto" nillable="true" type="tns:ArrayOfEmailDto" />
+  <xs:complexType name="EmailDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmailDto" nillable="true" type="tns:EmailDto" />
+  <xs:complexType name="ArrayOfPhoneDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PhoneDto" nillable="true" type="tns:PhoneDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPhoneDto" nillable="true" type="tns:ArrayOfPhoneDto" />
+  <xs:complexType name="PhoneDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PhoneDto" nillable="true" type="tns:PhoneDto" />
   <xs:complexType name="ArrayOfCategoryDto">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="CategoryDto" nillable="true" type="tns:CategoryDto" />
@@ -62,34 +106,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="OrganizerDto" nillable="true" type="tns:OrganizerDto" />
-  <xs:complexType name="ArrayOfEmailDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailDto" nillable="true" type="tns:EmailDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfEmailDto" nillable="true" type="tns:ArrayOfEmailDto" />
-  <xs:complexType name="EmailDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EmailDto" nillable="true" type="tns:EmailDto" />
-  <xs:complexType name="ArrayOfPhoneDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PhoneDto" nillable="true" type="tns:PhoneDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPhoneDto" nillable="true" type="tns:ArrayOfPhoneDto" />
-  <xs:complexType name="PhoneDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
-      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PhoneDto" nillable="true" type="tns:PhoneDto" />
   <xs:complexType name="AddressDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />

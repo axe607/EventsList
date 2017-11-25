@@ -6,10 +6,10 @@ namespace EventsListWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IProvider _provider;
+        private readonly IBusinessProvider _provider;
         private static readonly ILog Log = LogManager.GetLogger("HomeController");
 
-        public HomeController(IProvider providerInput)
+        public HomeController(IBusinessProvider providerInput)
         {
             _provider = providerInput;
         }

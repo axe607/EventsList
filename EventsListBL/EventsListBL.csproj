@@ -56,8 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Container\BusinessRegistry.cs" />
-    <Compile Include="Providers\Provider.cs" />
-    <Compile Include="Providers\IProvider.cs" />
+    <Compile Include="Providers\BusinessProvider.cs" />
+    <Compile Include="Providers\IBusinessProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

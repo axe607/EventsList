@@ -10,6 +10,12 @@ namespace EventsListService.Contracts.Contracts
         [OperationContract]
         List<EventDto> GetEvents();
         [OperationContract]
+        List<EventDto> GetEventsBySubcategoryId(int subcategoryId);
+        [OperationContract]
+        List<EventDto> GetEventsByCategoryId(int categoryId);
+        [OperationContract]
+        EventDetailDto GetEventInfoDetailById(int eventId);
+        [OperationContract]
         List<CategoryDto> GetCategories();
         [OperationContract]
         List<SubcategoryDto> GetSubcategories();

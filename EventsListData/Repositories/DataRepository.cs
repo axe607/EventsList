@@ -29,6 +29,21 @@ namespace EventsListData.Repositories
             return _client.GetEvents();
         }
 
+        public IReadOnlyList<Event> GetEventsBySubcategoryId(int subcategoryId)
+        {
+            return _client.GetEventsBySubcategoryId(subcategoryId);
+        }
+
+        public IReadOnlyList<Event> GetEventsByCategoryId(int categoryId)
+        {
+            return _client.GetEventsByCategoryId(categoryId);
+        }
+
+        public EventDetail GetEventInfoDetailById(int eventId)
+        {
+           return _client.GetEventInfoDetailById(eventId);
+        }
+
         public Organizer GetOrganizerById(int id)
         {
             return _client.GetOrganizerById(id);
@@ -43,5 +58,6 @@ namespace EventsListData.Repositories
         {
             return _client.GetSubcategories();
         }
+
     }
 }
