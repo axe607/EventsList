@@ -4,12 +4,12 @@
 <div class="row">
     @foreach (var itemEvent in Model)
     {
-        <div onclick="getEventById(@itemEvent.Id)" class="col-sm-6 col-md-4">
+        <div onclick="getEventById(@itemEvent.Id)" class="col-xs-12 col-sm-6 col-md-4">
             <div class="event-block">
                 <div class="event-block-image">
                 @if (!string.IsNullOrEmpty(itemEvent.ImageUrl))
                 {
-                    <img src="@itemEvent.ImageUrl"/>
+                    <img src="../Content/Images/@itemEvent.ImageUrl"/>
                 }
                 else
                 {

@@ -1,7 +1,7 @@
 ﻿.event-block {
   background: linear-gradient(235deg, #ffefd9,#c1ffef);
+  border-radius: 15px;
   border: 2px dashed #c0c0c0;
-  height: 200px;
   overflow: hidden;
   padding: 2px 5px;
   position: relative;
@@ -10,26 +10,42 @@
   cursor: pointer;
 }
 
+.event-block-hidden {
+  opacity: 0;
+  display: none;
+}
+
   .event-block:hover {
+    border-radius: 10px;
     background: linear-gradient(0, #ffefd9,#c1ffef);
+    border-style: solid;
     box-shadow: 0 0 5px #000000;
   }
 
 .event-block-image {
-  height: 150px;
+  opacity: 0.85;
+  padding: 5px;
+  height: 200px;
   float: left;
+  width: 100%;
 }
 
   .event-block-image > img {
-    height: 100%;
+    transition: 0.4s;
+    border-radius: 15px;
+    display: block;
+    margin: auto;
+    max-height: 100%;
     max-width: 100%;
   }
-
+.event-block:hover .event-block-image > img {
+  border-radius: 10px;
+}
 .event-title {
   padding-top: 10px;
   text-align: center;
   height: 100%;
-  width: 50%;
+  width: 100%;
   float: left;
 }
 

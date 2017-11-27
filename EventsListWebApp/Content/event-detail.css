@@ -1,9 +1,28 @@
-﻿    .event-detail {
-      font-family: "Century Gothic";
-      font-size: 16px;
-    }
+﻿.event-detail-block {
+  float: left;
+}
 
-    .event-detail-email,
-    .event-detail-phone {
-      margin-left: 50px;
-    }
+.event-detail-image {
+  float: left;
+  padding-right: 8px; 
+  min-width: 200px;
+  max-width: 50%;
+  max-height: 50%;
+}
+
+  .event-detail-image > img {
+    width: 100%;
+    height: 100%;
+  }
+
+.event-detail-text {
+  width: 50%;
+  float: left;
+  font-family: "Century Gothic";
+  font-size: 16px;
+}
+
+.event-detail-email,
+.event-detail-phone {
+  margin-left: 50px;
+}

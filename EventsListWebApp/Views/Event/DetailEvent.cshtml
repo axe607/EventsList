@@ -1,43 +1,57 @@
 ﻿@model EventsListCommon.Models.EventDetail
-
+<link href="~/Content/event-detail.css" rel="stylesheet" />
 @if (Model != null)
 {
     //ImageURL
-    <div class="event-detail">
-        <div>
-            <p>Название: @Model.EventName</p>
-        </div>
-        <div>
-            <p>Дата: @Model.Date.ToShortDateString()</p>
-        </div>
-        <div>
-            <p>Организатор: @Model.OrganizerName</p>
-            @if (Model.OrganizerEmails.Count > 0)
+    <div class="event-detail-block">
+        <div class="event-detail-image">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
             {
-                <p>Emails:</p>
-                foreach (var email in Model.OrganizerEmails)
-                {
-                    <p class="event-detail-email">@email.EmailString</p>
-                }
+                <img src="../Content/Images/@Model.ImageUrl"/>
             }
-            @if (Model.OrganizerPhones.Count > 0)
+            else
             {
-                <p>Телефоны:</p>
-                foreach (var phone in Model.OrganizerPhones)
-                {
-                    <p class="event-detail-phone">@phone.PhoneNumber</p>
-                }
+                <img src="~/Content/Images/no-image.png"/>
             }
         </div>
-        <div>
-            <p>Категория: @Model.CategoryName, @Model.SubcategoryName</p>
+        <div class="event-detail-text">
+            <div>
+                <p><b>Название:</b> @Model.EventName</p>
+            </div>
+            <div>
+                <p><b>Дата:</b> @Model.Date.ToShortDateString()</p>
+            </div>
+            <div>
+                <p><b>Организатор:</b> @Model.OrganizerName</p>
+                @if (Model.OrganizerEmails.Count > 0)
+                {
+                    <p><b>Emails:</b>
+                    </p>
+                    foreach (var email in Model.OrganizerEmails)
+                    {
+                        <p class="event-detail-email">@email.EmailString</p>
+                    }
+                }
+                @if (Model.OrganizerPhones.Count > 0)
+                {
+                    <p><b>Телефоны:</b>
+                    </p>
+                    foreach (var phone in Model.OrganizerPhones)
+                    {
+                        <p class="event-detail-phone">@phone.PhoneNumber</p>
+                    }
+                }
+            </div>
+            <div>
+                <p><b>Категория:</b> @Model.CategoryName, @Model.SubcategoryName</p>
 
-        </div>
-        <div>
-            <p>Адрес: @Model.Address</p>
-        </div>
-        <div>
-            <p>Описание: @Model.Description</p>
+            </div>
+            <div>
+                <p><b>Адрес:</b> @Model.Address</p>
+            </div>
+            <div>
+                <p><b>Описание:</b> @Model.Description</p>
+            </div>
         </div>
     </div>
 }
