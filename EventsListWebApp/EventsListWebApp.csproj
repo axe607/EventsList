@@ -104,6 +104,8 @@
     <Content Include="Content\categoriesbar.css" />
     <Content Include="Content\event-block.css" />
     <Content Include="Content\event-detail.css" />
+    <Content Include="Content\Images\15056501883900.jpg" />
+    <Content Include="Content\Images\baf3edbdfd6d719febed5.png" />
     <Content Include="Content\Images\no-image.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
