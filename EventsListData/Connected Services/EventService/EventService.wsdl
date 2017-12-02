@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="EventService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="EventService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:57209/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" />
+      <xsd:import schemaLocation="http://localhost:1123/EventsListService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:1123/EventsListService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" />
+      <xsd:import schemaLocation="http://localhost:1123/EventsListService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:1123/EventsListService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IEventService_GetEvents_InputMessage">
@@ -13,11 +14,8 @@
   <wsdl:message name="IEventService_GetEvents_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetEventsResponse" />
   </wsdl:message>
-  <wsdl:message name="IEventService_GetEventsBySubcategoryId_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetEventsBySubcategoryId" />
-  </wsdl:message>
-  <wsdl:message name="IEventService_GetEventsBySubcategoryId_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetEventsBySubcategoryIdResponse" />
+  <wsdl:message name="IEventService_GetEvents_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q1:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetEventsByCategoryId_InputMessage">
     <wsdl:part name="parameters" element="tns:GetEventsByCategoryId" />
@@ -25,11 +23,17 @@
   <wsdl:message name="IEventService_GetEventsByCategoryId_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetEventsByCategoryIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IEventService_GetEventsByCategoryId_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q2:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="IEventService_GetEventInfoDetailById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetEventInfoDetailById" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetEventInfoDetailById_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetEventInfoDetailByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetEventInfoDetailById_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q3:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetCategories_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCategories" />
@@ -37,17 +41,8 @@
   <wsdl:message name="IEventService_GetCategories_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCategoriesResponse" />
   </wsdl:message>
-  <wsdl:message name="IEventService_GetSubcategories_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetSubcategories" />
-  </wsdl:message>
-  <wsdl:message name="IEventService_GetSubcategories_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetSubcategoriesResponse" />
-  </wsdl:message>
-  <wsdl:message name="IEventService_GetSubcategoriesByCategoryId_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetSubcategoriesByCategoryId" />
-  </wsdl:message>
-  <wsdl:message name="IEventService_GetSubcategoriesByCategoryId_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetSubcategoriesByCategoryIdResponse" />
+  <wsdl:message name="IEventService_GetCategories_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q4:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetOrganizers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOrganizers" />
@@ -55,11 +50,17 @@
   <wsdl:message name="IEventService_GetOrganizers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetOrganizersResponse" />
   </wsdl:message>
+  <wsdl:message name="IEventService_GetOrganizers_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q5:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="IEventService_GetOrganizerById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOrganizerById" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetOrganizerById_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetOrganizerByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetOrganizerById_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetEmailsByOrganizerId_InputMessage">
     <wsdl:part name="parameters" element="tns:GetEmailsByOrganizerId" />
@@ -67,11 +68,17 @@
   <wsdl:message name="IEventService_GetEmailsByOrganizerId_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetEmailsByOrganizerIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IEventService_GetEmailsByOrganizerId_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="IEventService_GetPhonesByOrganizerId_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPhonesByOrganizerId" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetPhonesByOrganizerId_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPhonesByOrganizerIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetPhonesByOrganizerId_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IEventService_GetAddressById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAddressById" />
@@ -79,54 +86,54 @@
   <wsdl:message name="IEventService_GetAddressById_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAddressByIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IEventService_GetAddressById_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q9:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="IEventService">
     <wsdl:operation name="GetEvents">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEvents" message="tns:IEventService_GetEvents_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventsResponse" message="tns:IEventService_GetEvents_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetEventsBySubcategoryId">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEventsBySubcategoryId" message="tns:IEventService_GetEventsBySubcategoryId_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventsBySubcategoryIdResponse" message="tns:IEventService_GetEventsBySubcategoryId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetEventsServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetEvents_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetEventsByCategoryId">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEventsByCategoryId" message="tns:IEventService_GetEventsByCategoryId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventsByCategoryIdResponse" message="tns:IEventService_GetEventsByCategoryId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetEventsByCategoryIdServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetEventsByCategoryId_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetEventInfoDetailById">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEventInfoDetailById" message="tns:IEventService_GetEventInfoDetailById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEventInfoDetailByIdResponse" message="tns:IEventService_GetEventInfoDetailById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetEventInfoDetailByIdServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetEventInfoDetailById_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCategories">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetCategories" message="tns:IEventService_GetCategories_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetCategoriesResponse" message="tns:IEventService_GetCategories_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetSubcategories">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetSubcategories" message="tns:IEventService_GetSubcategories_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetSubcategoriesResponse" message="tns:IEventService_GetSubcategories_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetSubcategoriesByCategoryId">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetSubcategoriesByCategoryId" message="tns:IEventService_GetSubcategoriesByCategoryId_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetSubcategoriesByCategoryIdResponse" message="tns:IEventService_GetSubcategoriesByCategoryId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetCategoriesServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetCategories_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetOrganizers">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetOrganizers" message="tns:IEventService_GetOrganizers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetOrganizersResponse" message="tns:IEventService_GetOrganizers_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetOrganizersServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetOrganizers_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetOrganizerById">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetOrganizerById" message="tns:IEventService_GetOrganizerById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetOrganizerByIdResponse" message="tns:IEventService_GetOrganizerById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetOrganizerByIdServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetOrganizerById_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetEmailsByOrganizerId">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEmailsByOrganizerId" message="tns:IEventService_GetEmailsByOrganizerId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetEmailsByOrganizerIdResponse" message="tns:IEventService_GetEmailsByOrganizerId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetEmailsByOrganizerIdServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetEmailsByOrganizerId_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPhonesByOrganizerId">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetPhonesByOrganizerId" message="tns:IEventService_GetPhonesByOrganizerId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetPhonesByOrganizerIdResponse" message="tns:IEventService_GetPhonesByOrganizerId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetPhonesByOrganizerIdServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetPhonesByOrganizerId_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetAddressById">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetAddressById" message="tns:IEventService_GetAddressById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetAddressByIdResponse" message="tns:IEventService_GetAddressById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetAddressByIdServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetAddressById_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEventService" type="tns:IEventService">
@@ -139,15 +146,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetEventsBySubcategoryId">
-      <soap:operation soapAction="http://tempuri.org/IEventService/GetEventsBySubcategoryId" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetEventsByCategoryId">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetEventsByCategoryId" style="document" />
@@ -157,6 +158,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetEventInfoDetailById">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetEventInfoDetailById" style="document" />
@@ -166,6 +170,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetCategories">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetCategories" style="document" />
@@ -175,24 +182,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSubcategories">
-      <soap:operation soapAction="http://tempuri.org/IEventService/GetSubcategories" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSubcategoriesByCategoryId">
-      <soap:operation soapAction="http://tempuri.org/IEventService/GetSubcategoriesByCategoryId" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetOrganizers">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetOrganizers" style="document" />
@@ -202,6 +194,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetOrganizerById">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetOrganizerById" style="document" />
@@ -211,6 +206,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetEmailsByOrganizerId">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetEmailsByOrganizerId" style="document" />
@@ -220,6 +218,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetPhonesByOrganizerId">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetPhonesByOrganizerId" style="document" />
@@ -229,6 +230,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetAddressById">
       <soap:operation soapAction="http://tempuri.org/IEventService/GetAddressById" style="document" />
@@ -238,11 +242,14 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="EventService">
     <wsdl:port name="BasicHttpBinding_IEventService" binding="tns:BasicHttpBinding_IEventService">
-      <soap:address location="http://localhost:57209/Service1.svc" />
+      <soap:address location="http://localhost:1123/EventsListService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

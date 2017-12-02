@@ -1,30 +1,40 @@
 ﻿@model IEnumerable<EventsListCommon.Models.Event>
 <link href="~/Content/event-block.css" rel="stylesheet" />
-
 <div class="row">
-    @foreach (var itemEvent in Model)
+    @if (Model != null)
     {
-        <div onclick="getEventById(@itemEvent.Id)" class="col-xs-12 col-sm-6 col-md-4">
-            <div class="event-block">
-                <div class="event-block-image">
-                @if (!string.IsNullOrEmpty(itemEvent.ImageUrl))
-                {
-                    <img src="../Content/Images/@itemEvent.ImageUrl"/>
-                }
-                else
-                {
-                    <img src="~/Content/Images/no-image.png"/>
-                }
+        if (Model.Any())
+        {
+            foreach (var itemEvent in Model)
+            {
+                <div onclick="getEventById(@itemEvent.Id)" class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="event-block">
+                        <div class="event-block-image">
+                            @if (!string.IsNullOrEmpty(itemEvent.ImageUrl))
+                            {
+                                <img src="../Content/Images/@itemEvent.ImageUrl" />
+                            }
+                            else
+                            {
+                                <img src="~/Content/Images/no-image.png" />
+                            }
+                        </div>
+                        <div class="event-title">
+                            <p>@itemEvent.Name</p>
+                            <p>@itemEvent.Date.ToShortDateString()</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="event-title">
-                    <p>@itemEvent.Name</p>
-                    <p>@itemEvent.Date.ToShortDateString()</p>
-                </div>
-            </div>
-        </div>
+            }
+
+        }
+        else
+        {
+            <p> Событий нет </p>
+        }
+    }
+    else
+    {
+        <b>@ViewBag.Error</b>
     }
 </div>
-@if (!Model.Any())
-{
-    <p>Событий нет</p>
-}

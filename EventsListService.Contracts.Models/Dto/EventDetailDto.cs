@@ -22,8 +22,6 @@ namespace EventsListService.Contracts.Models.Dto
         [DataMember]
         public string CategoryName { get; set; }
         [DataMember]
-        public string SubcategoryName { get; set; }
-        [DataMember]
         public string OrganizerName { get; set; }
         public int OrganizerId { get; set; }
         [DataMember]

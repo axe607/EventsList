@@ -1,19 +1,37 @@
 ﻿using EventsListService.Contracts.Models.Dto;
+using EventsListService.Contracts.Models.DtoExceptions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.ServiceModel;
 
 namespace EventsListService.Contracts.Contracts
 {
     public class EventService : IEventService
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DefDbConnect"].ConnectionString;
+        private readonly string _connectionString;
+
+        public EventService()
+        {
+            try
+            {
+                _connectionString = ConfigurationManager.ConnectionStrings["DefDbConnect"].ConnectionString;
+            }
+            catch (NullReferenceException e)
+            {
+               //log
+            }
+        }
 
         private List<T> GetDataFromDb<T>(string procedureName, params SqlParameter[] sqlParams)
         {
+            if (string.IsNullOrEmpty(procedureName))
+            {
+                throw new FaultException<ServiceFault>(new ServiceFault("Empty procedure name"),new FaultReason("Empty procedure name"));
+            }
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = new SqlCommand())
@@ -32,7 +50,16 @@ namespace EventsListService.Contracts.Contracts
 
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     DataSet dataSet = new DataSet();
-                    adapter.Fill(dataSet);
+
+                    try
+                    {
+                        adapter.Fill(dataSet);
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message),new FaultReason(ex.Message));
+                    }
+
 
                     if (typeof(List<T>) == typeof(List<EventDto>))
                     {
@@ -47,7 +74,7 @@ namespace EventsListService.Contracts.Contracts
                                     Name = dataRow[1].ToString(),
                                     Date = (DateTime)dataRow[2],
                                     OrganizerId = (int)dataRow[3],
-                                    SubcategoryId = (int)dataRow[4],
+                                    CategoryId = (int)dataRow[4],
                                     ImageUrl = dataRow[5]?.ToString(),
                                     Description = dataRow[6].ToString(),
                                     AddressId = (int)dataRow[7]
@@ -72,9 +99,8 @@ namespace EventsListService.Contracts.Contracts
                                     Description = dataRow[4].ToString(),
                                     Address = dataRow[5].ToString(),
                                     CategoryName = dataRow[6].ToString(),
-                                    SubcategoryName = dataRow[7].ToString(),
-                                    OrganizerName = dataRow[8].ToString(),
-                                    OrganizerId = (int)dataRow[9]
+                                    OrganizerName = dataRow[7].ToString(),
+                                    OrganizerId = (int)dataRow[8]
                                 });
                             }
                         }
@@ -90,25 +116,8 @@ namespace EventsListService.Contracts.Contracts
                                 tempList.Add(new CategoryDto
                                 {
                                     Id = (int)dataRow[0],
-                                    Name = dataRow[1].ToString(),
-                                    Subcategories = GetSubcategoriesByCategoryId((int)dataRow[0])
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
-                    }
-                    if (typeof(List<T>) == typeof(List<SubcategoryDto>))
-                    {
-                        List<SubcategoryDto> tempList = new List<SubcategoryDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new SubcategoryDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    CategoryId = (int)dataRow[1],
-                                    Name = dataRow[2].ToString()
+                                    Pid = (dataRow[1]) as int?,
+                                    Name = dataRow[2].ToString(),
                                 });
                             }
                         }
@@ -193,17 +202,6 @@ namespace EventsListService.Contracts.Contracts
             return GetDataFromDb<EventDto>("SelectEvents");
         }
 
-        public List<EventDto> GetEventsBySubcategoryId(int subcategoryId)
-        {
-            SqlParameter param = new SqlParameter
-            {
-                DbType = DbType.Int32,
-                ParameterName = "@subcategoryId",
-                Value = subcategoryId
-            };
-            return GetDataFromDb<EventDto>("SelectEventsBySubcategoryId", param);
-
-        }
 
         public List<EventDto> GetEventsByCategoryId(int categoryId)
         {
@@ -231,22 +229,6 @@ namespace EventsListService.Contracts.Contracts
         public List<CategoryDto> GetCategories()
         {
             return GetDataFromDb<CategoryDto>("SelectCategories", null);
-        }
-
-        public List<SubcategoryDto> GetSubcategories()
-        {
-            return GetDataFromDb<SubcategoryDto>("SelectSubcategories", null);
-        }
-
-        public List<SubcategoryDto> GetSubcategoriesByCategoryId(int categoryId)
-        {
-            SqlParameter param = new SqlParameter
-            {
-                DbType = DbType.Int32,
-                ParameterName = "@categoryId",
-                Value = categoryId
-            };
-            return GetDataFromDb<SubcategoryDto>("SelectSubcategoriesByCategoryId", param);
         }
 
         public List<OrganizerDto> GetOrganizers()

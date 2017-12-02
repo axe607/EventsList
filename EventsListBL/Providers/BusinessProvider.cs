@@ -13,11 +13,6 @@ namespace EventsListBL.Providers
             _dataProvider = provider;
         }
 
-        public IReadOnlyList<Subcategory> GetSubcategories()
-        {
-            return _dataProvider.GetSubcategories();
-        }
-
         public IReadOnlyList<Event> GetEvents()
         {
             return _dataProvider.GetEvents();
@@ -26,11 +21,6 @@ namespace EventsListBL.Providers
         public IReadOnlyList<Category> GetCategories()
         {
             return _dataProvider.GetCategories();
-        }
-
-        public IReadOnlyList<Event> GetEventsBySubcategoryId(int subcategoryId)
-        {
-            return _dataProvider.GetEventsBySubcategoryId(subcategoryId);
         }
 
         public IReadOnlyList<Event> GetEventsByCategoryId(int categoryId)

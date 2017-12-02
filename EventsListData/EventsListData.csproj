@@ -99,16 +99,16 @@
     <None Include="Connected Services\EventService\EventsListData.EventService.PhoneDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\EventService\EventsListData.EventService.SubcategoryDto.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\EventService\Service1.xsd">
+    <None Include="Connected Services\EventService\EventsListService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\EventService\Service11.xsd">
+    <None Include="Connected Services\EventService\EventsListService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\EventService\Service12.xsd">
+    <None Include="Connected Services\EventService\EventsListService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventService\EventsListService3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -123,7 +123,7 @@
     <WCFMetadataStorage Include="Connected Services\EventService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\EventService\Service1.disco" />
+    <None Include="Connected Services\EventService\EventsListService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\EventService\configuration91.svcinfo" />

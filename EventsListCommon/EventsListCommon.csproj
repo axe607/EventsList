@@ -47,7 +47,6 @@
     <Compile Include="Models\EventDetail.cs" />
     <Compile Include="Models\Organizer.cs" />
     <Compile Include="Models\Phone.cs" />
-    <Compile Include="Models\Subcategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

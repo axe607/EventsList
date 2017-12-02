@@ -12,7 +12,6 @@ namespace EventsListCommon.Models
         public string Description { get; set; }
         public string Address { get; set; }
         public string CategoryName { get; set; }
-        public string SubcategoryName { get; set; }
         public string OrganizerName { get; set; }
         public List<Phone> OrganizerPhones { get; set; }
         public List<Email> OrganizerEmails { get; set; }

@@ -11,7 +11,6 @@
 }
 
 .category,
-.subcategory,
 .category-title {
   font-family: "Arial";
   font-size: 18px;
@@ -22,20 +21,8 @@
   transition: box-shadow 0.4s ease-in-out;
 }
 
-
   .category:hover {
     box-shadow: 0 0 1px 2px rgba(7, 190, 129,0.5);
-  }
-
-.subcategory {
-  font-size: 15px;
-  color: rgb(7, 173, 190);
-  padding: 4px 8px 4px 25px;
-}
-
-
-  .subcategory:hover {
-    box-shadow: 0 0 1px 2px rgba(7, 173, 190,0.5);
   }
 
 .category-title {
@@ -47,4 +34,10 @@
 .category-div {
   width: 100%;
   text-align: center;
+}
+
+.category-children > p {
+  padding-left: 40px;
+  font-size: 15px;
+  color: rgb(7, 173, 190);
 }

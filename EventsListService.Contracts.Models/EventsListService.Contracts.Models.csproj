@@ -48,8 +48,8 @@
     <Compile Include="Dto\EventDto.cs" />
     <Compile Include="Dto\OrganizerDto.cs" />
     <Compile Include="Dto\PhoneDto.cs" />
-    <Compile Include="Dto\SubcategoryDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DtoExceptions\ServiceFault.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

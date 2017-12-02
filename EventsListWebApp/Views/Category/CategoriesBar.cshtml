@@ -1,15 +1,26 @@
 ﻿@model IEnumerable<EventsListCommon.Models.Category>
 
+<link href="~/Content/categoriesbar.css" rel="stylesheet" />
 <div class="category-div">
     <p class="category-title" onclick="getAllEvents()"><b>Все категории</b></p>
-    @foreach (var category in Model)
+    @DisplayTree(Model.Where(x => x.Pid == null).OrderBy(x => x.Name))
+    @helper DisplayTree(IEnumerable<EventsListCommon.Models.Category> categories)
     {
-        <p class="category" id="@category.Id" onclick="getEventsByCategoryId(@category.Id)" >@category.Name</p>
-        <div class="subcategories">
-            @foreach (var subcategory in category.Subcategories)
-            {
-                <p id="@subcategory.Id" class="subcategory" onclick="getEventsBySubcategoryId(@subcategory.Id,false)">@subcategory.Name</p>
-            }
-        </div>
+
+foreach (var category in categories)
+{
+
+        <p class="category" id="@category.Id" onclick="getEventsByCategoryId(@category.Id)">@category.Name</p>
+
+    var children = Model.Where(x => x.Pid == category.Id).ToList();
+    if (children.Any())
+    {
+            <div class="category-children">
+                @DisplayTree(children)
+            </div>
     }
+
+
+}
+}
 </div>

@@ -26,6 +26,9 @@ namespace EventsListData.EventService {
         private int AddressIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CategoryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -42,9 +45,6 @@ namespace EventsListData.EventService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int OrganizerIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int SubcategoryIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -65,6 +65,19 @@ namespace EventsListData.EventService {
                 if ((this.AddressIdField.Equals(value) != true)) {
                     this.AddressIdField = value;
                     this.RaisePropertyChanged("AddressId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CategoryId {
+            get {
+                return this.CategoryIdField;
+            }
+            set {
+                if ((this.CategoryIdField.Equals(value) != true)) {
+                    this.CategoryIdField = value;
+                    this.RaisePropertyChanged("CategoryId");
                 }
             }
         }
@@ -147,15 +160,48 @@ namespace EventsListData.EventService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int SubcategoryId {
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+        "eptions")]
+    [System.SerializableAttribute()]
+    public partial class ServiceFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorMessageField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.SubcategoryIdField;
+                return this.extensionDataField;
             }
             set {
-                if ((this.SubcategoryIdField.Equals(value) != true)) {
-                    this.SubcategoryIdField = value;
-                    this.RaisePropertyChanged("SubcategoryId");
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorMessage {
+            get {
+                return this.ErrorMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
+                    this.ErrorMessageField = value;
+                    this.RaisePropertyChanged("ErrorMessage");
                 }
             }
         }
@@ -208,9 +254,6 @@ namespace EventsListData.EventService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private EventsListData.EventService.PhoneDto[] OrganizerPhonesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SubcategoryNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -348,19 +391,6 @@ namespace EventsListData.EventService {
                 if ((object.ReferenceEquals(this.OrganizerPhonesField, value) != true)) {
                     this.OrganizerPhonesField = value;
                     this.RaisePropertyChanged("OrganizerPhones");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SubcategoryName {
-            get {
-                return this.SubcategoryNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SubcategoryNameField, value) != true)) {
-                    this.SubcategoryNameField = value;
-                    this.RaisePropertyChanged("SubcategoryName");
                 }
             }
         }
@@ -545,7 +575,7 @@ namespace EventsListData.EventService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private EventsListData.EventService.SubcategoryDto[] SubcategoriesField;
+        private System.Nullable<int> PidField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -584,91 +614,14 @@ namespace EventsListData.EventService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public EventsListData.EventService.SubcategoryDto[] Subcategories {
+        public System.Nullable<int> Pid {
             get {
-                return this.SubcategoriesField;
+                return this.PidField;
             }
             set {
-                if ((object.ReferenceEquals(this.SubcategoriesField, value) != true)) {
-                    this.SubcategoriesField = value;
-                    this.RaisePropertyChanged("Subcategories");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SubcategoryDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
-    [System.SerializableAttribute()]
-    public partial class SubcategoryDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int CategoryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int CategoryId {
-            get {
-                return this.CategoryIdField;
-            }
-            set {
-                if ((this.CategoryIdField.Equals(value) != true)) {
-                    this.CategoryIdField = value;
-                    this.RaisePropertyChanged("CategoryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
+                if ((this.PidField.Equals(value) != true)) {
+                    this.PidField = value;
+                    this.RaisePropertyChanged("Pid");
                 }
             }
         }
@@ -842,72 +795,72 @@ namespace EventsListData.EventService {
     public interface IEventService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEvents", ReplyAction="http://tempuri.org/IEventService/GetEventsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetEventsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.EventDto[] GetEvents();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEvents", ReplyAction="http://tempuri.org/IEventService/GetEventsResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsBySubcategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsBySubcategoryIdResponse")]
-        EventsListData.EventService.EventDto[] GetEventsBySubcategoryId(int subcategoryId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsBySubcategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsBySubcategoryIdResponse")]
-        System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsBySubcategoryIdAsync(int subcategoryId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsByCategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsByCategoryIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetEventsByCategoryIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.EventDto[] GetEventsByCategoryId(int categoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsByCategoryId", ReplyAction="http://tempuri.org/IEventService/GetEventsByCategoryIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsByCategoryIdAsync(int categoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventInfoDetailById", ReplyAction="http://tempuri.org/IEventService/GetEventInfoDetailByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetEventInfoDetailByIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.EventDetailDto GetEventInfoDetailById(int eventId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventInfoDetailById", ReplyAction="http://tempuri.org/IEventService/GetEventInfoDetailByIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.EventDetailDto> GetEventInfoDetailByIdAsync(int eventId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetCategories", ReplyAction="http://tempuri.org/IEventService/GetCategoriesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetCategoriesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.CategoryDto[] GetCategories();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetCategories", ReplyAction="http://tempuri.org/IEventService/GetCategoriesResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.CategoryDto[]> GetCategoriesAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetSubcategories", ReplyAction="http://tempuri.org/IEventService/GetSubcategoriesResponse")]
-        EventsListData.EventService.SubcategoryDto[] GetSubcategories();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetSubcategories", ReplyAction="http://tempuri.org/IEventService/GetSubcategoriesResponse")]
-        System.Threading.Tasks.Task<EventsListData.EventService.SubcategoryDto[]> GetSubcategoriesAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetSubcategoriesByCategoryId", ReplyAction="http://tempuri.org/IEventService/GetSubcategoriesByCategoryIdResponse")]
-        EventsListData.EventService.SubcategoryDto[] GetSubcategoriesByCategoryId(int categoryId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetSubcategoriesByCategoryId", ReplyAction="http://tempuri.org/IEventService/GetSubcategoriesByCategoryIdResponse")]
-        System.Threading.Tasks.Task<EventsListData.EventService.SubcategoryDto[]> GetSubcategoriesByCategoryIdAsync(int categoryId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetOrganizers", ReplyAction="http://tempuri.org/IEventService/GetOrganizersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetOrganizersServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.OrganizerDto[] GetOrganizers();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetOrganizers", ReplyAction="http://tempuri.org/IEventService/GetOrganizersResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.OrganizerDto[]> GetOrganizersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetOrganizerById", ReplyAction="http://tempuri.org/IEventService/GetOrganizerByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetOrganizerByIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.OrganizerDto GetOrganizerById(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetOrganizerById", ReplyAction="http://tempuri.org/IEventService/GetOrganizerByIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.OrganizerDto> GetOrganizerByIdAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEmailsByOrganizerId", ReplyAction="http://tempuri.org/IEventService/GetEmailsByOrganizerIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetEmailsByOrganizerIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.EmailDto[] GetEmailsByOrganizerId(int organizerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEmailsByOrganizerId", ReplyAction="http://tempuri.org/IEventService/GetEmailsByOrganizerIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.EmailDto[]> GetEmailsByOrganizerIdAsync(int organizerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetPhonesByOrganizerId", ReplyAction="http://tempuri.org/IEventService/GetPhonesByOrganizerIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetPhonesByOrganizerIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.PhoneDto[] GetPhonesByOrganizerId(int organizerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetPhonesByOrganizerId", ReplyAction="http://tempuri.org/IEventService/GetPhonesByOrganizerIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.PhoneDto[]> GetPhonesByOrganizerIdAsync(int organizerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetAddressById", ReplyAction="http://tempuri.org/IEventService/GetAddressByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetAddressByIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
         EventsListData.EventService.AddressDto GetAddressById(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetAddressById", ReplyAction="http://tempuri.org/IEventService/GetAddressByIdResponse")]
@@ -949,14 +902,6 @@ namespace EventsListData.EventService {
             return base.Channel.GetEventsAsync();
         }
         
-        public EventsListData.EventService.EventDto[] GetEventsBySubcategoryId(int subcategoryId) {
-            return base.Channel.GetEventsBySubcategoryId(subcategoryId);
-        }
-        
-        public System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsBySubcategoryIdAsync(int subcategoryId) {
-            return base.Channel.GetEventsBySubcategoryIdAsync(subcategoryId);
-        }
-        
         public EventsListData.EventService.EventDto[] GetEventsByCategoryId(int categoryId) {
             return base.Channel.GetEventsByCategoryId(categoryId);
         }
@@ -979,22 +924,6 @@ namespace EventsListData.EventService {
         
         public System.Threading.Tasks.Task<EventsListData.EventService.CategoryDto[]> GetCategoriesAsync() {
             return base.Channel.GetCategoriesAsync();
-        }
-        
-        public EventsListData.EventService.SubcategoryDto[] GetSubcategories() {
-            return base.Channel.GetSubcategories();
-        }
-        
-        public System.Threading.Tasks.Task<EventsListData.EventService.SubcategoryDto[]> GetSubcategoriesAsync() {
-            return base.Channel.GetSubcategoriesAsync();
-        }
-        
-        public EventsListData.EventService.SubcategoryDto[] GetSubcategoriesByCategoryId(int categoryId) {
-            return base.Channel.GetSubcategoriesByCategoryId(categoryId);
-        }
-        
-        public System.Threading.Tasks.Task<EventsListData.EventService.SubcategoryDto[]> GetSubcategoriesByCategoryIdAsync(int categoryId) {
-            return base.Channel.GetSubcategoriesByCategoryIdAsync(categoryId);
         }
         
         public EventsListData.EventService.OrganizerDto[] GetOrganizers() {

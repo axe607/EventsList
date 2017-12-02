@@ -1,4 +1,5 @@
-﻿using EventsListBL.Providers;
+﻿using System;
+using EventsListBL.Providers;
 using log4net;
 using System.Web.Mvc;
 
@@ -16,7 +17,16 @@ namespace EventsListWebApp.Controllers
 
         public PartialViewResult CategoriesBar()
         {
-            return PartialView(_provider.GetCategories());
+            try
+            {
+                return PartialView(_provider.GetCategories());
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[CategoriesBar][_provider.GetCategories()]; " + ex.Message);
+                ViewBag.Error = ex.Message;
+                return PartialView();
+            }
         }
     }
 }

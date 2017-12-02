@@ -1,6 +1,5 @@
 ﻿using EventsListCommon.Models;
 using EventsListData.Clients;
-using System;
 using System.Collections.Generic;
 
 namespace EventsListData.Repositories
@@ -29,11 +28,6 @@ namespace EventsListData.Repositories
             return _client.GetEvents();
         }
 
-        public IReadOnlyList<Event> GetEventsBySubcategoryId(int subcategoryId)
-        {
-            return _client.GetEventsBySubcategoryId(subcategoryId);
-        }
-
         public IReadOnlyList<Event> GetEventsByCategoryId(int categoryId)
         {
             return _client.GetEventsByCategoryId(categoryId);
@@ -53,11 +47,7 @@ namespace EventsListData.Repositories
         {
             return _client.GetOrganizers();
         }
-
-        public IReadOnlyList<Subcategory> GetSubcategories()
-        {
-            return _client.GetSubcategories();
-        }
+        
 
     }
 }

@@ -9,13 +9,13 @@
   <xs:complexType name="EventDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="AddressId" type="xs:int" />
+      <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
       <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="ImageUrl" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
-      <xs:element minOccurs="0" name="SubcategoryId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EventDto" nillable="true" type="tns:EventDto" />
@@ -31,7 +31,6 @@
       <xs:element minOccurs="0" name="OrganizerEmails" nillable="true" type="tns:ArrayOfEmailDto" />
       <xs:element minOccurs="0" name="OrganizerName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OrganizerPhones" nillable="true" type="tns:ArrayOfPhoneDto" />
-      <xs:element minOccurs="0" name="SubcategoryName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EventDetailDto" nillable="true" type="tns:EventDetailDto" />
@@ -73,24 +72,10 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Subcategories" nillable="true" type="tns:ArrayOfSubcategoryDto" />
+      <xs:element minOccurs="0" name="Pid" nillable="true" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CategoryDto" nillable="true" type="tns:CategoryDto" />
-  <xs:complexType name="ArrayOfSubcategoryDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SubcategoryDto" nillable="true" type="tns:SubcategoryDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSubcategoryDto" nillable="true" type="tns:ArrayOfSubcategoryDto" />
-  <xs:complexType name="SubcategoryDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SubcategoryDto" nillable="true" type="tns:SubcategoryDto" />
   <xs:complexType name="ArrayOfOrganizerDto">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="OrganizerDto" nillable="true" type="tns:OrganizerDto" />

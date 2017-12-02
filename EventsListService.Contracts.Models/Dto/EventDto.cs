@@ -15,7 +15,7 @@ namespace EventsListService.Contracts.Models.Dto
         [DataMember]
         public int OrganizerId { get; set; }
         [DataMember]
-        public int SubcategoryId { get; set; }
+        public int CategoryId { get; set; }
         [DataMember]
         public string ImageUrl { get; set; }
         [DataMember]

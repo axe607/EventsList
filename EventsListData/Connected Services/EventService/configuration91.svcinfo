@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="YeO3mp/v/HyZQez2mPflCSPFpPM=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="YhnoIMbJvT107FPaNcWo+OljcJU=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IEventService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IEventService" contract="EventService.IEventService" bindingType="basicHttpBinding" address="http://localhost:57209/Service1.svc" bindingConfiguration="BasicHttpBinding_IEventService">
+    <endpoint name="BasicHttpBinding_IEventService" contract="EventService.IEventService" bindingType="basicHttpBinding" address="http://localhost:1123/EventsListService.svc" bindingConfiguration="BasicHttpBinding_IEventService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:57209/Service1.svc</serializedValue>
+          <serializedValue>http://localhost:1123/EventsListService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
