@@ -1,5 +1,6 @@
 ﻿using EventsListService.Contracts.Models.Dto;
 using EventsListService.Contracts.Models.DtoExceptions;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +15,8 @@ namespace EventsListService.Contracts.Contracts
     {
         private readonly string _connectionString;
 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(EventService));
+
         public EventService()
         {
             try
@@ -22,7 +25,7 @@ namespace EventsListService.Contracts.Contracts
             }
             catch (NullReferenceException e)
             {
-               //log
+                Log.Error(e.Message);
             }
         }
 
@@ -30,7 +33,7 @@ namespace EventsListService.Contracts.Contracts
         {
             if (string.IsNullOrEmpty(procedureName))
             {
-                throw new FaultException<ServiceFault>(new ServiceFault("Empty procedure name"),new FaultReason("Empty procedure name"));
+                throw new FaultException<ServiceFault>(new ServiceFault("Empty procedure name"), new FaultReason("Empty procedure name"));
             }
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,7 +60,7 @@ namespace EventsListService.Contracts.Contracts
                     }
                     catch (SqlException ex)
                     {
-                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message),new FaultReason(ex.Message));
+                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message), new FaultReason(ex.Message));
                     }
 
 
@@ -191,6 +194,37 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
+                    if (typeof(List<T>) == typeof(List<UserDto>))
+                    {
+                        List<UserDto> tempList = new List<UserDto>();
+                        foreach (DataTable dataSetTable in dataSet.Tables)
+                        {
+                            foreach (DataRow dataRow in dataSetTable.Rows)
+                            {
+                                tempList.Add(new UserDto
+                                {
+                                    UserName = dataRow[1].ToString(),
+                                    UserRoles = GetRolesByUserId((int)dataRow[0])
+                                });
+                            }
+                        }
+                        return tempList.Cast<T>().ToList();
+                    }
+                    if (typeof(List<T>) == typeof(List<RoleDto>))
+                    {
+                        List<RoleDto> tempList = new List<RoleDto>();
+                        foreach (DataTable dataSetTable in dataSet.Tables)
+                        {
+                            foreach (DataRow dataRow in dataSetTable.Rows)
+                            {
+                                tempList.Add(new RoleDto
+                                {
+                                    RoleName = dataRow[0].ToString()
+                                });
+                            }
+                        }
+                        return tempList.Cast<T>().ToList();
+                    }
                 }
             }
 
@@ -275,6 +309,80 @@ namespace EventsListService.Contracts.Contracts
             return GetDataFromDb<AddressDto>("SelectAddressById", param).SingleOrDefault();
         }
 
+        public UserDto GetUserByName(string name)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.String,
+                ParameterName = "@name",
+                Value = name
+            };
+            return GetDataFromDb<UserDto>("SelectUserByName", param).SingleOrDefault();
+        }
 
+        public List<RoleDto> GetRolesByUserId(int id)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@userId",
+                Value = id
+            };
+            return GetDataFromDb<RoleDto>("SelectRolesByUserId", param);
+        }
+
+        public bool IsValidUser(string username, string password)
+        {
+            SqlParameter[] param = {
+                new SqlParameter
+                {
+                   DbType = DbType.String,
+                   ParameterName = "@name",
+                   Value = username
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.String,
+                    ParameterName = "@password",
+                    Value = password
+                }
+            };
+
+            bool result = false;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "IsValidUser";
+
+                    command.Parameters.AddRange(param);
+
+                    SqlParameter resultParameter = new SqlParameter();
+                    resultParameter.Direction = ParameterDirection.ReturnValue;
+                    command.Parameters.Add(resultParameter);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+
+                    try
+                    {
+                        adapter.Fill(dataSet);
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message), new FaultReason(ex.Message));
+                    }
+
+                    if ((int)resultParameter.Value == 1)
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

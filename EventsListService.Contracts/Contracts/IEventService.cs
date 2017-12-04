@@ -43,5 +43,14 @@ namespace EventsListService.Contracts.Contracts
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         AddressDto GetAddressById(int id);
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        UserDto GetUserByName(string name);
+
+        List<RoleDto> GetRolesByUserId(int id);
+
+        [OperationContract]
+        bool IsValidUser(string username, string password);
     }
 }

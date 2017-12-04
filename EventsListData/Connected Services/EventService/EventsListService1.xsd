@@ -98,4 +98,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AddressDto" nillable="true" type="tns:AddressDto" />
+  <xs:complexType name="UserDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserRoles" nillable="true" type="tns:ArrayOfRoleDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserDto" nillable="true" type="tns:UserDto" />
+  <xs:complexType name="ArrayOfRoleDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoleDto" nillable="true" type="tns:RoleDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRoleDto" nillable="true" type="tns:ArrayOfRoleDto" />
+  <xs:complexType name="RoleDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RoleName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RoleDto" nillable="true" type="tns:RoleDto" />
 </xs:schema>

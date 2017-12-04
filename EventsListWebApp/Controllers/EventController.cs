@@ -2,13 +2,14 @@
 using log4net;
 using System;
 using System.Web.Mvc;
+using EventsListWebApp.Models;
 
 namespace EventsListWebApp.Controllers
 {
     public class EventController : Controller
     {
         private readonly IBusinessProvider _provider;
-        private static readonly ILog Log = LogManager.GetLogger("HomeController");
+        private static readonly ILog Log = LogManager.GetLogger(typeof(EventController));
         private const string EVENTS_VIEW = "Events";
 
         public EventController(IBusinessProvider providerInput)
@@ -25,7 +26,7 @@ namespace EventsListWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("[EventsByCategory][_provider.GetEventsByCategoryId(categoryId)][categoryId = "+ categoryId + " ]; "+ex.Message);
+                Log.Error("[categoryId = "+ categoryId + " ]; "+ex.Message);
                 ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
             }
@@ -45,6 +46,7 @@ namespace EventsListWebApp.Controllers
             }
         }
 
+        [Admin]
         public PartialViewResult DetailEvent(int id)
         {
             try

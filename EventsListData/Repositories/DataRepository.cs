@@ -18,6 +18,16 @@ namespace EventsListData.Repositories
             return _client.GetAddressById(id);
         }
 
+        public User GetUserByName(string name)
+        {
+            return _client.GetUserByName(name);
+        }
+
+        public bool IsValidUser(string username, string password)
+        {
+            return _client.IsValidUser(username, password);
+        }
+
         public IReadOnlyList<Category> GetCategories()
         {
             return _client.GetCategories();

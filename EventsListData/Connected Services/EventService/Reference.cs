@@ -790,6 +790,112 @@ namespace EventsListData.EventService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
+    [System.SerializableAttribute()]
+    public partial class UserDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private EventsListData.EventService.RoleDto[] UserRolesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public EventsListData.EventService.RoleDto[] UserRoles {
+            get {
+                return this.UserRolesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserRolesField, value) != true)) {
+                    this.UserRolesField = value;
+                    this.RaisePropertyChanged("UserRoles");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoleDto", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto")]
+    [System.SerializableAttribute()]
+    public partial class RoleDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoleNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RoleName {
+            get {
+                return this.RoleNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoleNameField, value) != true)) {
+                    this.RoleNameField = value;
+                    this.RaisePropertyChanged("RoleName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EventService.IEventService")]
     public interface IEventService {
@@ -865,6 +971,20 @@ namespace EventsListData.EventService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetAddressById", ReplyAction="http://tempuri.org/IEventService/GetAddressByIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.AddressDto> GetAddressByIdAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetUserByName", ReplyAction="http://tempuri.org/IEventService/GetUserByNameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetUserByNameServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.UserDto GetUserByName(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetUserByName", ReplyAction="http://tempuri.org/IEventService/GetUserByNameResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.UserDto> GetUserByNameAsync(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/IsValidUser", ReplyAction="http://tempuri.org/IEventService/IsValidUserResponse")]
+        bool IsValidUser(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/IsValidUser", ReplyAction="http://tempuri.org/IEventService/IsValidUserResponse")]
+        System.Threading.Tasks.Task<bool> IsValidUserAsync(string username, string password);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -964,6 +1084,22 @@ namespace EventsListData.EventService {
         
         public System.Threading.Tasks.Task<EventsListData.EventService.AddressDto> GetAddressByIdAsync(int id) {
             return base.Channel.GetAddressByIdAsync(id);
+        }
+        
+        public EventsListData.EventService.UserDto GetUserByName(string name) {
+            return base.Channel.GetUserByName(name);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.UserDto> GetUserByNameAsync(string name) {
+            return base.Channel.GetUserByNameAsync(name);
+        }
+        
+        public bool IsValidUser(string username, string password) {
+            return base.Channel.IsValidUser(username, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsValidUserAsync(string username, string password) {
+            return base.Channel.IsValidUserAsync(username, password);
         }
     }
 }

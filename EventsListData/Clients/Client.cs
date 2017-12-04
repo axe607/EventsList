@@ -87,6 +87,24 @@ namespace EventsListData.Clients
                         }).ToList();
                     result = tempList.Cast<T>().ToList();
                 }
+                else if (typeof(TK) == typeof(EventService.UserDto))
+                {
+                    List<User> tempList = dataFromService.Cast<EventService.UserDto>()
+                        .Select(x => new User
+                        {
+                            UserName = x.UserName,
+                            Roles = x.UserRoles.Select(z=>new Role
+                            {
+                                RoleName = z.RoleName
+                            }).ToList()
+                        }).ToList();
+                    result = tempList.Cast<T>().ToList();
+                }
+                else if(typeof(TK) == typeof(bool))
+                {
+                    List<bool> tempList = dataFromService.Cast<bool>().ToList();
+                    result = tempList.Cast<T>().ToList();
+                }
             }
             catch (FaultException<EventService.ServiceFault> ex)
             {
@@ -256,7 +274,48 @@ namespace EventsListData.Clients
             return result;
         }
 
+        public User GetUserByName(string name)
+        {
+            var result = new User();
+            var client = new EventService.EventServiceClient();
+            try
+            {
+                client.Open();
+                result = ConvertDataFromService<User, EventService.UserDto>(client.GetUserByName(name)).First();
+                client.Close();
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                client.Abort();
+            }
 
-
+            return result;
+        }
+        
+        public bool IsValidUser(string username, string password)
+        {
+            var result = false;
+            var client = new EventService.EventServiceClient();
+            try
+            {
+                client.Open();
+                result = ConvertDataFromService<bool, bool>(client.IsValidUser(username,password)).First();
+                client.Close();
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                client.Abort();
+            }
+            
+            return result;
+        }
     }
 }

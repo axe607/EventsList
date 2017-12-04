@@ -1,0 +1,26 @@
+﻿@model EventsListWebApp.Models.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    @if (Model != null && !string.IsNullOrEmpty(Model.Message))
+    {
+        <div>@Model.Message</div>
+    }
+    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+    {
+        <input type="text" name="userName" /><br />
+        <input type="text" name="password" /><br />
+        <input type="submit" value="Login" />
+    }
+</body>
+</html>

@@ -48,6 +48,8 @@
     <Compile Include="Dto\EventDto.cs" />
     <Compile Include="Dto\OrganizerDto.cs" />
     <Compile Include="Dto\PhoneDto.cs" />
+    <Compile Include="Dto\RoleDto.cs" />
+    <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DtoExceptions\ServiceFault.cs" />
   </ItemGroup>

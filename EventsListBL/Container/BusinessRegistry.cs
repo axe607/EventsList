@@ -1,4 +1,5 @@
 ﻿using EventsListBL.Providers;
+using EventsListBL.Services;
 using StructureMap;
 
 
@@ -9,6 +10,8 @@ namespace EventsListBL.Container
         public BusinessRegistry()
         {
             For<IBusinessProvider>().Use<BusinessProvider>();
+            For<IUserProvider>().Use<UserProvider>();
+            For<ILoginService>().Use<LoginService>();
         }
     }
 }

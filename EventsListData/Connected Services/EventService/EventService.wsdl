@@ -89,6 +89,21 @@
   <wsdl:message name="IEventService_GetAddressById_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="IEventService_GetUserByName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByName" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetUserByName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_GetUserByName_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q10:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_IsValidUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidUser" />
+  </wsdl:message>
+  <wsdl:message name="IEventService_IsValidUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidUserResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEventService">
     <wsdl:operation name="GetEvents">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetEvents" message="tns:IEventService_GetEvents_InputMessage" />
@@ -134,6 +149,15 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetAddressById" message="tns:IEventService_GetAddressById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetAddressByIdResponse" message="tns:IEventService_GetAddressById_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetAddressByIdServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetAddressById_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/GetUserByName" message="tns:IEventService_GetUserByName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/GetUserByNameResponse" message="tns:IEventService_GetUserByName_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IEventService/GetUserByNameServiceFaultFault" name="ServiceFaultFault" message="tns:IEventService_GetUserByName_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventService/IsValidUser" message="tns:IEventService_IsValidUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventService/IsValidUserResponse" message="tns:IEventService_IsValidUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEventService" type="tns:IEventService">
@@ -245,6 +269,27 @@
       <wsdl:fault name="ServiceFaultFault">
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByName">
+      <soap:operation soapAction="http://tempuri.org/IEventService/GetUserByName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUser">
+      <soap:operation soapAction="http://tempuri.org/IEventService/IsValidUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="EventService">

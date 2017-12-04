@@ -23,7 +23,7 @@ namespace EventsListWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("[CategoriesBar][_provider.GetCategories()]; " + ex.Message);
+                Log.Error(ex.Message);
                 ViewBag.Error = ex.Message;
                 return PartialView();
             }

@@ -12,5 +12,7 @@ namespace EventsListData.Repositories
         IReadOnlyList<Organizer> GetOrganizers();
         Organizer GetOrganizerById(int id);
         Address GetAddressById(int id);
+        User GetUserByName(string name);
+        bool IsValidUser(string username, string password);
     }
 }
