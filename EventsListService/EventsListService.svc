@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Service="EventsListService.Contracts.Contracts.EventService"  %>
+﻿<%@ ServiceHost Service="EventsListService.Contracts.Contracts.EventService" %>

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\EventService.cs" />
+    <Compile Include="Contracts\IAddService.cs" />
     <Compile Include="Contracts\IEventService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

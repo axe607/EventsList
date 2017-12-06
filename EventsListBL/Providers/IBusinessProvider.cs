@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EventsListCommon.Models;
 
 namespace EventsListBL.Providers
@@ -7,7 +8,12 @@ namespace EventsListBL.Providers
     {
         IReadOnlyList<Event> GetEvents();
         IReadOnlyList<Event> GetEventsByCategoryId(int categoryId);
+        IReadOnlyList<Event> GetEventsBySearchData(int? categoryId, DateTime? date, int? state);
         EventDetail GetEventInfoDetailById(int eventId);
         IReadOnlyList<Category> GetCategories();
+        IReadOnlyList<Organizer> GetOrganizers();
+
+        void AddEvent(string name, DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId);
+
     }
 }

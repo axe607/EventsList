@@ -1,34 +1,24 @@
-﻿.categories-div {
-  position: fixed;
-  height: 100%;
-  width: 250px;
-  float: left;
-  z-index: 2;
-  background-color: #FAFAFA;
-  overflow-x: hidden;
-  transition: 0.5s;
-  border-right: 2px solid #4CAF50;
-}
+﻿
 
 .category,
 .category-title {
   font-family: "Arial";
   font-size: 18px;
   text-align: left;
-  color: rgb(7, 190, 129);
+  color: #00796B;
   cursor: pointer;
   padding: 4px 8px 4px 8px;
   transition: box-shadow 0.4s ease-in-out;
 }
 
   .category:hover {
-    box-shadow: 0 0 1px 2px rgba(7, 190, 129,0.5);
+    box-shadow: 0 0 1px 2px #80DEEA;
   }
 
 .category-title {
   text-align: center;
   color: white;
-  background-color: rgb(28, 135, 202)
+  background-color: #80DEEA
 }
 
 .category-div {
@@ -39,5 +29,5 @@
 .category-children > p {
   padding-left: 40px;
   font-size: 15px;
-  color: rgb(7, 173, 190);
+  color: #29B6F6;
 }

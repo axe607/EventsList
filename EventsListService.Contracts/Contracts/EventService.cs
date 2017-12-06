@@ -11,7 +11,7 @@ using System.ServiceModel;
 
 namespace EventsListService.Contracts.Contracts
 {
-    public class EventService : IEventService
+    public class EventService : IEventService,IAddService
     {
         private readonly string _connectionString;
 
@@ -64,7 +64,7 @@ namespace EventsListService.Contracts.Contracts
                     }
 
 
-                    if (typeof(List<T>) == typeof(List<EventDto>))
+                    if (typeof(T) == typeof(EventDto))
                     {
                         List<EventDto> tempList = new List<EventDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -86,7 +86,7 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<EventDetailDto>))
+                    if (typeof(T) == typeof(EventDetailDto))
                     {
                         List<EventDetailDto> tempList = new List<EventDetailDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -109,7 +109,7 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<CategoryDto>))
+                    if (typeof(T) == typeof(CategoryDto))
                     {
                         List<CategoryDto> tempList = new List<CategoryDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -126,7 +126,7 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<OrganizerDto>))
+                    if (typeof(T) == typeof(OrganizerDto))
                     {
                         List<OrganizerDto> tempList = new List<OrganizerDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -136,15 +136,13 @@ namespace EventsListService.Contracts.Contracts
                                 tempList.Add(new OrganizerDto
                                 {
                                     Id = (int)dataRow[0],
-                                    Name = dataRow[1].ToString(),
-                                    Emails = GetEmailsByOrganizerId((int)dataRow[0]),
-                                    Phones = GetPhonesByOrganizerId((int)dataRow[0])
+                                    Name = dataRow[1].ToString()
                                 });
                             }
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<EmailDto>))
+                    if (typeof(T) == typeof(EmailDto))
                     {
                         List<EmailDto> tempList = new List<EmailDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -161,7 +159,7 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<PhoneDto>))
+                    if (typeof(T) == typeof(PhoneDto))
                     {
                         List<PhoneDto> tempList = new List<PhoneDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -178,7 +176,7 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<AddressDto>))
+                    if (typeof(T) == typeof(AddressDto))
                     {
                         List<AddressDto> tempList = new List<AddressDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -194,7 +192,7 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<UserDto>))
+                    if (typeof(T) == typeof(UserDto))
                     {
                         List<UserDto> tempList = new List<UserDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -210,7 +208,7 @@ namespace EventsListService.Contracts.Contracts
                         }
                         return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(List<T>) == typeof(List<RoleDto>))
+                    if (typeof(T) == typeof(RoleDto))
                     {
                         List<RoleDto> tempList = new List<RoleDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
@@ -258,6 +256,36 @@ namespace EventsListService.Contracts.Contracts
                 result.OrganizerPhones = GetPhonesByOrganizerId(result.OrganizerId);
             }
             return result;
+        }
+
+        public List<EventDto> GetEventsBySearchData(int? categoryId, DateTime? date, int? state)
+        {
+            SqlParameter[] parameters = new []
+            {
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@categoryId",
+                    Value = categoryId,
+                    IsNullable = true
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.Date,
+                    ParameterName = "@date",
+                    Value = date,
+                    IsNullable = true
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@state",
+                    Value = state,
+                    IsNullable = true
+                }
+            };
+
+            return GetDataFromDb<EventDto>("SelectEventsByCategoryIdAndDateAndState", parameters);
         }
 
         public List<CategoryDto> GetCategories()
@@ -383,6 +411,36 @@ namespace EventsListService.Contracts.Contracts
             }
 
             return result;
+        }
+
+        public void AddEvent(string name, DateTime date, int organizerId, int categoryId, string imageUrl, string description,
+            int addressId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "AddEvent";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
+                        new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@organizerId",Value = organizerId},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+
         }
     }
 }

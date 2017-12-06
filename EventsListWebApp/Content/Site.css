@@ -3,13 +3,24 @@
   width: 100%;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
+  position: relative;
+  top: 40px;
   padding: 20px 10px 10px 10px;
   margin-left: 250px;
 }
-
-/* Set width on the form input elements since they're 100% wide by default */
+.categories-div {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  float: left;
+  top: 40px;
+  z-index: 2;
+  background-color: #FAFAFA;
+  overflow-x: hidden;
+  transition: 0.5s;
+  border-right: 2px solid #4CAF50;
+}
 input,
 select,
 textarea {

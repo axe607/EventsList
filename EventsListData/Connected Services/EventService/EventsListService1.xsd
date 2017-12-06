@@ -1,120 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfEventDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="EventDto" nillable="true" type="tns:EventDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfEventDto" nillable="true" type="tns:ArrayOfEventDto" />
-  <xs:complexType name="EventDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AddressId" type="xs:int" />
-      <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
-      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="ImageUrl" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EventDto" nillable="true" type="tns:EventDto" />
-  <xs:complexType name="EventDetailDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CategoryName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EventId" type="xs:int" />
-      <xs:element minOccurs="0" name="EventName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ImageUrl" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrganizerEmails" nillable="true" type="tns:ArrayOfEmailDto" />
-      <xs:element minOccurs="0" name="OrganizerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrganizerPhones" nillable="true" type="tns:ArrayOfPhoneDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EventDetailDto" nillable="true" type="tns:EventDetailDto" />
-  <xs:complexType name="ArrayOfEmailDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailDto" nillable="true" type="tns:EmailDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfEmailDto" nillable="true" type="tns:ArrayOfEmailDto" />
-  <xs:complexType name="EmailDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EmailDto" nillable="true" type="tns:EmailDto" />
-  <xs:complexType name="ArrayOfPhoneDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PhoneDto" nillable="true" type="tns:PhoneDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPhoneDto" nillable="true" type="tns:ArrayOfPhoneDto" />
-  <xs:complexType name="PhoneDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
-      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PhoneDto" nillable="true" type="tns:PhoneDto" />
-  <xs:complexType name="ArrayOfCategoryDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="CategoryDto" nillable="true" type="tns:CategoryDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfCategoryDto" nillable="true" type="tns:ArrayOfCategoryDto" />
-  <xs:complexType name="CategoryDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Pid" nillable="true" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="CategoryDto" nillable="true" type="tns:CategoryDto" />
-  <xs:complexType name="ArrayOfOrganizerDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrganizerDto" nillable="true" type="tns:OrganizerDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfOrganizerDto" nillable="true" type="tns:ArrayOfOrganizerDto" />
-  <xs:complexType name="OrganizerDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Emails" nillable="true" type="tns:ArrayOfEmailDto" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Phones" nillable="true" type="tns:ArrayOfPhoneDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="OrganizerDto" nillable="true" type="tns:OrganizerDto" />
-  <xs:complexType name="AddressDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="AddressDto" nillable="true" type="tns:AddressDto" />
-  <xs:complexType name="UserDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UserRoles" nillable="true" type="tns:ArrayOfRoleDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="UserDto" nillable="true" type="tns:UserDto" />
-  <xs:complexType name="ArrayOfRoleDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoleDto" nillable="true" type="tns:RoleDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfRoleDto" nillable="true" type="tns:ArrayOfRoleDto" />
-  <xs:complexType name="RoleDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="RoleName" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="RoleDto" nillable="true" type="tns:RoleDto" />
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:57209/EventsListService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" />
+  <xs:element name="GetEvents">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsResult" nillable="true" type="q1:ArrayOfEventDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsByCategoryId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsByCategoryIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsByCategoryIdResult" nillable="true" type="q2:ArrayOfEventDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventInfoDetailById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="eventId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventInfoDetailByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventInfoDetailByIdResult" nillable="true" type="q3:EventDetailDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsBySearchData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="categoryId" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="date" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="state" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsBySearchDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsBySearchDataResult" nillable="true" type="q4:ArrayOfEventDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategories">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategoriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetCategoriesResult" nillable="true" type="q5:ArrayOfCategoryDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrganizers">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrganizersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetOrganizersResult" nillable="true" type="q6:ArrayOfOrganizerDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrganizerById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrganizerByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetOrganizerByIdResult" nillable="true" type="q7:OrganizerDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEmailsByOrganizerId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="organizerId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEmailsByOrganizerIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEmailsByOrganizerIdResult" nillable="true" type="q8:ArrayOfEmailDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhonesByOrganizerId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="organizerId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhonesByOrganizerIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetPhonesByOrganizerIdResult" nillable="true" type="q9:ArrayOfPhoneDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAddressById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAddressByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetAddressByIdResult" nillable="true" type="q10:AddressDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserByName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserByNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetUserByNameResult" nillable="true" type="q11:UserDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsValidUserResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddEvent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="organizerId" type="xs:int" />
+        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+        <xs:element minOccurs="0" name="imageUrl" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="addressId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddEventResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

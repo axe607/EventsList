@@ -68,12 +68,7 @@ namespace EventsListData.Clients
                         .Select(x => new Organizer
                         {
                             Id = x.Id,
-                            Name = x.Name,
-                            Emails = x.Emails.Select(z =>
-                                new Email { Id = z.Id, OrganizerId = z.OrganizerId, EmailString = z.Email }).ToList(),
-                            Phones = x.Phones.Select(z =>
-                                    new Phone { Id = z.Id, OrganizerId = z.OrganizerId, PhoneNumber = z.PhoneNumber })
-                                .ToList()
+                            Name = x.Name
                         }).ToList();
                     result = tempList.Cast<T>().ToList();
                 }
@@ -169,7 +164,29 @@ namespace EventsListData.Clients
             try
             {
                 client.Open();
-                result = ConvertDataFromService<Event, EventService.EventDto>(client.GetEvents());
+                result = ConvertDataFromService<Event, EventService.EventDto>(client.GetEventsByCategoryId(categoryId));
+                client.Close();
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                client.Abort();
+            }
+
+            return result;
+        }
+
+        public IReadOnlyList<Event> GetEventsBySearchData(int? categoryId, DateTime? date, int? state)
+        {
+            var result = new List<Event>();
+            var client = new EventService.EventServiceClient();
+            try
+            {
+                client.Open();
+                result = ConvertDataFromService<Event, EventService.EventDto>(client.GetEventsBySearchData(categoryId,date,state));
                 client.Close();
             }
             catch (EndpointNotFoundException)
@@ -316,6 +333,26 @@ namespace EventsListData.Clients
             }
             
             return result;
+        }
+
+        public void AddEvent(string name, DateTime date, int organizerId, int categoryId, string imageUrl, string description,
+            int addressId)
+        {
+            var client = new EventService.AddServiceClient();
+            try
+            {
+                client.Open();
+                client.AddEvent(name,date,organizerId,categoryId,imageUrl,description,addressId);
+                client.Close();
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                client.Abort();
+            }
         }
     }
 }

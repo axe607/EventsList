@@ -1,0 +1,28 @@
+﻿<link href="~/Content/searchbar.css" rel="stylesheet" />
+<div class="searchbar">
+    <div>
+        <select class="form-control" id="category_search">
+            <option value="">All</option>
+        </select>
+    </div>
+    <div><input class="form-control" id="date_search" type="date" /></div>
+    <div>
+        <select class="form-control" id="state_search">
+            <option value="" selected="selected">All</option>
+            <option value="-1">Past</option>
+            <option value="0">Today</option>
+            <option value="1">Future</option>
+        </select>
+    </div>
+    <div><input id="SearchBtn" class="form-control" type="button" value="Search" /></div>
+</div>
+
+<script>
+    $(function () {
+        setCategories('category_search');
+    });
+    $("#SearchBtn").click(function () {
+        setEventsBySearch($("#category_search").val(), $("#date_search").val(),$("#state_search").val());
+    });
+</script>
+

@@ -646,16 +646,10 @@ namespace EventsListData.EventService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private EventsListData.EventService.EmailDto[] EmailsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private EventsListData.EventService.PhoneDto[] PhonesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -664,19 +658,6 @@ namespace EventsListData.EventService {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public EventsListData.EventService.EmailDto[] Emails {
-            get {
-                return this.EmailsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailsField, value) != true)) {
-                    this.EmailsField = value;
-                    this.RaisePropertyChanged("Emails");
-                }
             }
         }
         
@@ -702,19 +683,6 @@ namespace EventsListData.EventService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public EventsListData.EventService.PhoneDto[] Phones {
-            get {
-                return this.PhonesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PhonesField, value) != true)) {
-                    this.PhonesField = value;
-                    this.RaisePropertyChanged("Phones");
                 }
             }
         }
@@ -924,6 +892,14 @@ namespace EventsListData.EventService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventInfoDetailById", ReplyAction="http://tempuri.org/IEventService/GetEventInfoDetailByIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.EventDetailDto> GetEventInfoDetailByIdAsync(int eventId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsBySearchData", ReplyAction="http://tempuri.org/IEventService/GetEventsBySearchDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetEventsBySearchDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.EventDto[] GetEventsBySearchData(System.Nullable<int> categoryId, System.Nullable<System.DateTime> date, System.Nullable<int> state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetEventsBySearchData", ReplyAction="http://tempuri.org/IEventService/GetEventsBySearchDataResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsBySearchDataAsync(System.Nullable<int> categoryId, System.Nullable<System.DateTime> date, System.Nullable<int> state);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEventService/GetCategories", ReplyAction="http://tempuri.org/IEventService/GetCategoriesResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IEventService/GetCategoriesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
             "eptions")]
@@ -1038,6 +1014,14 @@ namespace EventsListData.EventService {
             return base.Channel.GetEventInfoDetailByIdAsync(eventId);
         }
         
+        public EventsListData.EventService.EventDto[] GetEventsBySearchData(System.Nullable<int> categoryId, System.Nullable<System.DateTime> date, System.Nullable<int> state) {
+            return base.Channel.GetEventsBySearchData(categoryId, date, state);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsBySearchDataAsync(System.Nullable<int> categoryId, System.Nullable<System.DateTime> date, System.Nullable<int> state) {
+            return base.Channel.GetEventsBySearchDataAsync(categoryId, date, state);
+        }
+        
         public EventsListData.EventService.CategoryDto[] GetCategories() {
             return base.Channel.GetCategories();
         }
@@ -1100,6 +1084,53 @@ namespace EventsListData.EventService {
         
         public System.Threading.Tasks.Task<bool> IsValidUserAsync(string username, string password) {
             return base.Channel.IsValidUserAsync(username, password);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EventService.IAddService")]
+    public interface IAddService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAddService/AddEvent", ReplyAction="http://tempuri.org/IAddService/AddEventResponse")]
+        void AddEvent(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAddService/AddEvent", ReplyAction="http://tempuri.org/IAddService/AddEventResponse")]
+        System.Threading.Tasks.Task AddEventAsync(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IAddServiceChannel : EventsListData.EventService.IAddService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class AddServiceClient : System.ServiceModel.ClientBase<EventsListData.EventService.IAddService>, EventsListData.EventService.IAddService {
+        
+        public AddServiceClient() {
+        }
+        
+        public AddServiceClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public AddServiceClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public AddServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public AddServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public void AddEvent(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId) {
+            base.Channel.AddEvent(name, date, organizerId, categoryId, imageUrl, description, addressId);
+        }
+        
+        public System.Threading.Tasks.Task AddEventAsync(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId) {
+            return base.Channel.AddEventAsync(name, date, organizerId, categoryId, imageUrl, description, addressId);
         }
     }
 }

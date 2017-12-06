@@ -1,4 +1,5 @@
-﻿using EventsListService.Contracts.Models.Dto;
+﻿using System;
+using EventsListService.Contracts.Models.Dto;
 using EventsListService.Contracts.Models.DtoExceptions;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -19,6 +20,10 @@ namespace EventsListService.Contracts.Contracts
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         EventDetailDto GetEventInfoDetailById(int eventId);
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        List<EventDto> GetEventsBySearchData(int? categoryId, DateTime? date, int? state);
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]

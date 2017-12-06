@@ -1,4 +1,5 @@
-﻿using EventsListCommon.Models;
+﻿using System;
+using EventsListCommon.Models;
 using EventsListData.Clients;
 using System.Collections.Generic;
 
@@ -28,6 +29,12 @@ namespace EventsListData.Repositories
             return _client.IsValidUser(username, password);
         }
 
+        public void AddEvent(string name, DateTime date, int organizerId, int categoryId, string imageUrl, string description,
+            int addressId)
+        {
+            _client.AddEvent(name,date,organizerId,categoryId,imageUrl,description,addressId);
+        }
+
         public IReadOnlyList<Category> GetCategories()
         {
             return _client.GetCategories();
@@ -41,6 +48,11 @@ namespace EventsListData.Repositories
         public IReadOnlyList<Event> GetEventsByCategoryId(int categoryId)
         {
             return _client.GetEventsByCategoryId(categoryId);
+        }
+
+        public IReadOnlyList<Event> GetEventsBySearchData(int? categoryId, DateTime? date, int? state)
+        {
+            return _client.GetEventsBySearchData(categoryId, date, state);
         }
 
         public EventDetail GetEventInfoDetailById(int eventId)

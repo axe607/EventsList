@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace EventsListCommon.Models
+﻿namespace EventsListCommon.Models
 {
     public class Category
     {

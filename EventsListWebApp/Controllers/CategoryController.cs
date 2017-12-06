@@ -8,13 +8,13 @@ namespace EventsListWebApp.Controllers
     public class CategoryController : Controller
     {
         private readonly IBusinessProvider _provider;
-        private static readonly ILog Log = LogManager.GetLogger("CategoryController");
+        private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
 
         public CategoryController(IBusinessProvider providerInput)
         {
             _provider = providerInput;
         }
-
+        
         public PartialViewResult CategoriesBar()
         {
             try

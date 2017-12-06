@@ -110,7 +110,9 @@
     <Content Include="Content\Images\15056501883900.jpg" />
     <Content Include="Content\Images\baf3edbdfd6d719febed5.png" />
     <Content Include="Content\Images\no-image.png" />
+    <Content Include="Content\searchbar.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\topbar.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -120,6 +122,7 @@
     <Content Include="Scripts\eventslist.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\JsonToSelect.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -129,6 +132,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -139,6 +143,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminAttribute.cs" />
+    <Compile Include="Models\AjaxAttribute.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\UserPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,6 +163,8 @@
     <Content Include="Views\Event\Events.cshtml" />
     <Content Include="Views\Event\DetailEvent.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Event\CreateEvent.cshtml" />
+    <Content Include="Views\Event\SearchBar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -167,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Json\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventsListBL\EventsListBL.csproj">

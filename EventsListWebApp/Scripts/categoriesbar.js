@@ -1,5 +1,5 @@
 ﻿function loadCategoriesBar() {
-    $("#categories").load("Category/CategoriesBar", function(response, status, xhr) {
+    $("#categories").load("/Category/CategoriesBar", function(response, status, xhr) {
         if (status === "error")
         {
             console.log("[CategoryBar]: "+xhr.status + " - " + xhr.statusText);
@@ -11,12 +11,12 @@
 }
 
 function getEventsBySubcategoryId(subcategoryId) {
-    $(".body-content").load("Event/EventsBySubcategory?subcategoryId=" + subcategoryId);
+    $(".body-content").load("/Event/EventsBySubcategory?subcategoryId=" + subcategoryId);
 }
 function getEventsByCategoryId(categoryId) {
-    $(".body-content").load("Event/EventsByCategory?categoryId=" + categoryId);
+    $(".body-content").load("/Event/EventsByCategory?categoryId=" + categoryId);
 }
 
 function getAllEvents() {
-    $(".body-content").load("Event/Events");
+    $(".body-content").load("/Event/Events");
 }
