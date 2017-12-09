@@ -110,6 +110,7 @@
     <Content Include="Content\Images\15056501883900.jpg" />
     <Content Include="Content\Images\baf3edbdfd6d719febed5.png" />
     <Content Include="Content\Images\no-image.png" />
+    <Content Include="Content\loginpage.css" />
     <Content Include="Content\searchbar.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\topbar.css" />

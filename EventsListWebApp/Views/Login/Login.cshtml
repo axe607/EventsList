@@ -2,7 +2,7 @@
 @{
     Layout = null;
 }
-
+<link href="~/Content/loginpage.css" rel="stylesheet" />
 <!DOCTYPE html>
 
 <html>
@@ -11,16 +11,17 @@
     <title>Login</title>
 </head>
 <body>
-    <h2>Login</h2>
-    @if (Model != null && !string.IsNullOrEmpty(Model.Message))
-    {
-        <div>@Model.Message</div>
-    }
-    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
-    {
-        <input type="text" name="userName" /><br />
-        <input type="text" name="password" /><br />
-        <input type="submit" value="Login" />
-    }
+    <div class="main">
+            @if (Model != null && !string.IsNullOrEmpty(Model.Message))
+            {
+                <div>@Model.Message</div>
+            }
+            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+            {
+                <input type="text" name="userName" placeholder="username" /><br />
+                <input type="password" name="password" placeholder="password" /><br />
+                <input class="input-btn" type="submit" value="Login" />
+            }
+    </div>
 </body>
 </html>
