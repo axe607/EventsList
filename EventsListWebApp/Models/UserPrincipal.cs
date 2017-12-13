@@ -15,7 +15,7 @@ namespace EventsListWebApp.Models
 
         public UserPrincipal(string userName,int userId)
         {
-            Identity = new WindowsIdentity(userName);
+            Identity = new GenericIdentity(userName);
             UserId = userId;
         }
 
