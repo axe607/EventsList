@@ -1,0 +1,93 @@
+﻿@model EventsListCommon.Models.User
+
+@{
+    ViewBag.Title = "EditUserInfo";
+}
+<style>
+    b {
+        font-size: 16px;
+        color: #ef5350;
+        font-weight: 500;
+        font-style: italic;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit User Info</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                <b id="btn_check"></b>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",type="email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+   
+}
+@section scripts
+{
+    <script>
+        $("#btn_check").click(function() {
+            var name = $("[name='UserName']").val();
+            $.ajax({
+                url: "/Account/IsNameFree",
+                data:
+                {
+                    name: name
+                },
+                success: function(result) {
+                    if (result === "True") {
+                        $("#btn_check")[0].innerText = "Name is free";
+                        $("#btn_check")[0].className = "btn btn-success";
+                    } else {
+                        $("#btn_check")[0].innerText = "Name isn't free";
+                        $("#btn_check")[0].className = "btn btn-danger";
+                    }
+                },
+                error: function(error) {
+                    console.log(error.status + " - " + error.statusText);
+                }
+            });
+        });
+        $("[name='UserName']").focusout(function() {
+            var name = $("[name='UserName']").val();
+            $.ajax({
+                url: "/Account/IsNameFree",
+                data:
+                {
+                    name: name
+                },
+                success: function(result) {
+                    if (result === "True") {
+                        $("#btn_check")[0].innerText = "";
+                    } else if(result==="False"){
+                        $("#btn_check")[0].innerText = "Name isn't free";
+                    }
+                },
+                error: function(error) {
+                    console.log(error.status + " - " + error.statusText);
+                }
+            });
+        });
+    </script>
+}

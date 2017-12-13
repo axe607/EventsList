@@ -19,7 +19,7 @@ function setEventsBySearch(categoryId, date, state) {
             }
         },
         error: function(error) {
-            console.log(error);
+            console.log(error.status + " - " + error.statusText);
         }
     });
 }

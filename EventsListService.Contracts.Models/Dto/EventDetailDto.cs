@@ -23,7 +23,6 @@ namespace EventsListService.Contracts.Models.Dto
         public string CategoryName { get; set; }
         [DataMember]
         public string OrganizerName { get; set; }
-        public int OrganizerId { get; set; }
         [DataMember]
         public List<PhoneDto> OrganizerPhones { get; set; }
         [DataMember]

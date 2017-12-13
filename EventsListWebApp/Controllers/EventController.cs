@@ -1,23 +1,24 @@
 ﻿using EventsListBL.Providers;
-using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+using EventsListBL.Services;
 using EventsListCommon.Models;
 using EventsListWebApp.Models;
+using log4net;
+using System;
+using System.Web.Mvc;
 
 namespace EventsListWebApp.Controllers
 {
     public class EventController : Controller
     {
         private readonly IBusinessProvider _provider;
+        private readonly IEventOperation _eventOperation;
         private static readonly ILog Log = LogManager.GetLogger(typeof(EventController));
         private const string EVENTS_VIEW = "Events";
 
-        public EventController(IBusinessProvider providerInput)
+        public EventController(IBusinessProvider providerInput, IEventOperation eventOperation)
         {
             _provider = providerInput;
+            _eventOperation = eventOperation;
         }
 
         public PartialViewResult EventsByCategory(int categoryId)
@@ -35,6 +36,7 @@ namespace EventsListWebApp.Controllers
             }
         }
 
+        [Ajax]
         public PartialViewResult Events()
         {
             try
@@ -49,7 +51,6 @@ namespace EventsListWebApp.Controllers
             }
         }
 
-        [Admin]
         public PartialViewResult DetailEvent(int id)
         {
             try
@@ -79,7 +80,7 @@ namespace EventsListWebApp.Controllers
             {
                 try
                 {
-                    _provider.AddEvent(
+                    _eventOperation.AddEvent(
                         createdEvent.Name,
                         createdEvent.Date,
                         createdEvent.OrganizerId,
@@ -99,6 +100,46 @@ namespace EventsListWebApp.Controllers
             return View(createdEvent);
         }
 
+        [Admin]
+        public void DeleteEvent(int eventId)
+        {
+            _eventOperation.DeleteEvent(eventId);
+        }
+
+        [HttpGet]
+        [Admin]
+        public ActionResult EditEvent(int eventId)
+        {
+            try
+            {
+                return View(_provider.GetEventById(eventId));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                return RedirectToAction("Index","Home");
+            }
+        }
+
+        [HttpPost]
+        [Admin]
+        public ActionResult EditEvent(Event eventModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _eventOperation.EditEvent(
+                    eventModel.Id,
+                    eventModel.Name,
+                    eventModel.Date,
+                    eventModel.CategoryId,
+                    eventModel.ImageUrl,
+                    eventModel.Description,
+                    eventModel.AddressId);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(eventModel);
+        }
+
         public PartialViewResult SearchBar()
         {
             return PartialView();
@@ -107,7 +148,7 @@ namespace EventsListWebApp.Controllers
         {
             try
             {
-                return PartialView(EVENTS_VIEW,_provider.GetEventsBySearchData(categoryId,date,state));
+                return PartialView(EVENTS_VIEW, _provider.GetEventsBySearchData(categoryId, date, state));
             }
             catch (Exception ex)
             {

@@ -10,10 +10,8 @@ namespace EventsListBL.Providers
         IReadOnlyList<Event> GetEventsByCategoryId(int categoryId);
         IReadOnlyList<Event> GetEventsBySearchData(int? categoryId, DateTime? date, int? state);
         EventDetail GetEventInfoDetailById(int eventId);
+        Event GetEventById(int eventId);
         IReadOnlyList<Category> GetCategories();
-        IReadOnlyList<Organizer> GetOrganizers();
-
-        void AddEvent(string name, DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId);
-
+        IReadOnlyList<Address> GetAddresses();
     }
 }

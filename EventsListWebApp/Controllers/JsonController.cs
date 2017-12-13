@@ -10,7 +10,7 @@ namespace EventsListWebApp.Controllers
     public class JsonController : Controller
     {
         private const string CATEGORIES_KEY = "categories_key";
-        private const string ORGANIZERS_KEY = "organizers_key";
+        private const string ADDRESSES_KEY = "addresses_key";
 
         private readonly IBusinessProvider _provider;
         private static readonly ILog Log = LogManager.GetLogger(typeof(JsonController));
@@ -40,15 +40,15 @@ namespace EventsListWebApp.Controllers
         }
 
         [Ajax]
-        public JsonResult GetOrganizers()
+        public JsonResult GetAddresses()
         {
             try
             {
-                if (HttpRuntime.Cache.Get(ORGANIZERS_KEY) == null)
+                if (HttpRuntime.Cache.Get(ADDRESSES_KEY) == null)
                 {
-                    HttpRuntime.Cache.Insert(ORGANIZERS_KEY, _provider.GetOrganizers());
+                    HttpRuntime.Cache.Insert(ADDRESSES_KEY, _provider.GetAddresses());
                 }
-                return Json(HttpRuntime.Cache.Get(ORGANIZERS_KEY), JsonRequestBehavior.AllowGet);
+                return Json(HttpRuntime.Cache.Get(ADDRESSES_KEY), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

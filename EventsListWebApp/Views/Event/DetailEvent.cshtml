@@ -1,4 +1,5 @@
-﻿@model EventsListCommon.Models.EventDetail
+﻿@using System.Globalization
+@model EventsListCommon.Models.EventDetail
 <link href="~/Content/event-detail.css" rel="stylesheet" />
 @if (Model != null)
 {
@@ -19,7 +20,7 @@
                 <p><b>Название:</b> @Model.EventName</p>
             </div>
             <div>
-                <p><b>Дата:</b> @Model.Date.ToShortDateString()</p>
+                <p><b>Дата:</b> @Model.Date.ToString("f",CultureInfo.CurrentUICulture)</p>
             </div>
             <div>
                 <p><b>Организатор:</b> @Model.OrganizerName</p>

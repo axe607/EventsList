@@ -16,13 +16,13 @@
 </head>
 <body>
     <div class="topbar">
-        <div class="topbar-title"><a href="/Home/Index">Events List</a></div>
+        <div class="topbar-title"><a href="/Home/Index">Home</a></div>
         @if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
         {
             <div><a href="/Event/CreateEvent">Create</a></div>
             <div><a href="#" onclick="loadSearchBar('categories')">Search</a></div>
         
-            <div class="topbar-user">@HttpContext.Current.User.Identity.Name.ToUpperInvariant()</div>
+            <div class="topbar-user"><a href="/Account/Index">@HttpContext.Current.User.Identity.Name.ToUpperInvariant()</a></div>
         }
         else
         {
@@ -36,23 +36,23 @@
 </div>
     @RenderSection("scripts",false)
     
+    @if (HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
+    {
         <script>
             $(function() {
                 if ('@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"]' === 'Home') {
                     loadCategoriesBar();
                     getAllEvents();
                 }
-                setCategories('category_search');
-
-            });
-            $("#input_search").on('input',function() {
-                getEventByInfo($(this).val());
             });
 
-            function loadSearchBar(idToLoad) {
-                $("#" + idToLoad).load("/Event/SearchBar");
-            }
         </script>
+    }
+    <script>
+        function loadSearchBar(idToLoad) {
+            $("#" + idToLoad).load("/Event/SearchBar");
+        }
+    </script>
 
 </body>
 </html>

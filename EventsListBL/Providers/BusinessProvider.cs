@@ -7,7 +7,7 @@ namespace EventsListBL.Providers
 {
     public class BusinessProvider : IBusinessProvider
     {
-        IDataRepository _dataProvider;
+        readonly IDataRepository _dataProvider;
 
         public BusinessProvider(IDataRepository provider)
         {
@@ -23,16 +23,10 @@ namespace EventsListBL.Providers
         {
             return _dataProvider.GetCategories();
         }
-
-        public IReadOnlyList<Organizer> GetOrganizers()
+        
+        public IReadOnlyList<Address> GetAddresses()
         {
-           return _dataProvider.GetOrganizers();
-        }
-
-        public void AddEvent(string name, DateTime date, int organizerId, int categoryId, string imageUrl, string description,
-            int addressId)
-        {
-            _dataProvider.AddEvent(name, date, organizerId, categoryId, imageUrl, description, addressId);
+            return _dataProvider.GetAddresses();
         }
 
         public IReadOnlyList<Event> GetEventsByCategoryId(int categoryId)
@@ -44,7 +38,11 @@ namespace EventsListBL.Providers
         {
             return _dataProvider.GetEventsBySearchData(categoryId, date, state);
         }
-        
+
+        public Event GetEventById(int eventId)
+        {
+            return _dataProvider.GetEventById(eventId);
+        }
 
         public EventDetail GetEventInfoDetailById(int eventId)
         {

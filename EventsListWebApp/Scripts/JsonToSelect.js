@@ -1,4 +1,4 @@
-﻿function setCategories(idToAddData) {
+﻿function setCategories(idToAddData, idCategorySelected) {
     $.ajax({
         url: "/Json/GetCategories",
         type: "GET",
@@ -9,18 +9,21 @@
                     var option = document.createElement("option");
                     option.value = value["Id"];
                     option.textContent = value["Name"];
+                    if (option.value === idCategorySelected) {
+                        option.selected = true;
+                    }
                     $("#" + idToAddData).append(option);
                 });
         },
-        error: function (error) {
-            console.log(error);
+        error: function () {
+            console.log("Error on getting categories");
         }
     });
 }
 
-function setOrganizers(idToAddData) {
+function setAddresses(idToAddData, idAddressSelected) {
     $.ajax({
-        url: "/Json/GetOrganizers",
+        url: "/Json/GetAddresses",
         type: "GET",
         success: function (result) {
             var a = result;
@@ -28,12 +31,15 @@ function setOrganizers(idToAddData) {
                 function (key, value) {
                     var option = document.createElement("option");
                     option.value = value["Id"];
-                    option.textContent = value["Name"];
+                    option.textContent = value["AddressString"];
+                    if (option.value === idAddressSelected) {
+                        option.selected = true;
+                    }
                     $("#" + idToAddData).append(option);
                 });
         },
-        error: function (error) {
-            console.log(error);
+        error: function () {
+            console.log("Error on getting addresses");
         }
     });
 }

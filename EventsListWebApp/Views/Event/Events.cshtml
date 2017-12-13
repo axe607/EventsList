@@ -7,8 +7,8 @@
         {
             foreach (var itemEvent in Model)
             {
-                <div onclick="getEventById(@itemEvent.Id)" class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="event-block">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div onclick="getEventById(@itemEvent.Id)" class="event-block">
                         <div class="event-block-image">
                             @if (!string.IsNullOrEmpty(itemEvent.ImageUrl))
                             {
@@ -23,6 +23,13 @@
                             <p>@itemEvent.Name</p>
                             <p>@itemEvent.Date.ToShortDateString()</p>
                         </div>
+                        @if (HttpContext.Current.User.IsInRole("Admin"))
+                        {
+                            <div class="event-block-edit">
+                                <a href="/Event/EditEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-edit">Edit
+                                </a><a href="/Event/DeleteEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-delete">Delete</a>
+                            </div>
+                        }
                     </div>
                 </div>
             }

@@ -24,13 +24,16 @@ namespace EventsListWebApp
             if (auth != null)
             {
                 var ticket = FormsAuthentication.Decrypt(auth.Value);
-                var model = JsonConvert.DeserializeObject<User>(ticket.UserData);
-                var principal = new UserPrincipal(ticket.Name)
+                if (ticket != null)
                 {
-                    UserName = model.UserName,
-                    Roles = model.Roles.Select(x => x.RoleName).ToArray()
-                };
-                HttpContext.Current.User = principal;
+                    var model = JsonConvert.DeserializeObject<User>(ticket.UserData);
+                    var principal = new UserPrincipal(model.UserName,model.Id)
+                    {
+                        UserName = model.UserName,
+                        Roles = model.Roles.Select(x => x.RoleName).ToArray()
+                    };
+                    HttpContext.Current.User = principal;
+                }
             }
         }
     }

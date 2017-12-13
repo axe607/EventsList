@@ -7,7 +7,7 @@ using System.ServiceModel;
 namespace EventsListService.Contracts.Contracts
 {
     [ServiceContract]
-    public interface IEventService
+    public interface IGet
     {
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -23,6 +23,10 @@ namespace EventsListService.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
+        EventDto GetEventById(int eventId);
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         List<EventDto> GetEventsBySearchData(int? categoryId, DateTime? date, int? state);
 
         [OperationContract]
@@ -31,11 +35,7 @@ namespace EventsListService.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        List<OrganizerDto> GetOrganizers();
-
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        OrganizerDto GetOrganizerById(int id);
+        List<AddressDto> GetAddresses();
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -47,15 +47,14 @@ namespace EventsListService.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        AddressDto GetAddressById(int id);
-
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
         UserDto GetUserByName(string name);
 
         List<RoleDto> GetRolesByUserId(int id);
 
         [OperationContract]
         bool IsValidUser(string username, string password);
+
+        [OperationContract]
+        bool IsNameFree(int userId, string name);
     }
 }

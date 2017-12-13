@@ -12,6 +12,8 @@ namespace EventsListBL.Container
             For<IBusinessProvider>().Use<BusinessProvider>();
             For<IUserProvider>().Use<UserProvider>();
             For<ILoginService>().Use<LoginService>();
+            For<IEventOperation>().Use<EventOperation>();
+            For<IUserOperation>().Use<UserOperation>();
         }
     }
 }

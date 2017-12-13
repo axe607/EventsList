@@ -1,0 +1,68 @@
+﻿@model EventsListCommon.Models.User
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <h4>@Html.DisplayFor(model => model.UserName)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+
+        @foreach (var role in Model.Roles)
+        {
+            <dd>@role.RoleName</dd>
+        }
+        <dt>
+            @Html.ActionLink("Edit user", "EditUserInfo") |
+            @Html.ActionLink("Log out", "Logout", "Login")
+        </dt>
+
+
+        <hr />
+        @if (!string.IsNullOrEmpty(Model.OrganizerName))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.OrganizerName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OrganizerName)
+            </dd>
+        }
+
+        @if (Model.OrganizerEmails != null && Model.OrganizerEmails.Any())
+        {
+
+            <dt>@Html.DisplayNameFor(model => model.OrganizerEmails)</dt>
+            foreach (var email in Model.OrganizerEmails)
+            {
+                <dd>@email.EmailString</dd>
+            }
+
+        }
+        @if (Model.OrganizerPhones != null && Model.OrganizerPhones.Any())
+        {
+            <dt>@Html.DisplayNameFor(model => model.OrganizerPhones)</dt>
+            foreach (var phone in Model.OrganizerPhones)
+            {
+                <dd>@phone.PhoneNumber</dd>
+            }
+        }
+        <dt>
+            @Html.ActionLink("Edit organizer", "EditOrganizerInfo")
+        </dt>
+    </dl>
+</div>
+

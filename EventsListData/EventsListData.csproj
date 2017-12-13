@@ -96,9 +96,6 @@
     <None Include="Connected Services\EventService\EventsListData.EventService.EventDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\EventService\EventsListData.EventService.OrganizerDto.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\EventService\EventsListData.EventService.PhoneDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

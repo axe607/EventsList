@@ -12,6 +12,12 @@ namespace EventsListBL.Providers
         {
             _provider = provider;
         }
+
+        public bool IsNameFree(int userId, string name)
+        {
+            return _provider.IsNameFree(userId, name);
+        }
+
         public User GetUserByName(string userName)
         {
             return _provider.GetUserByName(userName);
