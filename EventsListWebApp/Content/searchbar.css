@@ -1,14 +1,24 @@
 ﻿.searchbar {
   width: 100%
 }
-.searchbar>div {
-  width: inherit;
-  max-height: 50px;
-  padding: 10px 2px 10px 2px;
-}
-  .searchbar > div > input,
-  .searchbar > div > select {
+
+  .searchbar > div {
     width: inherit;
-    height: auto;
-    max-height: inherit;
+    max-height: 50px;
+    padding: 10px 2px 10px 2px;
   }
+
+    .searchbar > div.search-label {
+      padding-bottom: 0;
+    }
+
+    .searchbar > div > * {
+      width: inherit;
+      height: auto;
+      max-height: inherit;
+    }
+
+    .searchbar > div > b {
+      font-family: "Arial";
+      font-size: 16px;
+    }

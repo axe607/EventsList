@@ -23,10 +23,10 @@ namespace EventsListData.EventService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int AddressIdField;
+        private System.Nullable<int> AddressIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int CategoryIdField;
+        private System.Nullable<int> CategoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateField;
@@ -44,7 +44,7 @@ namespace EventsListData.EventService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int OrganizerIdField;
+        private System.Nullable<int> OrganizerIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -57,7 +57,7 @@ namespace EventsListData.EventService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int AddressId {
+        public System.Nullable<int> AddressId {
             get {
                 return this.AddressIdField;
             }
@@ -70,7 +70,7 @@ namespace EventsListData.EventService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int CategoryId {
+        public System.Nullable<int> CategoryId {
             get {
                 return this.CategoryIdField;
             }
@@ -148,7 +148,7 @@ namespace EventsListData.EventService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int OrganizerId {
+        public System.Nullable<int> OrganizerId {
             get {
                 return this.OrganizerIdField;
             }
@@ -848,6 +848,9 @@ namespace EventsListData.EventService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RoleNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -857,6 +860,19 @@ namespace EventsListData.EventService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
             }
         }
         
@@ -903,6 +919,14 @@ namespace EventsListData.EventService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetEventsByCategoryId", ReplyAction="http://tempuri.org/IGet/GetEventsByCategoryIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsByCategoryIdAsync(int categoryId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetEventsByUserId", ReplyAction="http://tempuri.org/IGet/GetEventsByUserIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetEventsByUserIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.EventDto[] GetEventsByUserId(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetEventsByUserId", ReplyAction="http://tempuri.org/IGet/GetEventsByUserIdResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsByUserIdAsync(int userId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetEventInfoDetailById", ReplyAction="http://tempuri.org/IGet/GetEventInfoDetailByIdResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetEventInfoDetailByIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
             "eptions")]
@@ -935,6 +959,14 @@ namespace EventsListData.EventService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetCategories", ReplyAction="http://tempuri.org/IGet/GetCategoriesResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.CategoryDto[]> GetCategoriesAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetCategoryById", ReplyAction="http://tempuri.org/IGet/GetCategoryByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetCategoryByIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.CategoryDto GetCategoryById(int categoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetCategoryById", ReplyAction="http://tempuri.org/IGet/GetCategoryByIdResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.CategoryDto> GetCategoryByIdAsync(int categoryId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetAddresses", ReplyAction="http://tempuri.org/IGet/GetAddressesResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetAddressesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
             "eptions")]
@@ -942,6 +974,14 @@ namespace EventsListData.EventService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetAddresses", ReplyAction="http://tempuri.org/IGet/GetAddressesResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.AddressDto[]> GetAddressesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetAddressById", ReplyAction="http://tempuri.org/IGet/GetAddressByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetAddressByIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.AddressDto GetAddressById(int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetAddressById", ReplyAction="http://tempuri.org/IGet/GetAddressByIdResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.AddressDto> GetAddressByIdAsync(int addressId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetEmailsByOrganizerId", ReplyAction="http://tempuri.org/IGet/GetEmailsByOrganizerIdResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetEmailsByOrganizerIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
@@ -959,6 +999,14 @@ namespace EventsListData.EventService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetPhonesByOrganizerId", ReplyAction="http://tempuri.org/IGet/GetPhonesByOrganizerIdResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.PhoneDto[]> GetPhonesByOrganizerIdAsync(int organizerId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetUsers", ReplyAction="http://tempuri.org/IGet/GetUsersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetUsersServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.UserDto[] GetUsers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetUsers", ReplyAction="http://tempuri.org/IGet/GetUsersResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.UserDto[]> GetUsersAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetUserByName", ReplyAction="http://tempuri.org/IGet/GetUserByNameResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetUserByNameServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
             "eptions")]
@@ -967,17 +1015,47 @@ namespace EventsListData.EventService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetUserByName", ReplyAction="http://tempuri.org/IGet/GetUserByNameResponse")]
         System.Threading.Tasks.Task<EventsListData.EventService.UserDto> GetUserByNameAsync(string name);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetRolesNotInUser", ReplyAction="http://tempuri.org/IGet/GetRolesNotInUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetRolesNotInUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.RoleDto[] GetRolesNotInUser(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetRolesNotInUser", ReplyAction="http://tempuri.org/IGet/GetRolesNotInUserResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.RoleDto[]> GetRolesNotInUserAsync(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetRoles", ReplyAction="http://tempuri.org/IGet/GetRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetRolesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.RoleDto[] GetRoles();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetRoles", ReplyAction="http://tempuri.org/IGet/GetRolesResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.RoleDto[]> GetRolesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetRolesById", ReplyAction="http://tempuri.org/IGet/GetRolesByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EventsListData.EventService.ServiceFault), Action="http://tempuri.org/IGet/GetRolesByIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExc" +
+            "eptions")]
+        EventsListData.EventService.RoleDto GetRolesById(int roleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/GetRolesById", ReplyAction="http://tempuri.org/IGet/GetRolesByIdResponse")]
+        System.Threading.Tasks.Task<EventsListData.EventService.RoleDto> GetRolesByIdAsync(int roleId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsValidUser", ReplyAction="http://tempuri.org/IGet/IsValidUserResponse")]
         bool IsValidUser(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsValidUser", ReplyAction="http://tempuri.org/IGet/IsValidUserResponse")]
         System.Threading.Tasks.Task<bool> IsValidUserAsync(string username, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsNameFree", ReplyAction="http://tempuri.org/IGet/IsNameFreeResponse")]
-        bool IsNameFree(int userId, string name);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsUserNameFree", ReplyAction="http://tempuri.org/IGet/IsUserNameFreeResponse")]
+        bool IsUserNameFree(int userId, string name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsNameFree", ReplyAction="http://tempuri.org/IGet/IsNameFreeResponse")]
-        System.Threading.Tasks.Task<bool> IsNameFreeAsync(int userId, string name);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsUserNameFree", ReplyAction="http://tempuri.org/IGet/IsUserNameFreeResponse")]
+        System.Threading.Tasks.Task<bool> IsUserNameFreeAsync(int userId, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsRoleNameFree", ReplyAction="http://tempuri.org/IGet/IsRoleNameFreeResponse")]
+        bool IsRoleNameFree(System.Nullable<int> roleId, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsRoleNameFree", ReplyAction="http://tempuri.org/IGet/IsRoleNameFreeResponse")]
+        System.Threading.Tasks.Task<bool> IsRoleNameFreeAsync(System.Nullable<int> roleId, string name);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1023,6 +1101,14 @@ namespace EventsListData.EventService {
             return base.Channel.GetEventsByCategoryIdAsync(categoryId);
         }
         
+        public EventsListData.EventService.EventDto[] GetEventsByUserId(int userId) {
+            return base.Channel.GetEventsByUserId(userId);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.EventDto[]> GetEventsByUserIdAsync(int userId) {
+            return base.Channel.GetEventsByUserIdAsync(userId);
+        }
+        
         public EventsListData.EventService.EventDetailDto GetEventInfoDetailById(int eventId) {
             return base.Channel.GetEventInfoDetailById(eventId);
         }
@@ -1055,12 +1141,28 @@ namespace EventsListData.EventService {
             return base.Channel.GetCategoriesAsync();
         }
         
+        public EventsListData.EventService.CategoryDto GetCategoryById(int categoryId) {
+            return base.Channel.GetCategoryById(categoryId);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.CategoryDto> GetCategoryByIdAsync(int categoryId) {
+            return base.Channel.GetCategoryByIdAsync(categoryId);
+        }
+        
         public EventsListData.EventService.AddressDto[] GetAddresses() {
             return base.Channel.GetAddresses();
         }
         
         public System.Threading.Tasks.Task<EventsListData.EventService.AddressDto[]> GetAddressesAsync() {
             return base.Channel.GetAddressesAsync();
+        }
+        
+        public EventsListData.EventService.AddressDto GetAddressById(int addressId) {
+            return base.Channel.GetAddressById(addressId);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.AddressDto> GetAddressByIdAsync(int addressId) {
+            return base.Channel.GetAddressByIdAsync(addressId);
         }
         
         public EventsListData.EventService.EmailDto[] GetEmailsByOrganizerId(int organizerId) {
@@ -1079,12 +1181,44 @@ namespace EventsListData.EventService {
             return base.Channel.GetPhonesByOrganizerIdAsync(organizerId);
         }
         
+        public EventsListData.EventService.UserDto[] GetUsers() {
+            return base.Channel.GetUsers();
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.UserDto[]> GetUsersAsync() {
+            return base.Channel.GetUsersAsync();
+        }
+        
         public EventsListData.EventService.UserDto GetUserByName(string name) {
             return base.Channel.GetUserByName(name);
         }
         
         public System.Threading.Tasks.Task<EventsListData.EventService.UserDto> GetUserByNameAsync(string name) {
             return base.Channel.GetUserByNameAsync(name);
+        }
+        
+        public EventsListData.EventService.RoleDto[] GetRolesNotInUser(string userName) {
+            return base.Channel.GetRolesNotInUser(userName);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.RoleDto[]> GetRolesNotInUserAsync(string userName) {
+            return base.Channel.GetRolesNotInUserAsync(userName);
+        }
+        
+        public EventsListData.EventService.RoleDto[] GetRoles() {
+            return base.Channel.GetRoles();
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.RoleDto[]> GetRolesAsync() {
+            return base.Channel.GetRolesAsync();
+        }
+        
+        public EventsListData.EventService.RoleDto GetRolesById(int roleId) {
+            return base.Channel.GetRolesById(roleId);
+        }
+        
+        public System.Threading.Tasks.Task<EventsListData.EventService.RoleDto> GetRolesByIdAsync(int roleId) {
+            return base.Channel.GetRolesByIdAsync(roleId);
         }
         
         public bool IsValidUser(string username, string password) {
@@ -1095,12 +1229,20 @@ namespace EventsListData.EventService {
             return base.Channel.IsValidUserAsync(username, password);
         }
         
-        public bool IsNameFree(int userId, string name) {
-            return base.Channel.IsNameFree(userId, name);
+        public bool IsUserNameFree(int userId, string name) {
+            return base.Channel.IsUserNameFree(userId, name);
         }
         
-        public System.Threading.Tasks.Task<bool> IsNameFreeAsync(int userId, string name) {
-            return base.Channel.IsNameFreeAsync(userId, name);
+        public System.Threading.Tasks.Task<bool> IsUserNameFreeAsync(int userId, string name) {
+            return base.Channel.IsUserNameFreeAsync(userId, name);
+        }
+        
+        public bool IsRoleNameFree(System.Nullable<int> roleId, string name) {
+            return base.Channel.IsRoleNameFree(roleId, name);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsRoleNameFreeAsync(System.Nullable<int> roleId, string name) {
+            return base.Channel.IsRoleNameFreeAsync(roleId, name);
         }
     }
     
@@ -1109,16 +1251,40 @@ namespace EventsListData.EventService {
     public interface IAdd {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddEvent", ReplyAction="http://tempuri.org/IAdd/AddEventResponse")]
-        void AddEvent(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId);
+        void AddEvent(string name, System.DateTime date, System.Nullable<int> organizerId, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddEvent", ReplyAction="http://tempuri.org/IAdd/AddEventResponse")]
-        System.Threading.Tasks.Task AddEventAsync(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId);
+        System.Threading.Tasks.Task AddEventAsync(string name, System.DateTime date, System.Nullable<int> organizerId, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddUser", ReplyAction="http://tempuri.org/IAdd/AddUserResponse")]
         void AddUser(string name, string password, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddUser", ReplyAction="http://tempuri.org/IAdd/AddUserResponse")]
         System.Threading.Tasks.Task AddUserAsync(string name, string password, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddRoleToUser", ReplyAction="http://tempuri.org/IAdd/AddRoleToUserResponse")]
+        void AddRoleToUser(string userName, int roleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddRoleToUser", ReplyAction="http://tempuri.org/IAdd/AddRoleToUserResponse")]
+        System.Threading.Tasks.Task AddRoleToUserAsync(string userName, int roleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddRole", ReplyAction="http://tempuri.org/IAdd/AddRoleResponse")]
+        void AddRole(string roleName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddRole", ReplyAction="http://tempuri.org/IAdd/AddRoleResponse")]
+        System.Threading.Tasks.Task AddRoleAsync(string roleName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddAddress", ReplyAction="http://tempuri.org/IAdd/AddAddressResponse")]
+        void AddAddress(string address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddAddress", ReplyAction="http://tempuri.org/IAdd/AddAddressResponse")]
+        System.Threading.Tasks.Task AddAddressAsync(string address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddCategory", ReplyAction="http://tempuri.org/IAdd/AddCategoryResponse")]
+        void AddCategory(string categoryName, System.Nullable<int> pid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddCategory", ReplyAction="http://tempuri.org/IAdd/AddCategoryResponse")]
+        System.Threading.Tasks.Task AddCategoryAsync(string categoryName, System.Nullable<int> pid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1148,11 +1314,11 @@ namespace EventsListData.EventService {
                 base(binding, remoteAddress) {
         }
         
-        public void AddEvent(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId) {
+        public void AddEvent(string name, System.DateTime date, System.Nullable<int> organizerId, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId) {
             base.Channel.AddEvent(name, date, organizerId, categoryId, imageUrl, description, addressId);
         }
         
-        public System.Threading.Tasks.Task AddEventAsync(string name, System.DateTime date, int organizerId, int categoryId, string imageUrl, string description, int addressId) {
+        public System.Threading.Tasks.Task AddEventAsync(string name, System.DateTime date, System.Nullable<int> organizerId, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId) {
             return base.Channel.AddEventAsync(name, date, organizerId, categoryId, imageUrl, description, addressId);
         }
         
@@ -1162,6 +1328,38 @@ namespace EventsListData.EventService {
         
         public System.Threading.Tasks.Task AddUserAsync(string name, string password, string email) {
             return base.Channel.AddUserAsync(name, password, email);
+        }
+        
+        public void AddRoleToUser(string userName, int roleId) {
+            base.Channel.AddRoleToUser(userName, roleId);
+        }
+        
+        public System.Threading.Tasks.Task AddRoleToUserAsync(string userName, int roleId) {
+            return base.Channel.AddRoleToUserAsync(userName, roleId);
+        }
+        
+        public void AddRole(string roleName) {
+            base.Channel.AddRole(roleName);
+        }
+        
+        public System.Threading.Tasks.Task AddRoleAsync(string roleName) {
+            return base.Channel.AddRoleAsync(roleName);
+        }
+        
+        public void AddAddress(string address) {
+            base.Channel.AddAddress(address);
+        }
+        
+        public System.Threading.Tasks.Task AddAddressAsync(string address) {
+            return base.Channel.AddAddressAsync(address);
+        }
+        
+        public void AddCategory(string categoryName, System.Nullable<int> pid) {
+            base.Channel.AddCategory(categoryName, pid);
+        }
+        
+        public System.Threading.Tasks.Task AddCategoryAsync(string categoryName, System.Nullable<int> pid) {
+            return base.Channel.AddCategoryAsync(categoryName, pid);
         }
     }
     
@@ -1175,11 +1373,53 @@ namespace EventsListData.EventService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteEvent", ReplyAction="http://tempuri.org/IDelete/DeleteEventResponse")]
         System.Threading.Tasks.Task DeleteEventAsync(int eventId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteFutureEventByIdAndUserId", ReplyAction="http://tempuri.org/IDelete/DeleteFutureEventByIdAndUserIdResponse")]
+        void DeleteFutureEventByIdAndUserId(int eventId, int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteFutureEventByIdAndUserId", ReplyAction="http://tempuri.org/IDelete/DeleteFutureEventByIdAndUserIdResponse")]
+        System.Threading.Tasks.Task DeleteFutureEventByIdAndUserIdAsync(int eventId, int userId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteUser", ReplyAction="http://tempuri.org/IDelete/DeleteUserResponse")]
         void DeleteUser(int userId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteUser", ReplyAction="http://tempuri.org/IDelete/DeleteUserResponse")]
         System.Threading.Tasks.Task DeleteUserAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteRole", ReplyAction="http://tempuri.org/IDelete/DeleteRoleResponse")]
+        void DeleteRole(int roleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteRole", ReplyAction="http://tempuri.org/IDelete/DeleteRoleResponse")]
+        System.Threading.Tasks.Task DeleteRoleAsync(int roleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteUserRole", ReplyAction="http://tempuri.org/IDelete/DeleteUserRoleResponse")]
+        void DeleteUserRole(string userName, int roleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteUserRole", ReplyAction="http://tempuri.org/IDelete/DeleteUserRoleResponse")]
+        System.Threading.Tasks.Task DeleteUserRoleAsync(string userName, int roleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteEmailByUserIdAndEmailId", ReplyAction="http://tempuri.org/IDelete/DeleteEmailByUserIdAndEmailIdResponse")]
+        void DeleteEmailByUserIdAndEmailId(int userId, int emailId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteEmailByUserIdAndEmailId", ReplyAction="http://tempuri.org/IDelete/DeleteEmailByUserIdAndEmailIdResponse")]
+        System.Threading.Tasks.Task DeleteEmailByUserIdAndEmailIdAsync(int userId, int emailId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeletePhoneByUserIdAndPhoneId", ReplyAction="http://tempuri.org/IDelete/DeletePhoneByUserIdAndPhoneIdResponse")]
+        void DeletePhoneByUserIdAndPhoneId(int userId, int phoneId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeletePhoneByUserIdAndPhoneId", ReplyAction="http://tempuri.org/IDelete/DeletePhoneByUserIdAndPhoneIdResponse")]
+        System.Threading.Tasks.Task DeletePhoneByUserIdAndPhoneIdAsync(int userId, int phoneId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteAddress", ReplyAction="http://tempuri.org/IDelete/DeleteAddressResponse")]
+        void DeleteAddress(int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteAddress", ReplyAction="http://tempuri.org/IDelete/DeleteAddressResponse")]
+        System.Threading.Tasks.Task DeleteAddressAsync(int addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteCategory", ReplyAction="http://tempuri.org/IDelete/DeleteCategoryResponse")]
+        void DeleteCategory(int categoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDelete/DeleteCategory", ReplyAction="http://tempuri.org/IDelete/DeleteCategoryResponse")]
+        System.Threading.Tasks.Task DeleteCategoryAsync(int categoryId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1217,12 +1457,68 @@ namespace EventsListData.EventService {
             return base.Channel.DeleteEventAsync(eventId);
         }
         
+        public void DeleteFutureEventByIdAndUserId(int eventId, int userId) {
+            base.Channel.DeleteFutureEventByIdAndUserId(eventId, userId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteFutureEventByIdAndUserIdAsync(int eventId, int userId) {
+            return base.Channel.DeleteFutureEventByIdAndUserIdAsync(eventId, userId);
+        }
+        
         public void DeleteUser(int userId) {
             base.Channel.DeleteUser(userId);
         }
         
         public System.Threading.Tasks.Task DeleteUserAsync(int userId) {
             return base.Channel.DeleteUserAsync(userId);
+        }
+        
+        public void DeleteRole(int roleId) {
+            base.Channel.DeleteRole(roleId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteRoleAsync(int roleId) {
+            return base.Channel.DeleteRoleAsync(roleId);
+        }
+        
+        public void DeleteUserRole(string userName, int roleId) {
+            base.Channel.DeleteUserRole(userName, roleId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteUserRoleAsync(string userName, int roleId) {
+            return base.Channel.DeleteUserRoleAsync(userName, roleId);
+        }
+        
+        public void DeleteEmailByUserIdAndEmailId(int userId, int emailId) {
+            base.Channel.DeleteEmailByUserIdAndEmailId(userId, emailId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteEmailByUserIdAndEmailIdAsync(int userId, int emailId) {
+            return base.Channel.DeleteEmailByUserIdAndEmailIdAsync(userId, emailId);
+        }
+        
+        public void DeletePhoneByUserIdAndPhoneId(int userId, int phoneId) {
+            base.Channel.DeletePhoneByUserIdAndPhoneId(userId, phoneId);
+        }
+        
+        public System.Threading.Tasks.Task DeletePhoneByUserIdAndPhoneIdAsync(int userId, int phoneId) {
+            return base.Channel.DeletePhoneByUserIdAndPhoneIdAsync(userId, phoneId);
+        }
+        
+        public void DeleteAddress(int addressId) {
+            base.Channel.DeleteAddress(addressId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteAddressAsync(int addressId) {
+            return base.Channel.DeleteAddressAsync(addressId);
+        }
+        
+        public void DeleteCategory(int categoryId) {
+            base.Channel.DeleteCategory(categoryId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteCategoryAsync(int categoryId) {
+            return base.Channel.DeleteCategoryAsync(categoryId);
         }
     }
     
@@ -1231,16 +1527,40 @@ namespace EventsListData.EventService {
     public interface IUpdate {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditEvent", ReplyAction="http://tempuri.org/IUpdate/EditEventResponse")]
-        void EditEvent(int eventId, string name, System.DateTime date, int categoryId, string imageUrl, string description, int addressId);
+        void EditEvent(int eventId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditEvent", ReplyAction="http://tempuri.org/IUpdate/EditEventResponse")]
-        System.Threading.Tasks.Task EditEventAsync(int eventId, string name, System.DateTime date, int categoryId, string imageUrl, string description, int addressId);
+        System.Threading.Tasks.Task EditEventAsync(int eventId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditEventByUserId", ReplyAction="http://tempuri.org/IUpdate/EditEventByUserIdResponse")]
+        void EditEventByUserId(int eventId, int userId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditEventByUserId", ReplyAction="http://tempuri.org/IUpdate/EditEventByUserIdResponse")]
+        System.Threading.Tasks.Task EditEventByUserIdAsync(int eventId, int userId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditUserInfo", ReplyAction="http://tempuri.org/IUpdate/EditUserInfoResponse")]
         void EditUserInfo(int userId, string name, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditUserInfo", ReplyAction="http://tempuri.org/IUpdate/EditUserInfoResponse")]
         System.Threading.Tasks.Task EditUserInfoAsync(int userId, string name, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditRole", ReplyAction="http://tempuri.org/IUpdate/EditRoleResponse")]
+        void EditRole(int roleId, string roleName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditRole", ReplyAction="http://tempuri.org/IUpdate/EditRoleResponse")]
+        System.Threading.Tasks.Task EditRoleAsync(int roleId, string roleName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditAddress", ReplyAction="http://tempuri.org/IUpdate/EditAddressResponse")]
+        void EditAddress(int addressId, string address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditAddress", ReplyAction="http://tempuri.org/IUpdate/EditAddressResponse")]
+        System.Threading.Tasks.Task EditAddressAsync(int addressId, string address);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditCategory", ReplyAction="http://tempuri.org/IUpdate/EditCategoryResponse")]
+        void EditCategory(int categoryId, System.Nullable<int> pid, string categoryName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditCategory", ReplyAction="http://tempuri.org/IUpdate/EditCategoryResponse")]
+        System.Threading.Tasks.Task EditCategoryAsync(int categoryId, System.Nullable<int> pid, string categoryName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1270,12 +1590,20 @@ namespace EventsListData.EventService {
                 base(binding, remoteAddress) {
         }
         
-        public void EditEvent(int eventId, string name, System.DateTime date, int categoryId, string imageUrl, string description, int addressId) {
+        public void EditEvent(int eventId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId) {
             base.Channel.EditEvent(eventId, name, date, categoryId, imageUrl, description, addressId);
         }
         
-        public System.Threading.Tasks.Task EditEventAsync(int eventId, string name, System.DateTime date, int categoryId, string imageUrl, string description, int addressId) {
+        public System.Threading.Tasks.Task EditEventAsync(int eventId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId) {
             return base.Channel.EditEventAsync(eventId, name, date, categoryId, imageUrl, description, addressId);
+        }
+        
+        public void EditEventByUserId(int eventId, int userId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId) {
+            base.Channel.EditEventByUserId(eventId, userId, name, date, categoryId, imageUrl, description, addressId);
+        }
+        
+        public System.Threading.Tasks.Task EditEventByUserIdAsync(int eventId, int userId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId) {
+            return base.Channel.EditEventByUserIdAsync(eventId, userId, name, date, categoryId, imageUrl, description, addressId);
         }
         
         public void EditUserInfo(int userId, string name, string email) {
@@ -1284,6 +1612,30 @@ namespace EventsListData.EventService {
         
         public System.Threading.Tasks.Task EditUserInfoAsync(int userId, string name, string email) {
             return base.Channel.EditUserInfoAsync(userId, name, email);
+        }
+        
+        public void EditRole(int roleId, string roleName) {
+            base.Channel.EditRole(roleId, roleName);
+        }
+        
+        public System.Threading.Tasks.Task EditRoleAsync(int roleId, string roleName) {
+            return base.Channel.EditRoleAsync(roleId, roleName);
+        }
+        
+        public void EditAddress(int addressId, string address) {
+            base.Channel.EditAddress(addressId, address);
+        }
+        
+        public System.Threading.Tasks.Task EditAddressAsync(int addressId, string address) {
+            return base.Channel.EditAddressAsync(addressId, address);
+        }
+        
+        public void EditCategory(int categoryId, System.Nullable<int> pid, string categoryName) {
+            base.Channel.EditCategory(categoryId, pid, categoryName);
+        }
+        
+        public System.Threading.Tasks.Task EditCategoryAsync(int categoryId, System.Nullable<int> pid, string categoryName) {
+            return base.Channel.EditCategoryAsync(categoryId, pid, categoryName);
         }
     }
 }

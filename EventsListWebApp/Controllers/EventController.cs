@@ -14,6 +14,7 @@ namespace EventsListWebApp.Controllers
         private readonly IEventOperation _eventOperation;
         private static readonly ILog Log = LogManager.GetLogger(typeof(EventController));
         private const string EVENTS_VIEW = "Events";
+        private const string EDIT_EVENT_VIEW = "EditEvent";
 
         public EventController(IBusinessProvider providerInput, IEventOperation eventOperation)
         {
@@ -45,9 +46,25 @@ namespace EventsListWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("[Events][_provider.GetEvents()]; " + ex.Message);
+                Log.Error(ex.Message);
                 ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
+            }
+        }
+
+        [Ajax]
+        [Authorize]
+        public PartialViewResult MyEvents()
+        {
+            try
+            {
+                return PartialView(_provider.GetEventsByUserId(((UserPrincipal)HttpContext.User).UserId));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[Current userId = " + ((UserPrincipal)HttpContext.User).UserId + " ]; " + ex.Message);
+                ViewBag.Error = ex.Message;
+                return PartialView();
             }
         }
 
@@ -59,22 +76,22 @@ namespace EventsListWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("[DetailEvent][_provider.GetEventInfoDetailById(id)][id = " + id + " ]; " + ex.Message);
+                Log.Error("[id = " + id + " ]; " + ex.Message);
                 ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
             }
         }
 
-        [Admin]
+        [Authorize]
         [HttpGet]
-        public ViewResult CreateEvent()
+        public ActionResult CreateEvent()
         {
             return View(new Event());
         }
 
-        [Admin]
+        [Authorize]
         [HttpPost]
-        public ViewResult CreateEvent(Event createdEvent)
+        public ActionResult CreateEvent(Event createdEvent)
         {
             if (ModelState.IsValid)
             {
@@ -83,13 +100,13 @@ namespace EventsListWebApp.Controllers
                     _eventOperation.AddEvent(
                         createdEvent.Name,
                         createdEvent.Date,
-                        createdEvent.OrganizerId,
+                        ((UserPrincipal)HttpContext.User).UserId,
                         createdEvent.CategoryId,
                         createdEvent.ImageUrl,
                         createdEvent.Description,
                         createdEvent.AddressId);
 
-                    return View("CreateEvent");
+                    return RedirectToAction("Index", "Home");
                 }
                 catch (Exception ex)
                 {
@@ -101,9 +118,17 @@ namespace EventsListWebApp.Controllers
         }
 
         [Admin]
-        public void DeleteEvent(int eventId)
+        public RedirectToRouteResult DeleteEvent(int eventId)
         {
             _eventOperation.DeleteEvent(eventId);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public RedirectToRouteResult DeleteMyEvent(int eventId)
+        {
+            _eventOperation.DeleteFutureEventByIdAndUserId(eventId, ((UserPrincipal)HttpContext.User).UserId);
+            return RedirectToAction("Index", "Account");
         }
 
         [HttpGet]
@@ -117,7 +142,7 @@ namespace EventsListWebApp.Controllers
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -140,10 +165,45 @@ namespace EventsListWebApp.Controllers
             return View(eventModel);
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult EditMyEvent(int eventId)
+        {
+            try
+            {
+                return View(EDIT_EVENT_VIEW, _provider.GetEventById(eventId));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                return RedirectToAction("Index", "Account");
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult EditMyEvent(Event eventModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _eventOperation.EditEvent(
+                    eventModel.Id,
+                    eventModel.Name,
+                    eventModel.Date,
+                    eventModel.CategoryId,
+                    eventModel.ImageUrl,
+                    eventModel.Description,
+                    eventModel.AddressId);
+                return RedirectToAction("Index", "Account");
+            }
+            return View(EDIT_EVENT_VIEW, eventModel);
+        }
+
         public PartialViewResult SearchBar()
         {
             return PartialView();
         }
+
         public PartialViewResult EventsBySearch(int? categoryId, DateTime? date, int? state)
         {
             try
@@ -156,6 +216,76 @@ namespace EventsListWebApp.Controllers
                 ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
             }
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        public ActionResult AddressesList()
+        {
+            return View(_provider.GetAddresses());
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        [HttpGet]
+        public ActionResult AddAddress()
+        {
+            return View(new Address());
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        [HttpPost]
+        public ActionResult AddAddress(Address createdAddress)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _eventOperation.AddAddress(createdAddress.AddressString);
+                    JsonController.ClearAddressesCache();
+                    return RedirectToAction("AddressesList");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                }
+            }
+            return View(createdAddress);
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        [HttpGet]
+        public ActionResult EditAddress(int addressId)
+        {
+            return View(_provider.GetAddressById(addressId));
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        [HttpPost]
+        public ActionResult EditAddress(Address editedAddress)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _eventOperation.EditAddress(
+                        editedAddress.Id,
+                        editedAddress.AddressString
+                    );
+                    JsonController.ClearAddressesCache();
+                    return RedirectToAction("AddressesList");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                }
+            }
+            return View(editedAddress);
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        public RedirectToRouteResult DeleteAddress(int addressId)
+        {
+            _eventOperation.DeleteAddress(addressId);
+            return RedirectToAction("AddressesList");
         }
     }
 }

@@ -17,11 +17,34 @@
 <body>
     <div class="topbar">
         <div class="topbar-title"><a href="/Home/Index">Home</a></div>
+
+        <div><a href="/Event/CreateEvent">Create</a></div>
+        @if (HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
+        {
+            <div>
+                <a href="#" onclick="loadSearchBar('categories')">Search</a>
+            </div>
+        }
+        @if (HttpContext.Current.User.IsInRole("Admin") || HttpContext.Current.User.IsInRole("Editor"))
+        {
+            <div>
+                <a href="#">Operations</a>
+                <div class="downdiv">
+                    <ul>
+                        <li><span><a href="/Event/AddressesList">Addresses</a></span></li>
+                        <li><span><a href="/Category/Index">Categories</a></span></li>
+                    @if (HttpContext.Current.User.IsInRole("Admin"))
+                    {
+
+                        <li><span><a href="/Account/UsersList">Users</a></span></li>
+                        <li><span><a href="/Account/RolesList">Roles</a></span></li>
+                    }
+                    </ul>
+                </div>
+            </div>
+        }
         @if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
         {
-            <div><a href="/Event/CreateEvent">Create</a></div>
-            <div><a href="#" onclick="loadSearchBar('categories')">Search</a></div>
-        
             <div class="topbar-user"><a href="/Account/Index">@HttpContext.Current.User.Identity.Name.ToUpperInvariant()</a></div>
         }
         else
@@ -31,28 +54,23 @@
     </div>
 
     <div class="categories-div" id="categories"></div>
-<div class="body-content">
-    @RenderBody()
-</div>
-    @RenderSection("scripts",false)
-    
+    <div class="body-content">
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", false)
+
     @if (HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
     {
         <script>
-            $(function() {
-                if ('@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"]' === 'Home') {
-                    loadCategoriesBar();
-                    getAllEvents();
-                }
+            $(function () {
+                loadCategoriesBar();
+                getAllEvents();
             });
 
+            function loadSearchBar(idToLoad) {
+                $("#" + idToLoad).load("/Event/SearchBar");
+            }
         </script>
     }
-    <script>
-        function loadSearchBar(idToLoad) {
-            $("#" + idToLoad).load("/Event/SearchBar");
-        }
-    </script>
-
 </body>
 </html>

@@ -10,12 +10,12 @@ namespace EventsListCommon.Models
         public string Name { get; set; }
         public DateTime Date { get; set; }
         [DisplayName("Organizer")]
-        public int OrganizerId { get; set; }
+        public int? OrganizerId { get; set; }
         [DisplayName("Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public string ImageUrl { get; set; }
         [DisplayName("Address")]
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         public string Description { get; set; }
     }
 }

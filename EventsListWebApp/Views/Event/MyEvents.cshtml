@@ -23,15 +23,13 @@
                             <p>@itemEvent.Name</p>
                             <p>@itemEvent.Date.ToShortDateString()</p>
                         </div>
-                        @if (HttpContext.Current.User.IsInRole("Admin") ||
-                             HttpContext.Current.User.IsInRole("Editor"))
-                        {
-                            <div class="event-block-edit">
-                                <a href="/Event/EditEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-edit">
-                                    <button class="btn btn-info">Edit</button>
-</a><a href="/Event/DeleteEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-delete"><button class="btn btn-danger">Delete</button></a>
-                            </div>
-                        }
+                        <div class="event-block-edit">
+                            <a href="/Event/EditMyEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-edit">
+                                <button class="btn btn-info">Edit</button>
+                            </a>@if (itemEvent.Date.Date > DateTime.Today)
+                            {<a href="/Event/DeleteMyEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-delete"><button class="btn btn-danger">Delete</button></a>
+                            }
+                        </div>
                     </div>
                 </div>
             }
@@ -39,7 +37,7 @@
         }
         else
         {
-            <p> Событий нет </p>
+            <p>У Вас пока нет событий</p>
         }
     }
     else

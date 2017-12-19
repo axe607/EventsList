@@ -11,6 +11,8 @@ namespace EventsListService.Contracts.Models.Dto
     public class RoleDto
     {
         [DataMember]
+        public int Id { get; set; }
+        [DataMember]
         public string RoleName { get; set; }
     }
 }

@@ -13,11 +13,13 @@ namespace EventsListWebApp.Controllers
         private const string ADDRESSES_KEY = "addresses_key";
 
         private readonly IBusinessProvider _provider;
+        private readonly IUserProvider _userProvider;
         private static readonly ILog Log = LogManager.GetLogger(typeof(JsonController));
 
-        public JsonController(IBusinessProvider providerInput)
+        public JsonController(IBusinessProvider providerInput, IUserProvider userProvider)
         {
             _provider = providerInput;
+            _userProvider = userProvider;
         }
 
         [Ajax]
@@ -56,5 +58,33 @@ namespace EventsListWebApp.Controllers
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [Ajax]
+        [Admin]
+        public JsonResult GetRolesNotInUser(string userName)
+        {
+            try
+            {
+                return Json(_userProvider.GetRolesNotInUser(userName), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        public static void ClearCategroriesCache()
+        {
+            HttpRuntime.Cache.Remove(CATEGORIES_KEY);
+        }
+
+        [AllowTo(Roles = "Admin,Editor")]
+        public static void ClearAddressesCache()
+        {
+            HttpRuntime.Cache.Remove(ADDRESSES_KEY);
+        }
+
     }
 }

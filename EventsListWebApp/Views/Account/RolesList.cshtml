@@ -1,0 +1,45 @@
+﻿@model IEnumerable<EventsListCommon.Models.Role>
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h4>Roles</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <a href="/Account/AddRole"><button type="button" class="btn btn-success">Create Role</button></a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @foreach (var role in Model)
+        {
+            <div class="alert alert-warning">
+                <p id="@role.Id">@role.RoleName</p>
+                <a href="/Account/EditRole?roleId=@role.Id"><button type="button" id="btn_edit_user" class="btn btn-info">Edit</button></a>
+                <button type="button" id="btn_del_user" class="btn btn-danger" onclick="DeleteRole(@role.Id)">Delete</button>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        function DeleteRole(idToDel) {
+            $.ajax({
+                url: "/Account/DeleteRole",
+                data:
+                {
+                    roleId: idToDel
+                },
+                success: function () {
+                    $("#" + idToDel).closest("div")[0].innerHTML = "Role deleted";
+                },
+                error: function (error) {
+                    console.log("[Error on delete role] " + error.status + " - " + error.statusText);
+                }
+            });
+        }
+    </script>
+}

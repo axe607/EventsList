@@ -3,14 +3,7 @@
 @{
     ViewBag.Title = "EditUserInfo";
 }
-<style>
-    b {
-        font-size: 16px;
-        color: #ef5350;
-        font-weight: 500;
-        font-style: italic;
-    }
-</style>
+<link href="~/Content/check.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -19,75 +12,143 @@
         <h4>Edit User Info</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model=>model.Id)
         <div class="form-group">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                <b id="btn_check"></b>
+                <b id="check"></b>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",type="email" } })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        @if (HttpContext.Current.User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
             </div>
-        </div>
-    </div>
-   
-}
+            <div id="roles"></div>
+            <div class="form-group">
+                    <span><button class="btn btn-success" name="btn_role_add" type="button" onclick="AddRole()">Add</button></span>
+                    <select class="form-control col-md-10 col-md-offset-2" id="roles_not_in_user"></select>
+                </div>
+            
+        }
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+        }
 @section scripts
 {
-    <script>
-        $("#btn_check").click(function() {
-            var name = $("[name='UserName']").val();
-            $.ajax({
-                url: "/Account/IsNameFree",
-                data:
-                {
-                    name: name
-                },
-                success: function(result) {
-                    if (result === "True") {
-                        $("#btn_check")[0].innerText = "Name is free";
-                        $("#btn_check")[0].className = "btn btn-success";
-                    } else {
-                        $("#btn_check")[0].innerText = "Name isn't free";
-                        $("#btn_check")[0].className = "btn btn-danger";
-                    }
-                },
-                error: function(error) {
-                    console.log(error.status + " - " + error.statusText);
-                }
+    @if (HttpContext.Current.User.IsInRole("Admin"))
+    {
+        <script src="~/Scripts/JsonToSelect.js"></script>
+        <script>
+            var userName = "@Model.UserName";
+            $(function() {
+                loadRoles(userName);
+                setRolesNotInUser("roles_not_in_user", userName);
             });
-        });
-        $("[name='UserName']").focusout(function() {
-            var name = $("[name='UserName']").val();
-            $.ajax({
-                url: "/Account/IsNameFree",
-                data:
-                {
-                    name: name
-                },
-                success: function(result) {
-                    if (result === "True") {
-                        $("#btn_check")[0].innerText = "";
-                    } else if(result==="False"){
-                        $("#btn_check")[0].innerText = "Name isn't free";
+
+            $("[name='UserName']").focusout(function () {
+                var nameToCheck = $("[name='UserName']").val();
+                $.ajax({
+                    url: "/Account/IsUserNameFree",
+                    data:
+                    {
+                        userId: "@Model.Id",
+                        nameToCheck: nameToCheck
+                    },
+                    success: function(result) {
+                        if (result === "True") {
+                            $("#check")[0].innerText = "";
+                        } else if (result === "False") {
+                            $("#check")[0].innerText = "Name isn't free";
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error.status + " - " + error.statusText);
                     }
-                },
-                error: function(error) {
-                    console.log(error.status + " - " + error.statusText);
-                }
+                });
             });
-        });
-    </script>
+
+            function loadRoles(userName) {
+                $("#roles").load("/Account/GetUserRoles?userName=" + userName);
+            }
+
+            function AddRole() {
+                var roleId = $("#roles_not_in_user option:selected").val();
+                $.ajax({
+                    url: "/Account/AddUserRole",
+                    data:
+                    {
+                        userName: userName,
+                        roleId: roleId
+                    },
+                    success: function() {
+                        loadRoles(userName);
+                        setRolesNotInUser("roles_not_in_user", userName);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            function DeleteRole(roleId) {
+                $.ajax({
+                    url: "/Account/DeleteUserRole",
+                    data:
+                    {
+                        userName: userName,
+                        roleId: roleId
+                    },
+                    success: function() {
+                        loadRoles(userName);
+                        setRolesNotInUser("roles_not_in_user", userName);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        </script>
+    }
+    else
+    {
+        <script>
+            $("[name='UserName']").focusout(function () {
+                var name = $("[name='UserName']").val();
+                $.ajax({
+                    url: "/Account/IsUserNameFree",
+                    data:
+                    {
+                        nameToCheck: name
+                    },
+                    success: function (result) {
+                        if (result === "True") {
+                            $("#check")[0].innerText = "";
+                        } else if (result === "False") {
+                            $("#check")[0].innerText = "Name isn't free";
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error.status + " - " + error.statusText);
+                    }
+                });
+            });
+        </script>
+    }
 }

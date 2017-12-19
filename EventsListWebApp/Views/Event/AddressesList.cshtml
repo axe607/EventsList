@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EventsListCommon.Models.Address>
+@{
+    ViewBag.Title = "Addresses";
+}
+
+<h4>Addresses</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <a href="/Event/AddAddress"><button type="button" class="btn btn-success">Create Address</button></a>
+    </div>
+</div>
+<hr />
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var address in Model)
+            {
+                <div class="alert alert-warning">
+                    <p id="@address.Id">@address.AddressString</p>
+                    <a href="/Event/EditAddress?addressId=@address.Id"><button type="button" id="btn_edit_user" class="btn btn-info">Edit</button></a>
+                    <button type="button" class="btn btn-danger" onclick="DeleteAddress(@address.Id)">Delete</button>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div><p>Addresses not defined</p></div>
+}
+@section scripts
+{
+    <script>
+        function DeleteAddress(idToDel) {
+            $.ajax({
+                url: "/Event/DeleteAddress",
+                data:
+                {
+                    addressId: idToDel
+                },
+                success: function () {
+                    $("#" + idToDel).closest("div")[0].innerHTML = "Address deleted";
+                },
+                error: function (error) {
+                    console.log("[Error on delete address] " + error.status + " - " + error.statusText);
+                }
+            });
+        }
+    </script>
+}

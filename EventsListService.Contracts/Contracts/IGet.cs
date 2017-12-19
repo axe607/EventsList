@@ -19,6 +19,10 @@ namespace EventsListService.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
+        List<EventDto> GetEventsByUserId(int userId);
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         EventDetailDto GetEventInfoDetailById(int eventId);
 
         [OperationContract]
@@ -35,7 +39,15 @@ namespace EventsListService.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
+        CategoryDto GetCategoryById(int categoryId);
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         List<AddressDto> GetAddresses();
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        AddressDto GetAddressById(int addressId);
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -47,14 +59,33 @@ namespace EventsListService.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
+        List<UserDto> GetUsers();
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         UserDto GetUserByName(string name);
 
         List<RoleDto> GetRolesByUserId(int id);
 
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        List<RoleDto> GetRolesNotInUser(string userName);
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        List<RoleDto> GetRoles();
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        RoleDto GetRolesById(int roleId);
+
+        [OperationContract]
         bool IsValidUser(string username, string password);
 
         [OperationContract]
-        bool IsNameFree(int userId, string name);
+        bool IsUserNameFree(int userId, string name);
+
+        [OperationContract]
+        bool IsRoleNameFree(int? roleId, string name);
     }
 }

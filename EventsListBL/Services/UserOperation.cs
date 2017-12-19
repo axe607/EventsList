@@ -25,5 +25,40 @@ namespace EventsListBL.Services
         {
             _dataProvider.DeleteUser(userId);
         }
+
+        public void AddRoleToUser(string userName, int roleId)
+        {
+            _dataProvider.AddRoleToUser(userName, roleId);
+        }
+
+        public void DeleteUserRole(string userName, int roleId)
+        {
+            _dataProvider.DeleteUserRole(userName, roleId);
+        }
+
+        public void AddRole(string roleName)
+        {
+            _dataProvider.AddRole(roleName);
+        }
+
+        public void EditRole(int roleId, string roleName)
+        {
+            _dataProvider.EditRole(roleId, roleName);
+        }
+
+        public void DeleteRole(int roleId)
+        {
+            _dataProvider.DeleteRole(roleId);
+        }
+
+        public void DeleteEmailByUserIdAndEmailId(int userId, int emailId)
+        {
+            _dataProvider.DeleteEmailByUserIdAndEmailId(userId, emailId);
+        }
+
+        public void DeletePhoneByUserIdAndPhoneId(int userId, int phoneId)
+        {
+            _dataProvider.DeletePhoneByUserIdAndPhoneId(userId, phoneId);
+        }
     }
 }

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EventsListCommon.Models.Category>
+@{
+    ViewBag.Title = "Categories";
+}
+
+<h4>Addresses</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <a href="/Category/AddCategory" class="btn btn-success">Create Category</a>
+    </div>
+</div>
+<hr />
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var category in Model)
+            {
+                <div class="alert alert-warning">
+                    <p id="@category.Id">@category.Name</p>
+                    <a href="/Category/EditCategory?categoryId=@category.Id" id="btn_edit_user" class="btn btn-info">Edit</a>
+                    <button type="button" class="btn btn-danger" onclick="DeleteCategory(@category.Id)">Delete</button>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div><p>Categories not defined</p></div>
+}
+@section scripts
+{
+    <script>
+        function DeleteCategory(idToDel) {
+            $.ajax({
+                url: "/Category/DeleteCategory",
+                data:
+                {
+                    categoryId: idToDel
+                },
+                success: function () {
+                    $("#" + idToDel).closest("div")[0].innerHTML = "Category deleted";
+                },
+                error: function (error) {
+                    console.log("[Error on delete category] " + error.status + " - " + error.statusText);
+                }
+            });
+        }
+    </script>
+}

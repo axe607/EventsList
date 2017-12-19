@@ -26,6 +26,15 @@
   <wsdl:message name="IGet_GetEventsByCategoryId_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="IGet_GetEventsByUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsByUserId" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetEventsByUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsByUserIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetEventsByUserId_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="IGet_GetEventInfoDetailById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetEventInfoDetailById" />
   </wsdl:message>
@@ -33,7 +42,7 @@
     <wsdl:part name="parameters" element="tns:GetEventInfoDetailByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetEventInfoDetailById_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q3:ServiceFault" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q4:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_GetEventById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetEventById" />
@@ -42,7 +51,7 @@
     <wsdl:part name="parameters" element="tns:GetEventByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetEventById_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q4:ServiceFault" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q5:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_GetEventsBySearchData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetEventsBySearchData" />
@@ -51,7 +60,7 @@
     <wsdl:part name="parameters" element="tns:GetEventsBySearchDataResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetEventsBySearchData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q5:ServiceFault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_GetCategories_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCategories" />
@@ -60,7 +69,16 @@
     <wsdl:part name="parameters" element="tns:GetCategoriesResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetCategories_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q6:ServiceFault" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetCategoryById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoryById" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetCategoryById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoryByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetCategoryById_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_GetAddresses_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAddresses" />
@@ -69,7 +87,16 @@
     <wsdl:part name="parameters" element="tns:GetAddressesResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetAddresses_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q7:ServiceFault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q9:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetAddressById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAddressById" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetAddressById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAddressByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetAddressById_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_GetEmailsByOrganizerId_InputMessage">
     <wsdl:part name="parameters" element="tns:GetEmailsByOrganizerId" />
@@ -78,7 +105,7 @@
     <wsdl:part name="parameters" element="tns:GetEmailsByOrganizerIdResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetEmailsByOrganizerId_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q8:ServiceFault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q11:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_GetPhonesByOrganizerId_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPhonesByOrganizerId" />
@@ -87,7 +114,16 @@
     <wsdl:part name="parameters" element="tns:GetPhonesByOrganizerIdResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetPhonesByOrganizerId_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q9:ServiceFault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q12:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsers" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetUsers_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_GetUserByName_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserByName" />
@@ -96,7 +132,34 @@
     <wsdl:part name="parameters" element="tns:GetUserByNameResponse" />
   </wsdl:message>
   <wsdl:message name="IGet_GetUserByName_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q10:ServiceFault" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q14:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRolesNotInUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRolesNotInUser" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRolesNotInUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRolesNotInUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRolesNotInUser_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q15:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoles" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRoles_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q16:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRolesById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRolesById" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRolesById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRolesByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_GetRolesById_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.DtoExceptions" name="detail" element="q17:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="IGet_IsValidUser_InputMessage">
     <wsdl:part name="parameters" element="tns:IsValidUser" />
@@ -104,11 +167,17 @@
   <wsdl:message name="IGet_IsValidUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsValidUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IGet_IsNameFree_InputMessage">
-    <wsdl:part name="parameters" element="tns:IsNameFree" />
+  <wsdl:message name="IGet_IsUserNameFree_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserNameFree" />
   </wsdl:message>
-  <wsdl:message name="IGet_IsNameFree_OutputMessage">
-    <wsdl:part name="parameters" element="tns:IsNameFreeResponse" />
+  <wsdl:message name="IGet_IsUserNameFree_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserNameFreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGet_IsRoleNameFree_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsRoleNameFree" />
+  </wsdl:message>
+  <wsdl:message name="IGet_IsRoleNameFree_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsRoleNameFreeResponse" />
   </wsdl:message>
   <wsdl:message name="IAdd_AddEvent_InputMessage">
     <wsdl:part name="parameters" element="tns:AddEvent" />
@@ -122,11 +191,41 @@
   <wsdl:message name="IAdd_AddUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IAdd_AddRoleToUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRoleToUser" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddRoleToUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRoleToUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRole" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddAddress_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAddress" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddAddress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCategory" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCategoryResponse" />
+  </wsdl:message>
   <wsdl:message name="IDelete_DeleteEvent_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteEvent" />
   </wsdl:message>
   <wsdl:message name="IDelete_DeleteEvent_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteFutureEventByIdAndUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFutureEventByIdAndUserId" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteFutureEventByIdAndUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFutureEventByIdAndUserIdResponse" />
   </wsdl:message>
   <wsdl:message name="IDelete_DeleteUser_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteUser" />
@@ -134,17 +233,77 @@
   <wsdl:message name="IDelete_DeleteUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IDelete_DeleteRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRole" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteUserRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserRole" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteUserRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteEmailByUserIdAndEmailId_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEmailByUserIdAndEmailId" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteEmailByUserIdAndEmailId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEmailByUserIdAndEmailIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeletePhoneByUserIdAndPhoneId_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePhoneByUserIdAndPhoneId" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeletePhoneByUserIdAndPhoneId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePhoneByUserIdAndPhoneIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteAddress_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAddress" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteAddress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCategory" />
+  </wsdl:message>
+  <wsdl:message name="IDelete_DeleteCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCategoryResponse" />
+  </wsdl:message>
   <wsdl:message name="IUpdate_EditEvent_InputMessage">
     <wsdl:part name="parameters" element="tns:EditEvent" />
   </wsdl:message>
   <wsdl:message name="IUpdate_EditEvent_OutputMessage">
     <wsdl:part name="parameters" element="tns:EditEventResponse" />
   </wsdl:message>
+  <wsdl:message name="IUpdate_EditEventByUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditEventByUserId" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditEventByUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditEventByUserIdResponse" />
+  </wsdl:message>
   <wsdl:message name="IUpdate_EditUserInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:EditUserInfo" />
   </wsdl:message>
   <wsdl:message name="IUpdate_EditUserInfo_OutputMessage">
     <wsdl:part name="parameters" element="tns:EditUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditRole" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditAddress_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditAddress" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditAddress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditCategory" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditCategoryResponse" />
   </wsdl:message>
   <wsdl:portType name="IGet">
     <wsdl:operation name="GetEvents">
@@ -156,6 +315,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetEventsByCategoryId" message="tns:IGet_GetEventsByCategoryId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetEventsByCategoryIdResponse" message="tns:IGet_GetEventsByCategoryId_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetEventsByCategoryIdServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetEventsByCategoryId_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsByUserId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetEventsByUserId" message="tns:IGet_GetEventsByUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetEventsByUserIdResponse" message="tns:IGet_GetEventsByUserId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetEventsByUserIdServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetEventsByUserId_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetEventInfoDetailById">
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetEventInfoDetailById" message="tns:IGet_GetEventInfoDetailById_InputMessage" />
@@ -177,10 +341,20 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetCategoriesResponse" message="tns:IGet_GetCategories_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetCategoriesServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetCategories_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetCategoryById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetCategoryById" message="tns:IGet_GetCategoryById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetCategoryByIdResponse" message="tns:IGet_GetCategoryById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetCategoryByIdServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetCategoryById_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetAddresses">
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetAddresses" message="tns:IGet_GetAddresses_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetAddressesResponse" message="tns:IGet_GetAddresses_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetAddressesServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetAddresses_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetAddressById" message="tns:IGet_GetAddressById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetAddressByIdResponse" message="tns:IGet_GetAddressById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetAddressByIdServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetAddressById_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetEmailsByOrganizerId">
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetEmailsByOrganizerId" message="tns:IGet_GetEmailsByOrganizerId_InputMessage" />
@@ -192,18 +366,42 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetPhonesByOrganizerIdResponse" message="tns:IGet_GetPhonesByOrganizerId_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetPhonesByOrganizerIdServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetPhonesByOrganizerId_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetUsers" message="tns:IGet_GetUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetUsersResponse" message="tns:IGet_GetUsers_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetUsersServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetUsers_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetUserByName">
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetUserByName" message="tns:IGet_GetUserByName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetUserByNameResponse" message="tns:IGet_GetUserByName_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetUserByNameServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetUserByName_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetRolesNotInUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetRolesNotInUser" message="tns:IGet_GetRolesNotInUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetRolesNotInUserResponse" message="tns:IGet_GetRolesNotInUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetRolesNotInUserServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetRolesNotInUser_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetRoles" message="tns:IGet_GetRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetRolesResponse" message="tns:IGet_GetRoles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetRolesServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetRoles_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRolesById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/GetRolesById" message="tns:IGet_GetRolesById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/GetRolesByIdResponse" message="tns:IGet_GetRolesById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGet/GetRolesByIdServiceFaultFault" name="ServiceFaultFault" message="tns:IGet_GetRolesById_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="IsValidUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/IsValidUser" message="tns:IGet_IsValidUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/IsValidUserResponse" message="tns:IGet_IsValidUser_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="IsNameFree">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGet/IsNameFree" message="tns:IGet_IsNameFree_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGet/IsNameFreeResponse" message="tns:IGet_IsNameFree_OutputMessage" />
+    <wsdl:operation name="IsUserNameFree">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/IsUserNameFree" message="tns:IGet_IsUserNameFree_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/IsUserNameFreeResponse" message="tns:IGet_IsUserNameFree_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsRoleNameFree">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/IsRoleNameFree" message="tns:IGet_IsRoleNameFree_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/IsRoleNameFreeResponse" message="tns:IGet_IsRoleNameFree_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IAdd">
@@ -215,15 +413,59 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddUser" message="tns:IAdd_AddUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddUserResponse" message="tns:IAdd_AddUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddRoleToUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddRoleToUser" message="tns:IAdd_AddRoleToUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddRoleToUserResponse" message="tns:IAdd_AddRoleToUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddRole" message="tns:IAdd_AddRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddRoleResponse" message="tns:IAdd_AddRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddAddress">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddAddress" message="tns:IAdd_AddAddress_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddAddressResponse" message="tns:IAdd_AddAddress_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddCategory" message="tns:IAdd_AddCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddCategoryResponse" message="tns:IAdd_AddCategory_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IDelete">
     <wsdl:operation name="DeleteEvent">
       <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteEvent" message="tns:IDelete_DeleteEvent_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteEventResponse" message="tns:IDelete_DeleteEvent_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="DeleteFutureEventByIdAndUserId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteFutureEventByIdAndUserId" message="tns:IDelete_DeleteFutureEventByIdAndUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteFutureEventByIdAndUserIdResponse" message="tns:IDelete_DeleteFutureEventByIdAndUserId_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="DeleteUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteUser" message="tns:IDelete_DeleteUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteUserResponse" message="tns:IDelete_DeleteUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteRole" message="tns:IDelete_DeleteRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteRoleResponse" message="tns:IDelete_DeleteRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteUserRole" message="tns:IDelete_DeleteUserRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteUserRoleResponse" message="tns:IDelete_DeleteUserRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEmailByUserIdAndEmailId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteEmailByUserIdAndEmailId" message="tns:IDelete_DeleteEmailByUserIdAndEmailId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteEmailByUserIdAndEmailIdResponse" message="tns:IDelete_DeleteEmailByUserIdAndEmailId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePhoneByUserIdAndPhoneId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeletePhoneByUserIdAndPhoneId" message="tns:IDelete_DeletePhoneByUserIdAndPhoneId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeletePhoneByUserIdAndPhoneIdResponse" message="tns:IDelete_DeletePhoneByUserIdAndPhoneId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAddress">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteAddress" message="tns:IDelete_DeleteAddress_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteAddressResponse" message="tns:IDelete_DeleteAddress_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDelete/DeleteCategory" message="tns:IDelete_DeleteCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDelete/DeleteCategoryResponse" message="tns:IDelete_DeleteCategory_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IUpdate">
@@ -231,9 +473,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditEvent" message="tns:IUpdate_EditEvent_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditEventResponse" message="tns:IUpdate_EditEvent_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="EditEventByUserId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditEventByUserId" message="tns:IUpdate_EditEventByUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditEventByUserIdResponse" message="tns:IUpdate_EditEventByUserId_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="EditUserInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditUserInfo" message="tns:IUpdate_EditUserInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditUserInfoResponse" message="tns:IUpdate_EditUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditRole" message="tns:IUpdate_EditRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditRoleResponse" message="tns:IUpdate_EditRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditAddress">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditAddress" message="tns:IUpdate_EditAddress_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditAddressResponse" message="tns:IUpdate_EditAddress_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditCategory" message="tns:IUpdate_EditCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditCategoryResponse" message="tns:IUpdate_EditCategory_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IGet" type="tns:IGet">
@@ -252,6 +510,18 @@
     </wsdl:operation>
     <wsdl:operation name="GetEventsByCategoryId">
       <soap:operation soapAction="http://tempuri.org/IGet/GetEventsByCategoryId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsByUserId">
+      <soap:operation soapAction="http://tempuri.org/IGet/GetEventsByUserId" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -310,8 +580,32 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetCategoryById">
+      <soap:operation soapAction="http://tempuri.org/IGet/GetCategoryById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetAddresses">
       <soap:operation soapAction="http://tempuri.org/IGet/GetAddresses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressById">
+      <soap:operation soapAction="http://tempuri.org/IGet/GetAddressById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -346,8 +640,56 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetUsers">
+      <soap:operation soapAction="http://tempuri.org/IGet/GetUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetUserByName">
       <soap:operation soapAction="http://tempuri.org/IGet/GetUserByName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRolesNotInUser">
+      <soap:operation soapAction="http://tempuri.org/IGet/GetRolesNotInUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRoles">
+      <soap:operation soapAction="http://tempuri.org/IGet/GetRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRolesById">
+      <soap:operation soapAction="http://tempuri.org/IGet/GetRolesById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -367,8 +709,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="IsNameFree">
-      <soap:operation soapAction="http://tempuri.org/IGet/IsNameFree" style="document" />
+    <wsdl:operation name="IsUserNameFree">
+      <soap:operation soapAction="http://tempuri.org/IGet/IsUserNameFree" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsRoleNameFree">
+      <soap:operation soapAction="http://tempuri.org/IGet/IsRoleNameFree" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -397,6 +748,42 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddRoleToUser">
+      <soap:operation soapAction="http://tempuri.org/IAdd/AddRoleToUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRole">
+      <soap:operation soapAction="http://tempuri.org/IAdd/AddRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddAddress">
+      <soap:operation soapAction="http://tempuri.org/IAdd/AddAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCategory">
+      <soap:operation soapAction="http://tempuri.org/IAdd/AddCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpBinding_IDelete" type="tns:IDelete">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -409,8 +796,71 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DeleteFutureEventByIdAndUserId">
+      <soap:operation soapAction="http://tempuri.org/IDelete/DeleteFutureEventByIdAndUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="DeleteUser">
       <soap:operation soapAction="http://tempuri.org/IDelete/DeleteUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRole">
+      <soap:operation soapAction="http://tempuri.org/IDelete/DeleteRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserRole">
+      <soap:operation soapAction="http://tempuri.org/IDelete/DeleteUserRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEmailByUserIdAndEmailId">
+      <soap:operation soapAction="http://tempuri.org/IDelete/DeleteEmailByUserIdAndEmailId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePhoneByUserIdAndPhoneId">
+      <soap:operation soapAction="http://tempuri.org/IDelete/DeletePhoneByUserIdAndPhoneId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAddress">
+      <soap:operation soapAction="http://tempuri.org/IDelete/DeleteAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCategory">
+      <soap:operation soapAction="http://tempuri.org/IDelete/DeleteCategory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -430,8 +880,44 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="EditEventByUserId">
+      <soap:operation soapAction="http://tempuri.org/IUpdate/EditEventByUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="EditUserInfo">
       <soap:operation soapAction="http://tempuri.org/IUpdate/EditUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditRole">
+      <soap:operation soapAction="http://tempuri.org/IUpdate/EditRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditAddress">
+      <soap:operation soapAction="http://tempuri.org/IUpdate/EditAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditCategory">
+      <soap:operation soapAction="http://tempuri.org/IUpdate/EditCategory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -12,6 +12,7 @@
 .categories-div {
   position: fixed;
   height: 100%;
+  padding-bottom: 10%;
   width: 250px;
   float: left;
   top: 40px;

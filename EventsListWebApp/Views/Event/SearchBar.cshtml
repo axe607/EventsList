@@ -1,11 +1,15 @@
 ﻿<link href="~/Content/searchbar.css" rel="stylesheet" />
 <div class="searchbar">
+    <div class="search-label"><b>Category</b></div>
     <div>
         <select class="form-control" id="category_search">
             <option value="">All</option>
         </select>
     </div>
-    <div><input class="form-control" id="date_search" type="date" /></div>
+    <div class="search-label"><b>Date</b></div>
+    <div><input class="form-control" id="date_search" type="date"/>
+    </div>
+    <div class="search-label"><b>State</b></div>
     <div>
         <select class="form-control" id="state_search">
             <option value="" selected="selected">All</option>
@@ -14,15 +18,22 @@
             <option value="1">Future</option>
         </select>
     </div>
-    <div><input id="SearchBtn" class="form-control" type="button" value="Search" /></div>
+    <div><input id="SearchBtn" class="form-control" type="button" value="Search"/>
+    </div>
+    <div><button type="button" class="btn btn-info" onclick="backToCategories()">&lt;-- Back to categories</button>
+    </div>
 </div>
 
 <script>
     $(function () {
         setCategories('category_search');
     });
+
+    function backToCategories() {
+        loadCategoriesBar();
+    }
     $("#SearchBtn").click(function () {
-        setEventsBySearch($("#category_search").val(), $("#date_search").val(),$("#state_search").val());
+        setEventsBySearch($("#category_search").val(), $("#date_search").val(), $("#state_search").val());
     });
 </script>
 

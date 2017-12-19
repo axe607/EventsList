@@ -105,6 +105,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\categoriesbar.css" />
+    <Content Include="Content\check.css" />
     <Content Include="Content\event-block.css" />
     <Content Include="Content\event-detail.css" />
     <Content Include="Content\Images\15056501883900.jpg" />
@@ -147,6 +148,7 @@
     </Compile>
     <Compile Include="Models\AdminAttribute.cs" />
     <Compile Include="Models\AjaxAttribute.cs" />
+    <Compile Include="Models\AllowTo.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\UserPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,6 +174,19 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\EditUserInfo.cshtml" />
     <Content Include="Views\Account\EditOrganizerInfo.cshtml" />
+    <Content Include="Views\Account\UsersList.cshtml" />
+    <Content Include="Views\Account\GetUserRoles.cshtml" />
+    <Content Include="Views\Account\AddUser.cshtml" />
+    <Content Include="Views\Account\RolesList.cshtml" />
+    <Content Include="Views\Account\AddRole.cshtml" />
+    <Content Include="Views\Account\EditRole.cshtml" />
+    <Content Include="Views\Event\MyEvents.cshtml" />
+    <Content Include="Views\Event\AddressesList.cshtml" />
+    <Content Include="Views\Event\AddAddress.cshtml" />
+    <Content Include="Views\Event\EditAddress.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\EditCategory.cshtml" />
+    <Content Include="Views\Category\AddCategory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

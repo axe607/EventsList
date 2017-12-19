@@ -27,6 +27,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetEventsByUserId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsByUserIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsByUserIdResult" nillable="true" type="q3:ArrayOfEventDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetEventInfoDetailById">
     <xs:complexType>
       <xs:sequence>
@@ -37,7 +51,7 @@
   <xs:element name="GetEventInfoDetailByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventInfoDetailByIdResult" nillable="true" type="q3:EventDetailDto" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventInfoDetailByIdResult" nillable="true" type="q4:EventDetailDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -51,7 +65,7 @@
   <xs:element name="GetEventByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventByIdResult" nillable="true" type="q4:EventDto" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventByIdResult" nillable="true" type="q5:EventDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -67,7 +81,7 @@
   <xs:element name="GetEventsBySearchDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsBySearchDataResult" nillable="true" type="q5:ArrayOfEventDto" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEventsBySearchDataResult" nillable="true" type="q6:ArrayOfEventDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -79,7 +93,21 @@
   <xs:element name="GetCategoriesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetCategoriesResult" nillable="true" type="q6:ArrayOfCategoryDto" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetCategoriesResult" nillable="true" type="q7:ArrayOfCategoryDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategoryById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategoryByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetCategoryByIdResult" nillable="true" type="q8:CategoryDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -91,7 +119,21 @@
   <xs:element name="GetAddressesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetAddressesResult" nillable="true" type="q7:ArrayOfAddressDto" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetAddressesResult" nillable="true" type="q9:ArrayOfAddressDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAddressById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="addressId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAddressByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetAddressByIdResult" nillable="true" type="q10:AddressDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -105,7 +147,7 @@
   <xs:element name="GetEmailsByOrganizerIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEmailsByOrganizerIdResult" nillable="true" type="q8:ArrayOfEmailDto" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetEmailsByOrganizerIdResult" nillable="true" type="q11:ArrayOfEmailDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -119,7 +161,19 @@
   <xs:element name="GetPhonesByOrganizerIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetPhonesByOrganizerIdResult" nillable="true" type="q9:ArrayOfPhoneDto" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetPhonesByOrganizerIdResult" nillable="true" type="q12:ArrayOfPhoneDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUsers">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUsersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetUsersResult" nillable="true" type="q13:ArrayOfUserDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -133,7 +187,47 @@
   <xs:element name="GetUserByNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetUserByNameResult" nillable="true" type="q10:UserDto" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetUserByNameResult" nillable="true" type="q14:UserDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRolesNotInUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRolesNotInUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetRolesNotInUserResult" nillable="true" type="q15:ArrayOfRoleDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRoles">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRolesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetRolesResult" nillable="true" type="q16:ArrayOfRoleDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRolesById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="roleId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRolesByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/EventsListService.Contracts.Models.Dto" minOccurs="0" name="GetRolesByIdResult" nillable="true" type="q17:RoleDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -152,7 +246,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="IsNameFree">
+  <xs:element name="IsUserNameFree">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userId" type="xs:int" />
@@ -160,10 +254,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="IsNameFreeResponse">
+  <xs:element name="IsUserNameFreeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="IsNameFreeResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsUserNameFreeResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsRoleNameFree">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="roleId" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsRoleNameFreeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsRoleNameFreeResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -172,11 +281,11 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="organizerId" type="xs:int" />
-        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+        <xs:element minOccurs="0" name="organizerId" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="categoryId" nillable="true" type="xs:int" />
         <xs:element minOccurs="0" name="imageUrl" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="addressId" type="xs:int" />
+        <xs:element minOccurs="0" name="addressId" nillable="true" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -199,6 +308,56 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddRoleToUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="roleId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddRoleToUserResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddRole">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="roleName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddRoleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAddress">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="address" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAddressResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddCategory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="categoryName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pid" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddCategoryResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="DeleteEvent">
     <xs:complexType>
       <xs:sequence>
@@ -207,6 +366,19 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteEventResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteFutureEventByIdAndUserId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="eventId" type="xs:int" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteFutureEventByIdAndUserIdResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -223,20 +395,114 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="DeleteRole">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="roleId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteRoleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteUserRole">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="roleId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteUserRoleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteEmailByUserIdAndEmailId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="emailId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteEmailByUserIdAndEmailIdResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeletePhoneByUserIdAndPhoneId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="phoneId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeletePhoneByUserIdAndPhoneIdResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAddress">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="addressId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAddressResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteCategory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteCategoryResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="EditEvent">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="eventId" type="xs:int" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+        <xs:element minOccurs="0" name="categoryId" nillable="true" type="xs:int" />
         <xs:element minOccurs="0" name="imageUrl" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="addressId" type="xs:int" />
+        <xs:element minOccurs="0" name="addressId" nillable="true" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditEventResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditEventByUserId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="eventId" type="xs:int" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="categoryId" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="imageUrl" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="addressId" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditEventByUserIdResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -251,6 +517,46 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="EditUserInfoResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditRole">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="roleId" type="xs:int" />
+        <xs:element minOccurs="0" name="roleName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditRoleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditAddress">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="addressId" type="xs:int" />
+        <xs:element minOccurs="0" name="address" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditAddressResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditCategory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="categoryId" type="xs:int" />
+        <xs:element minOccurs="0" name="pid" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="categoryName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditCategoryResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

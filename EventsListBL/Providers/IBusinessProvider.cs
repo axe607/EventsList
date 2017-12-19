@@ -8,10 +8,13 @@ namespace EventsListBL.Providers
     {
         IReadOnlyList<Event> GetEvents();
         IReadOnlyList<Event> GetEventsByCategoryId(int categoryId);
+        IReadOnlyList<Event> GetEventsByUserId(int userId);
         IReadOnlyList<Event> GetEventsBySearchData(int? categoryId, DateTime? date, int? state);
-        EventDetail GetEventInfoDetailById(int eventId);
-        Event GetEventById(int eventId);
         IReadOnlyList<Category> GetCategories();
         IReadOnlyList<Address> GetAddresses();
+        Category GetCategoryById(int categoryId);
+        Event GetEventById(int eventId);
+        EventDetail GetEventInfoDetailById(int eventId);
+        Address GetAddressById(int addressId);
     }
 }

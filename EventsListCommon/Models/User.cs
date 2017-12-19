@@ -6,10 +6,13 @@ namespace EventsListCommon.Models
 {
     public class User
     {
-        [ScaffoldColumn(false)]
         public int Id { get; set; }
+
+        [Required]
         public string UserName { get; set; }
+        [Required]
         public string Email { get; set; }
+        public string Password { get; set; }
         public List<Role> Roles { get; set; }
         [DisplayName("Organizer name")]
         public string OrganizerName { get; set; }

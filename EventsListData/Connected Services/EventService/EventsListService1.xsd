@@ -8,14 +8,14 @@
   <xs:element name="ArrayOfEventDto" nillable="true" type="tns:ArrayOfEventDto" />
   <xs:complexType name="EventDto">
     <xs:sequence>
-      <xs:element minOccurs="0" name="AddressId" type="xs:int" />
-      <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
+      <xs:element minOccurs="0" name="AddressId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CategoryId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="ImageUrl" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrganizerId" type="xs:int" />
+      <xs:element minOccurs="0" name="OrganizerId" nillable="true" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EventDto" nillable="true" type="tns:EventDto" />
@@ -89,6 +89,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AddressDto" nillable="true" type="tns:AddressDto" />
+  <xs:complexType name="ArrayOfUserDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDto" nillable="true" type="tns:UserDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserDto" nillable="true" type="tns:ArrayOfUserDto" />
   <xs:complexType name="UserDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
@@ -109,6 +115,7 @@
   <xs:element name="ArrayOfRoleDto" nillable="true" type="tns:ArrayOfRoleDto" />
   <xs:complexType name="RoleDto">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="RoleName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

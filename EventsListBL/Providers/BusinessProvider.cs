@@ -29,9 +29,19 @@ namespace EventsListBL.Providers
             return _dataProvider.GetAddresses();
         }
 
+        public Category GetCategoryById(int categoryId)
+        {
+            return _dataProvider.GetCategoryById(categoryId);
+        }
+
         public IReadOnlyList<Event> GetEventsByCategoryId(int categoryId)
         {
             return _dataProvider.GetEventsByCategoryId(categoryId);
+        }
+
+        public IReadOnlyList<Event> GetEventsByUserId(int userId)
+        {
+            return _dataProvider.GetEventsByUserId(userId);
         }
 
         public IReadOnlyList<Event> GetEventsBySearchData(int? categoryId, DateTime? date, int? state)
@@ -47,6 +57,11 @@ namespace EventsListBL.Providers
         public EventDetail GetEventInfoDetailById(int eventId)
         {
            return _dataProvider.GetEventInfoDetailById(eventId);
+        }
+
+        public Address GetAddressById(int addressId)
+        {
+            return _dataProvider.GetAddressById(addressId);
         }
     }
 }

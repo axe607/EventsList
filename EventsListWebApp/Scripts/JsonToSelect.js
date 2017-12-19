@@ -1,18 +1,23 @@
-﻿function setCategories(idToAddData, idCategorySelected) {
+﻿function setCategories(idToAddData, idCategorySelected, exceptId) {
     $.ajax({
         url: "/Json/GetCategories",
         type: "GET",
         success: function (result) {
-            var a = result;
-            $.each(a,
+            var defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "";
+            $("#" + idToAddData).append(defaultOption);
+            $.each(result,
                 function (key, value) {
-                    var option = document.createElement("option");
-                    option.value = value["Id"];
-                    option.textContent = value["Name"];
-                    if (option.value === idCategorySelected) {
-                        option.selected = true;
+                    if (value["Id"] != exceptId) {
+                        var option = document.createElement("option");
+                        option.value = value["Id"];
+                        option.textContent = value["Name"];
+                        if (option.value === idCategorySelected) {
+                            option.selected = true;
+                        }
+                        $("#" + idToAddData).append(option);
                     }
-                    $("#" + idToAddData).append(option);
                 });
         },
         error: function () {
@@ -20,6 +25,8 @@
         }
     });
 }
+
+
 
 function setAddresses(idToAddData, idAddressSelected) {
     $.ajax({
@@ -40,6 +47,30 @@ function setAddresses(idToAddData, idAddressSelected) {
         },
         error: function () {
             console.log("Error on getting addresses");
+        }
+    });
+}
+
+function setRolesNotInUser(idToAddData, userName) {
+    $.ajax({
+        url: "/Json/GetRolesNotInUser",
+        type: "GET",
+        data:
+        {
+            userName: userName
+        },
+        success: function (result) {
+            $("#" + idToAddData).empty();
+            $.each(result,
+                function (key, value) {
+                    var option = document.createElement("option");
+                    option.value = value["Id"];
+                    option.textContent = value["RoleName"];
+                    $("#" + idToAddData).append(option);
+                });
+        },
+        error: function () {
+            console.log("Error on getting roles");
         }
     });
 }

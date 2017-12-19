@@ -3,16 +3,15 @@
 <link href="~/Content/event-detail.css" rel="stylesheet" />
 @if (Model != null)
 {
-    //ImageURL
     <div class="event-detail-block">
         <div class="event-detail-image">
             @if (!string.IsNullOrEmpty(Model.ImageUrl))
             {
-                <img src="../Content/Images/@Model.ImageUrl"/>
+                <img src="../Content/Images/@Model.ImageUrl" />
             }
             else
             {
-                <img src="~/Content/Images/no-image.png"/>
+                <img src="~/Content/Images/no-image.png" />
             }
         </div>
         <div class="event-detail-text">
@@ -20,22 +19,24 @@
                 <p><b>Название:</b> @Model.EventName</p>
             </div>
             <div>
-                <p><b>Дата:</b> @Model.Date.ToString("f",CultureInfo.CurrentUICulture)</p>
+                <p><b>Дата:</b> @Model.Date.ToString("f", CultureInfo.CurrentUICulture)</p>
             </div>
             <div>
                 <p><b>Организатор:</b> @Model.OrganizerName</p>
-                @if (Model.OrganizerEmails.Count > 0)
+                @if (Model.OrganizerEmails != null && Model.OrganizerEmails.Any())
                 {
-                    <p><b>Emails:</b>
+                    <p>
+                        <b>Emails:</b>
                     </p>
                     foreach (var email in Model.OrganizerEmails)
                     {
                         <p class="event-detail-email">@email.EmailString</p>
                     }
                 }
-                @if (Model.OrganizerPhones.Count > 0)
+                @if (Model.OrganizerPhones != null && Model.OrganizerPhones.Any())
                 {
-                    <p><b>Телефоны:</b>
+                    <p>
+                        <b>Телефоны:</b>
                     </p>
                     foreach (var phone in Model.OrganizerPhones)
                     {

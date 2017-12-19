@@ -21,25 +21,31 @@
 }
 
 .event-block-btn {
+  background-color: transparent;
   opacity: 0.65;
   width: 50%;
   display: inline-block;
   padding: 0;
   margin: 0;
   height: 100%;
-  font-family: "Arial";
-  font-size: 16px;
   line-height: normal;
   color: white;
   text-align: center;
   vertical-align: middle;
 }
 
-.event-block-btn-edit {
+  .event-block-btn > button {
+    width: 55%;
+    height: 55%;
+    font-family: "Arial";
+    font-size: 16px;
+  }
+
+.event-block-btn-edit > button {
   background-color: #2196F3;
 }
 
-.event-block-btn-delete {
+.event-block-btn-delete > button {
   background-color: #b71c1c;
 }
 
@@ -51,14 +57,15 @@
 }
 
   .event-block:hover .event-block-edit {
-    bottom: -15px;  
-  } 
-  .event-block-image {
-    padding: 5px;
-    height: 200px;
-    float: left;
-    width: 100%;
+    bottom: -15px;
   }
+
+.event-block-image {
+  padding: 5px;
+  height: 200px;
+  float: left;
+  width: 100%;
+}
 
   .event-block-image > img {
     opacity: 0.95;

@@ -13,13 +13,13 @@ namespace EventsListService.Contracts.Models.Dto
         [DataMember]
         public DateTime Date { get; set; }
         [DataMember]
-        public int OrganizerId { get; set; }
+        public int? OrganizerId { get; set; }
         [DataMember]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         [DataMember]
         public string ImageUrl { get; set; }
         [DataMember]
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         [DataMember]
         public string Description { get; set; }
     }

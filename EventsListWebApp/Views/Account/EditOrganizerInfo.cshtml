@@ -28,7 +28,7 @@
                     @foreach (var email in Model.OrganizerEmails)
                     {
                         <div id="email_@email.Id" class="input-group" role="group" aria-label="...">
-                            <span class="input-group-btn"><button name="delBtn_email" type="button" class="btn btn-danger">Del</button></span>
+                            <span class="input-group-btn"><button name="delBtn_email" type="button" class="btn btn-danger">Delete</button></span>
                             <input type="text" class="form-control" value="@email.EmailString" />
                         </div>
                     }
@@ -43,7 +43,7 @@
                     @foreach (var phone in Model.OrganizerPhones)
                     {
                         <div id="phone_@phone.Id" class="input-group" role="group" aria-label="...">
-                            <span class="input-group-btn"><button name="delBtn_phone" type="button" class="btn btn-danger">Del</button></span>
+                            <span class="input-group-btn"><button name="delBtn_phone" type="button" class="btn btn-danger">Delete</button></span>
                             <input type="text" class="form-control" value="@phone.PhoneNumber" />
                         </div>
 

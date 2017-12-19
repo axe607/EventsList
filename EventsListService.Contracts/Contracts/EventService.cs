@@ -76,11 +76,11 @@ namespace EventsListService.Contracts.Contracts
                                     Id = (int)dataRow[0],
                                     Name = dataRow[1].ToString(),
                                     Date = (DateTime)dataRow[2],
-                                    OrganizerId = (int)dataRow[3],
-                                    CategoryId = (int)dataRow[4],
+                                    OrganizerId = dataRow[3] as int?,
+                                    CategoryId = dataRow[4] as int?,
                                     ImageUrl = dataRow[5]?.ToString(),
                                     Description = dataRow[6].ToString(),
-                                    AddressId = (int)dataRow[7]
+                                    AddressId = dataRow[7] as int?
                                 });
                             }
                         }
@@ -105,8 +105,8 @@ namespace EventsListService.Contracts.Contracts
                                     OrganizerName = string.IsNullOrEmpty(dataRow[7].ToString())
                                     ? dataRow[9].ToString()
                                     : dataRow[7].ToString(),
-                                    OrganizerEmails = GetEmailsByOrganizerId((int)dataRow[8]),
-                                    OrganizerPhones = GetPhonesByOrganizerId((int)dataRow[8])
+                                    OrganizerEmails = (dataRow[8] as int?) != null ? GetEmailsByOrganizerId((int)dataRow[8]) : null,
+                                    OrganizerPhones = (dataRow[8] as int?) != null ? GetPhonesByOrganizerId((int)dataRow[8]) : null
                                 });
                             }
                         }
@@ -225,7 +225,8 @@ namespace EventsListService.Contracts.Contracts
                             {
                                 tempList.Add(new RoleDto
                                 {
-                                    RoleName = dataRow[0].ToString()
+                                    Id = (int)dataRow[0],
+                                    RoleName = dataRow[1].ToString()
                                 });
                             }
                         }
@@ -251,6 +252,17 @@ namespace EventsListService.Contracts.Contracts
                 Value = categoryId
             };
             return GetDataFromDb<EventDto>("SelectEventsByCategoryId", param);
+        }
+
+        public List<EventDto> GetEventsByUserId(int userId)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@userId",
+                Value = userId
+            };
+            return GetDataFromDb<EventDto>("SelectEventsByUserId", param);
         }
 
         public EventDetailDto GetEventInfoDetailById(int eventId)
@@ -312,9 +324,31 @@ namespace EventsListService.Contracts.Contracts
             return GetDataFromDb<CategoryDto>("SelectCategories");
         }
 
+        public CategoryDto GetCategoryById(int categoryId)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@categoryId",
+                Value = categoryId
+            };
+            return GetDataFromDb<CategoryDto>("SelectCategoryById", param).SingleOrDefault();
+        }
+
         public List<AddressDto> GetAddresses()
         {
             return GetDataFromDb<AddressDto>("SelectAddresses");
+        }
+
+        public AddressDto GetAddressById(int addressId)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@addressId",
+                Value = addressId
+            };
+            return GetDataFromDb<AddressDto>("SelectAddressById", param).SingleOrDefault();
         }
 
         public List<EmailDto> GetEmailsByOrganizerId(int organizerId)
@@ -332,6 +366,11 @@ namespace EventsListService.Contracts.Contracts
         {
             SqlParameter param = new SqlParameter { DbType = DbType.Int32, ParameterName = "@organizerId", Value = organizerId };
             return GetDataFromDb<PhoneDto>("SelectPhonesByOrganizerId", param);
+        }
+
+        public List<UserDto> GetUsers()
+        {
+            return GetDataFromDb<UserDto>("SelectUsers");
         }
 
         public UserDto GetUserByName(string name)
@@ -354,6 +393,33 @@ namespace EventsListService.Contracts.Contracts
                 Value = id
             };
             return GetDataFromDb<RoleDto>("SelectRolesByUserId", param);
+        }
+
+        public List<RoleDto> GetRolesNotInUser(string userName)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.String,
+                ParameterName = "@userName",
+                Value = userName
+            };
+            return GetDataFromDb<RoleDto>("SelectRolesNotInUser", param);
+        }
+
+        public List<RoleDto> GetRoles()
+        {
+            return GetDataFromDb<RoleDto>("SelectRoles");
+        }
+
+        public RoleDto GetRolesById(int roleId)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@roleId",
+                Value = roleId
+            };
+            return GetDataFromDb<RoleDto>("SelectRoleById", param).SingleOrDefault();
         }
 
         public bool IsValidUser(string username, string password)
@@ -409,7 +475,7 @@ namespace EventsListService.Contracts.Contracts
             return result;
         }
 
-        public bool IsNameFree(int userId, string name)
+        public bool IsUserNameFree(int userId, string name)
         {
             SqlParameter[] param = {
                 new SqlParameter
@@ -433,7 +499,7 @@ namespace EventsListService.Contracts.Contracts
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "IsNameFree";
+                    command.CommandText = "IsUserNameFree";
 
                     command.Parameters.AddRange(param);
 
@@ -462,8 +528,60 @@ namespace EventsListService.Contracts.Contracts
             return result;
         }
 
-        public void AddEvent(string name, DateTime date, int organizerId, int categoryId, string imageUrl, string description,
-            int addressId)
+        public bool IsRoleNameFree(int? roleId, string name)
+        {
+            bool result = false;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "IsRoleNameFree";
+
+                    command.Parameters.AddRange(new[]{
+                        new SqlParameter
+                        {
+                            DbType = DbType.Int32,
+                            ParameterName = "@roleId",
+                            Value = roleId,
+                            IsNullable = true
+                        },
+                        new SqlParameter
+                        {
+                            DbType = DbType.String,
+                            ParameterName = "@name",
+                            Value = name
+                        }
+                        });
+
+                    SqlParameter resultParameter = new SqlParameter { Direction = ParameterDirection.ReturnValue };
+                    command.Parameters.Add(resultParameter);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+
+                    try
+                    {
+                        adapter.Fill(dataSet);
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message), new FaultReason(ex.Message));
+                    }
+
+                    if ((int)resultParameter.Value == 1)
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public void AddEvent(string name, DateTime date, int? organizerId, int? categoryId, string imageUrl, string description,
+            int? addressId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -518,6 +636,41 @@ namespace EventsListService.Contracts.Contracts
             }
         }
 
+        public void DeleteFutureEventByIdAndUserId(int eventId, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DeleteFutureEventByIdAndUserId";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                    new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@eventId",
+                        Value = eventId
+                    },
+                    new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@userId",
+                        Value = userId
+                    }
+                    });
+
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
         public void DeleteUser(int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -544,7 +697,163 @@ namespace EventsListService.Contracts.Contracts
             }
         }
 
-        public void EditEvent(int eventId, string name, DateTime date, int categoryId, string imageUrl, string description, int addressId)
+        public void DeleteRole(int roleId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DeleteRoleById";
+
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@roleId",
+                        Value = roleId
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+        }
+
+        public void DeleteUserRole(string userName, int roleId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DeleteUserRole";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@userName",Value = userName},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@roleId",Value = roleId}
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void DeleteEmailByUserIdAndEmailId(int userId, int emailId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DeleteEmailByUserIdAndEmailId";
+
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@userId",
+                        Value = userId
+                    });
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@emailId",
+                        Value = emailId
+                    });
+
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void DeletePhoneByUserIdAndPhoneId(int userId, int phoneId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DeletePhoneByUserIdAndPhoneId";
+
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@userId",
+                        Value = userId
+                    });
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@phoneId",
+                        Value = phoneId
+                    });
+
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void DeleteAddress(int addressId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DeleteAddressById";
+
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@addressId",
+                        Value = addressId
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+        }
+
+        public void DeleteCategory(int categoryId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DeleteCategoryById";
+
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.Int32,
+                        ParameterName = "@categoryId",
+                        Value = categoryId
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+        }
+
+        public void EditEvent(int eventId, string name, DateTime date, int? categoryId, string imageUrl, string description, int? addressId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -568,6 +877,35 @@ namespace EventsListService.Contracts.Contracts
                     command.ExecuteNonQuery();
                     connection.Close();
 
+                }
+            }
+        }
+
+        public void EditEventByUserId(int eventId, int userId, string name, DateTime date, int? categoryId, string imageUrl,
+            string description, int? addressId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "UpdateEventByUserId";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@eventId",Value = eventId},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@userId",Value = userId},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
+                        new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
                 }
             }
         }
@@ -596,6 +934,112 @@ namespace EventsListService.Contracts.Contracts
             }
         }
 
+        public void AddRoleToUser(string userName, int roleId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "AddUserRole";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@userName",Value = userName},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@roleId",Value = roleId}
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void AddRole(string roleName)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "AddRole";
+
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.String,
+                        ParameterName = "@name",
+                        Value = roleName
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void AddAddress(string address)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "AddAddress";
+
+                    command.Parameters.Add(new SqlParameter
+                    {
+                        DbType = DbType.String,
+                        ParameterName = "@address",
+                        Value = address
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void AddCategory(string categoryName, int? pid)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "AddCategory";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter
+                        {
+                        DbType = DbType.String,
+                        ParameterName = "@categoryName",
+                        Value = categoryName
+                        },
+                        new SqlParameter
+                        {
+                            DbType = DbType.Int32,
+                            ParameterName = "@pid",
+                            Value = pid,
+                            IsNullable = true
+                        }
+
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
         public void EditUserInfo(int userId, string name, string email)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -611,6 +1055,76 @@ namespace EventsListService.Contracts.Contracts
                         new SqlParameter{DbType = DbType.String,ParameterName = "@userId",Value = userId},
                         new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
                         new SqlParameter{DbType = DbType.String,ParameterName = "@email",Value = email}
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void EditRole(int roleId, string roleName)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "UpdateRole";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@roleId",Value = roleId},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = roleName,IsNullable = true}
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void EditAddress(int addressId, string address)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "UpdateAddress";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@addressId",Value = addressId},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@address",Value = address,IsNullable = true}
+                    });
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                }
+            }
+        }
+
+        public void EditCategory(int categoryId, int? pid, string categoryName)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "UpdateCategory";
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
+                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@pid",Value = pid,IsNullable = true},
+                        new SqlParameter{DbType = DbType.String,ParameterName = "@categoryName",Value = categoryName}
                     });
                     connection.Open();
                     command.ExecuteNonQuery();

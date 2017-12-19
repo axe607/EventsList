@@ -1,0 +1,45 @@
+﻿@model IEnumerable<EventsListCommon.Models.User>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h4>Users</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <a href="/Account/AddUser"><button type="button" class="btn btn-success">Create User</button></a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @foreach (var user in Model)
+        {
+            <div class="alert alert-warning">
+                <p id="@user.Id">@user.UserName (@user.OrganizerName) [@string.Join(";", user.Roles.Select(x => x.RoleName))] @user.Email</p>
+                <a href="/Account/EditUser?userName=@user.UserName"><button type="button" id="btn_edit_user" class="btn btn-info">Edit</button></a>
+                <button type="button" id="btn_del_user" class="btn btn-danger" onclick="DeleteUser(@user.Id)">Delete</button>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        function DeleteUser(idToDel) {
+            $.ajax({
+                url: "/Account/DeleteUser",
+                data:
+                {
+                    userId: idToDel
+                },
+                success: function () {
+                    $("#" + idToDel).closest("div")[0].innerHTML = "User deleted";
+                },
+                error: function (error) {
+                    console.log("[Error on delete user] " + error.status + " - " + error.statusText);
+                }
+            });
+        }
+    </script>
+}

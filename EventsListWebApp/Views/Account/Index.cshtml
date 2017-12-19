@@ -7,6 +7,12 @@
 <div>
     <h4>@Html.DisplayFor(model => model.UserName)</h4>
     <hr />
+    <div class="row">
+        <div class="col-md-10">
+            <button type="button" class="btn btn-success" onclick="loadMyEvents()">My Events</button>
+        </div>
+    </div>
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Email)
@@ -25,7 +31,7 @@
             <dd>@role.RoleName</dd>
         }
         <dt>
-            @Html.ActionLink("Edit user", "EditUserInfo") |
+            @Html.ActionLink("Edit user", "EditAccount") |
             @Html.ActionLink("Log out", "Logout", "Login")
         </dt>
 
@@ -65,4 +71,8 @@
         </dt>
     </dl>
 </div>
-
+<script>
+    function loadMyEvents() {
+        $(".body-content").load("/Event/MyEvents");
+    }
+</script>

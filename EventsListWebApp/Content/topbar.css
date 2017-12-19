@@ -45,23 +45,79 @@
     padding-bottom: 4px;
   }
 
-    .topbar > .topbar-search > input,
-    .topbar > .topbar-search > select {
-      height: 100%;
-    }
-
-  .topbar > div > a {
-    text-decoration: none;
-    vertical-align: middle;
-    color: #607D8B;
-    transition: 0.2s;
+  .topbar > div:hover > .downdiv {
+    display: block;
+    opacity: 1;
   }
 
-    .topbar > div > a:hover {
-      text-shadow: 0 0 5px black;
+.downdiv {
+  display: none;
+  opacity: 0;
+  top: 38px;
+  position: fixed;
+  z-index: 999;
+  background-color: #1a237e;
+  transition: 0.25s;
+}
+
+  .downdiv ul {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+  }
+
+    .downdiv ul > li {
+      background-color: #607d8b;
+      line-height: normal;
+      font-family: "Arial";
+      font-size: 18px;
+      text-align: left;
+      padding: 0;
     }
 
-  .topbar > .topbar-user {
-    float: right;
-    padding-right: 25px;
+      .downdiv ul > li:hover {
+        background-color: aliceblue;
+        color: #607d8b;
+      }
+
+        .downdiv ul > li > span {
+          display: block;
+          position: relative;
+        }
+
+          .downdiv ul > li:hover > span > a {
+            color: #607d8b;
+          }
+
+      .downdiv ul > li > span > a {
+        display: block;
+        padding: 7px 18px;
+        line-height: 2;
+        text-decoration: none;
+        color: white;
+      }
+
+      .downdiv ul > li > a:hover {
+      }
+
+.topbar > .topbar-search > input,
+.topbar > .topbar-search > select {
+  height: 100%;
+}
+
+.topbar > div > a {
+  text-decoration: none;
+  vertical-align: middle;
+  color: #607D8B;
+  transition: 0.2s;
+}
+
+  .topbar > div > a:hover {
+    color: #1A237E;
   }
+
+.topbar > .topbar-user {
+  float: right;
+  padding-right: 25px;
+}
