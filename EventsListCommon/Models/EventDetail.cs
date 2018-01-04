@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace EventsListCommon.Models
 {
@@ -13,7 +12,7 @@ namespace EventsListCommon.Models
         public string Address { get; set; }
         public string CategoryName { get; set; }
         public string OrganizerName { get; set; }
-        public List<Phone> OrganizerPhones { get; set; }
-        public List<Email> OrganizerEmails { get; set; }
+        public Phone[] OrganizerPhones { get; set; }
+        public Email[] OrganizerEmails { get; set; }
     }
 }

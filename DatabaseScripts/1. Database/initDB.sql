@@ -1,6 +1,10 @@
 USE [master]
 GO
-
+IF EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = 'EventsListDB')
+DROP DATABASE EventsListDB
+PRINT 'Drop Database [EventsListDB]'
+GO
+PRINT 'Create Databese [EventsListDB]'
 CREATE DATABASE [EventsListDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -106,3 +110,6 @@ ALTER DATABASE [EventsListDB] SET DELAYED_DURABILITY = DISABLED
 GO
 
 ALTER DATABASE [EventsListDB] SET  READ_WRITE 
+GO
+:On Error EXIT
+PRINT 'Database create:  OK'

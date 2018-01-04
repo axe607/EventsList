@@ -9,8 +9,8 @@ namespace EventsListWebApp.Controllers
 {
     public class JsonController : Controller
     {
-        private const string CATEGORIES_KEY = "categories_key";
-        private const string ADDRESSES_KEY = "addresses_key";
+        private const string CATEGORIES_KEY = "categories";
+        private const string ADDRESSES_KEY = "addresses";
 
         private readonly IBusinessProvider _provider;
         private readonly IUserProvider _userProvider;
@@ -73,14 +73,12 @@ namespace EventsListWebApp.Controllers
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
         }
-
-        [AllowTo(Roles = "Admin,Editor")]
+        
         public static void ClearCategroriesCache()
         {
             HttpRuntime.Cache.Remove(CATEGORIES_KEY);
         }
-
-        [AllowTo(Roles = "Admin,Editor")]
+        
         public static void ClearAddressesCache()
         {
             HttpRuntime.Cache.Remove(ADDRESSES_KEY);

@@ -14,6 +14,7 @@ namespace EventsListService.Contracts.Contracts
     public class EventService : IGet, IAdd, IDelete, IUpdate
     {
         private readonly string _connectionString;
+        private static readonly string DEFAULT_ERROR_MESSAGE_FOR_CLIENT = "Server is unavailable now. Try again later.";
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(EventService));
 
@@ -29,12 +30,14 @@ namespace EventsListService.Contracts.Contracts
             }
         }
 
-        private List<T> GetDataFromDb<T>(string procedureName, params SqlParameter[] sqlParams)
+        private List<T> GetDataFromDb<T>(Func<DataRow, T> convertToDtoFunc, string procedureName, params SqlParameter[] sqlParams)
         {
             if (string.IsNullOrEmpty(procedureName))
             {
-                throw new FaultException<ServiceFault>(new ServiceFault("Empty procedure name"), new FaultReason("Empty procedure name"));
+                throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                    new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
             }
+
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = new SqlCommand())
@@ -60,187 +63,265 @@ namespace EventsListService.Contracts.Contracts
                     }
                     catch (SqlException ex)
                     {
-                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message), new FaultReason(ex.Message));
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
                     }
 
+                    List<T> resultList = new List<T>();
 
-                    if (typeof(T) == typeof(EventDto))
+                    try
                     {
-                        List<EventDto> tempList = new List<EventDto>();
                         foreach (DataTable dataSetTable in dataSet.Tables)
                         {
                             foreach (DataRow dataRow in dataSetTable.Rows)
                             {
-                                tempList.Add(new EventDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    Name = dataRow[1].ToString(),
-                                    Date = (DateTime)dataRow[2],
-                                    OrganizerId = dataRow[3] as int?,
-                                    CategoryId = dataRow[4] as int?,
-                                    ImageUrl = dataRow[5]?.ToString(),
-                                    Description = dataRow[6].ToString(),
-                                    AddressId = dataRow[7] as int?
-                                });
+                                resultList.Add(convertToDtoFunc(dataRow));
                             }
                         }
-                        return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(T) == typeof(EventDetailDto))
+                    catch (SqlException ex)
                     {
-                        List<EventDetailDto> tempList = new List<EventDetailDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new EventDetailDto
-                                {
-                                    EventId = (int)dataRow[0],
-                                    EventName = dataRow[1].ToString(),
-                                    Date = (DateTime)dataRow[2],
-                                    ImageUrl = dataRow[3]?.ToString(),
-                                    Description = dataRow[4].ToString(),
-                                    Address = dataRow[5].ToString(),
-                                    CategoryName = dataRow[6].ToString(),
-                                    OrganizerName = string.IsNullOrEmpty(dataRow[7].ToString())
-                                    ? dataRow[9].ToString()
-                                    : dataRow[7].ToString(),
-                                    OrganizerEmails = (dataRow[8] as int?) != null ? GetEmailsByOrganizerId((int)dataRow[8]) : null,
-                                    OrganizerPhones = (dataRow[8] as int?) != null ? GetPhonesByOrganizerId((int)dataRow[8]) : null
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
                     }
-                    if (typeof(T) == typeof(CategoryDto))
+                    catch (FormatException ex)
                     {
-                        List<CategoryDto> tempList = new List<CategoryDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new CategoryDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    Pid = (dataRow[1]) as int?,
-                                    Name = dataRow[2].ToString(),
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
                     }
-                    if (typeof(T) == typeof(OrganizerDto))
+                    catch (Exception ex)
                     {
-                        List<OrganizerDto> tempList = new List<OrganizerDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new OrganizerDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    Name = dataRow[1].ToString()
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
                     }
-                    if (typeof(T) == typeof(AddressDto))
+
+                    return resultList;
+                }
+            }
+        }
+
+        private bool GetBoolFromDb(string procedureName, params SqlParameter[] sqlParams)
+        {
+            if (string.IsNullOrEmpty(procedureName))
+            {
+                throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                    new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
+            }
+            bool result = false;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedureName;
+
+                    if (sqlParams != null)
                     {
-                        List<AddressDto> tempList = new List<AddressDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
+                        foreach (SqlParameter sqlparam in sqlParams)
                         {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new AddressDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    Address = dataRow[1].ToString()
-                                });
-                            }
+                            command.Parameters.Add(sqlparam);
                         }
-                        return tempList.Cast<T>().ToList();
                     }
-                    if (typeof(T) == typeof(EmailDto))
+
+                    SqlParameter resultParameter = new SqlParameter { Direction = ParameterDirection.ReturnValue };
+                    command.Parameters.Add(resultParameter);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataSet dataSet = new DataSet();
+
+                    try
                     {
-                        List<EmailDto> tempList = new List<EmailDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new EmailDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    OrganizerId = (int)dataRow[1],
-                                    Email = dataRow[2].ToString()
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
+                        adapter.Fill(dataSet);
                     }
-                    if (typeof(T) == typeof(PhoneDto))
+                    catch (SqlException ex)
                     {
-                        List<PhoneDto> tempList = new List<PhoneDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new PhoneDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    OrganizerId = (int)dataRow[1],
-                                    PhoneNumber = dataRow[2].ToString()
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
                     }
-                    if (typeof(T) == typeof(UserDto))
+                    catch (InvalidOperationException ex)
                     {
-                        List<UserDto> tempList = new List<UserDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new UserDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    UserName = dataRow[1].ToString(),
-                                    Email = dataRow[2].ToString(),
-                                    UserRoles = GetRolesByUserId((int)dataRow[0]),
-                                    OrganizerName = dataRow[3].ToString(),
-                                    OrganizerEmails = GetEmailsByOrganizerId((int)dataRow[0]),
-                                    OrganizerPhones = GetPhonesByOrganizerId((int)dataRow[0])
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
                     }
-                    if (typeof(T) == typeof(RoleDto))
+                    catch (Exception ex)
                     {
-                        List<RoleDto> tempList = new List<RoleDto>();
-                        foreach (DataTable dataSetTable in dataSet.Tables)
-                        {
-                            foreach (DataRow dataRow in dataSetTable.Rows)
-                            {
-                                tempList.Add(new RoleDto
-                                {
-                                    Id = (int)dataRow[0],
-                                    RoleName = dataRow[1].ToString()
-                                });
-                            }
-                        }
-                        return tempList.Cast<T>().ToList();
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
+                    }
+
+                    if ((int)resultParameter.Value == 1)
+                    {
+                        result = true;
                     }
                 }
             }
 
-            return new List<T>();
+            return result;
+        }
+
+        private void ChangeDbData(string procedureName, params SqlParameter[] sqlParams)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedureName;
+
+                    if (sqlParams != null)
+                    {
+                        foreach (SqlParameter sqlparam in sqlParams)
+                        {
+                            command.Parameters.Add(sqlparam);
+                        }
+                    }
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                    catch (SqlException ex)
+                    {
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex.Message);
+                        throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                            new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
+                    }
+                }
+            }
+        }
+
+        private EventDto CreateEventDto(DataRow dataRow)
+        {
+            return new EventDto
+            {
+                Id = (int)dataRow[0],
+                Name = dataRow[1].ToString(),
+                Date = (DateTime)dataRow[2],
+                OrganizerId = dataRow[3] as int?,
+                CategoryId = dataRow[4] as int?,
+                ImageUrl = dataRow[5]?.ToString(),
+                Description = dataRow[6].ToString(),
+                AddressId = dataRow[7] as int?
+            };
+        }
+
+        private EventDetailDto CreateEventDetailDto(DataRow dataRow)
+        {
+            return new EventDetailDto
+            {
+                EventId = (int)dataRow[0],
+                EventName = dataRow[1].ToString(),
+                Date = (DateTime)dataRow[2],
+                ImageUrl = dataRow[3]?.ToString(),
+                Description = dataRow[4].ToString(),
+                Address = dataRow[5].ToString(),
+                CategoryName = dataRow[6].ToString(),
+                OrganizerName = string.IsNullOrEmpty(dataRow[7].ToString())
+                    ? dataRow[9].ToString()
+                    : dataRow[7].ToString(),
+                OrganizerEmails = (dataRow[8] as int?) != null ? GetEmailsByOrganizerId((int)dataRow[8]) : null,
+                OrganizerPhones = (dataRow[8] as int?) != null ? GetPhonesByOrganizerId((int)dataRow[8]) : null
+            };
+        }
+
+        private CategoryDto CreateCategoryDto(DataRow dataRow)
+        {
+            return new CategoryDto
+            {
+                Id = (int)dataRow[0],
+                Pid = (dataRow[1]) as int?,
+                Name = dataRow[2].ToString()
+            };
+        }
+
+        private OrganizerDto CreateOrganizerDto(DataRow dataRow)
+        {
+            return new OrganizerDto
+            {
+                Id = (int)dataRow[0],
+                Name = dataRow[1].ToString()
+            };
+        }
+
+        private AddressDto CreateAddressDto(DataRow dataRow)
+        {
+            return new AddressDto
+            {
+                Id = (int)dataRow[0],
+                Address = dataRow[1].ToString()
+            };
+        }
+
+        private EmailDto CreateEmailDto(DataRow dataRow)
+        {
+            return new EmailDto
+            {
+                Id = (int)dataRow[0],
+                OrganizerId = (int)dataRow[1],
+                Email = dataRow[2].ToString()
+            };
+        }
+
+        private PhoneDto CreatePhoneDto(DataRow dataRow)
+        {
+            return new PhoneDto
+            {
+                Id = (int)dataRow[0],
+                OrganizerId = (int)dataRow[1],
+                PhoneNumber = dataRow[2].ToString()
+            };
+        }
+
+        private UserDto CreateUserDto(DataRow dataRow)
+        {
+            return new UserDto
+            {
+                Id = (int)dataRow[0],
+                UserName = dataRow[1].ToString(),
+                Email = dataRow[2].ToString(),
+                UserRoles = GetRolesByUserId((int)dataRow[0]),
+                OrganizerName = dataRow[3].ToString(),
+                OrganizerEmails = GetEmailsByOrganizerId((int)dataRow[0]),
+                OrganizerPhones = GetPhonesByOrganizerId((int)dataRow[0])
+            };
+        }
+
+        private RoleDto CreateRoleDto(DataRow dataRow)
+        {
+            return new RoleDto
+            {
+                Id = (int)dataRow[0],
+                RoleName = dataRow[1].ToString()
+            };
         }
 
         public List<EventDto> GetEvents()
         {
-            return GetDataFromDb<EventDto>("SelectEvents");
+            Func<DataRow, EventDto> dt = CreateEventDto;
+            return GetDataFromDb(dt, "SelectEvents");
         }
 
         public List<EventDto> GetEventsByCategoryId(int categoryId)
@@ -251,7 +332,8 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@categoryId",
                 Value = categoryId
             };
-            return GetDataFromDb<EventDto>("SelectEventsByCategoryId", param);
+            Func<DataRow, EventDto> dt = CreateEventDto;
+            return GetDataFromDb(dt, "SelectEventsByCategoryId", param);
         }
 
         public List<EventDto> GetEventsByUserId(int userId)
@@ -262,31 +344,8 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@userId",
                 Value = userId
             };
-            return GetDataFromDb<EventDto>("SelectEventsByUserId", param);
-        }
-
-        public EventDetailDto GetEventInfoDetailById(int eventId)
-        {
-            SqlParameter param = new SqlParameter
-            {
-                DbType = DbType.Int32,
-                ParameterName = "@eventId",
-                Value = eventId
-            };
-
-            return GetDataFromDb<EventDetailDto>("SelectEventDetailInfoById", param).SingleOrDefault();
-        }
-
-        public EventDto GetEventById(int eventId)
-        {
-            SqlParameter param = new SqlParameter
-            {
-                DbType = DbType.Int32,
-                ParameterName = "@id",
-                Value = eventId
-            };
-
-            return GetDataFromDb<EventDto>("SelectEventById", param).SingleOrDefault();
+            Func<DataRow, EventDto> dt = CreateEventDto;
+            return GetDataFromDb(dt, "SelectEventsByUserId", param);
         }
 
         public List<EventDto> GetEventsBySearchData(int? categoryId, DateTime? date, int? state)
@@ -315,13 +374,38 @@ namespace EventsListService.Contracts.Contracts
                     IsNullable = true
                 }
             };
+            Func<DataRow, EventDto> dt = CreateEventDto;
+            return GetDataFromDb(dt, "SelectEventsByCategoryIdAndDateAndState", parameters);
+        }
 
-            return GetDataFromDb<EventDto>("SelectEventsByCategoryIdAndDateAndState", parameters);
+        public EventDto GetEventById(int eventId)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@id",
+                Value = eventId
+            };
+            Func<DataRow, EventDto> dt = CreateEventDto;
+            return GetDataFromDb(dt, "SelectEventById", param).FirstOrDefault();
+        }
+
+        public EventDetailDto GetEventInfoDetailById(int eventId)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@eventId",
+                Value = eventId
+            };
+            Func<DataRow, EventDetailDto> dt = CreateEventDetailDto;
+            return GetDataFromDb(dt, "SelectEventDetailInfoById", param).FirstOrDefault();
         }
 
         public List<CategoryDto> GetCategories()
         {
-            return GetDataFromDb<CategoryDto>("SelectCategories");
+            Func<DataRow, CategoryDto> dt = CreateCategoryDto;
+            return GetDataFromDb(dt, "SelectCategories");
         }
 
         public CategoryDto GetCategoryById(int categoryId)
@@ -332,12 +416,14 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@categoryId",
                 Value = categoryId
             };
-            return GetDataFromDb<CategoryDto>("SelectCategoryById", param).SingleOrDefault();
+            Func<DataRow, CategoryDto> dt = CreateCategoryDto;
+            return GetDataFromDb(dt, "SelectCategoryById", param).FirstOrDefault();
         }
 
         public List<AddressDto> GetAddresses()
         {
-            return GetDataFromDb<AddressDto>("SelectAddresses");
+            Func<DataRow, AddressDto> dt = CreateAddressDto;
+            return GetDataFromDb(dt, "SelectAddresses");
         }
 
         public AddressDto GetAddressById(int addressId)
@@ -348,7 +434,8 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@addressId",
                 Value = addressId
             };
-            return GetDataFromDb<AddressDto>("SelectAddressById", param).SingleOrDefault();
+            Func<DataRow, AddressDto> dt = CreateAddressDto;
+            return GetDataFromDb(dt, "SelectAddressById", param).FirstOrDefault();
         }
 
         public List<EmailDto> GetEmailsByOrganizerId(int organizerId)
@@ -359,18 +446,26 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@organizerId",
                 Value = organizerId
             };
-            return GetDataFromDb<EmailDto>("SelectEmailsByOrganizerId", param);
+            Func<DataRow, EmailDto> dt = CreateEmailDto;
+            return GetDataFromDb(dt, "SelectEmailsByOrganizerId", param);
         }
 
         public List<PhoneDto> GetPhonesByOrganizerId(int organizerId)
         {
-            SqlParameter param = new SqlParameter { DbType = DbType.Int32, ParameterName = "@organizerId", Value = organizerId };
-            return GetDataFromDb<PhoneDto>("SelectPhonesByOrganizerId", param);
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.Int32,
+                ParameterName = "@organizerId",
+                Value = organizerId
+            };
+            Func<DataRow, PhoneDto> dt = CreatePhoneDto;
+            return GetDataFromDb(dt, "SelectPhonesByOrganizerId", param);
         }
 
         public List<UserDto> GetUsers()
         {
-            return GetDataFromDb<UserDto>("SelectUsers");
+            Func<DataRow, UserDto> dt = CreateUserDto;
+            return GetDataFromDb(dt, "SelectUsers");
         }
 
         public UserDto GetUserByName(string name)
@@ -381,7 +476,8 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@name",
                 Value = name
             };
-            return GetDataFromDb<UserDto>("SelectUserByName", param).SingleOrDefault();
+            Func<DataRow, UserDto> dt = CreateUserDto;
+            return GetDataFromDb(dt, "SelectUserByName", param).FirstOrDefault();
         }
 
         public List<RoleDto> GetRolesByUserId(int id)
@@ -392,7 +488,8 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@userId",
                 Value = id
             };
-            return GetDataFromDb<RoleDto>("SelectRolesByUserId", param);
+            Func<DataRow, RoleDto> dt = CreateRoleDto;
+            return GetDataFromDb(dt, "SelectRolesByUserId", param);
         }
 
         public List<RoleDto> GetRolesNotInUser(string userName)
@@ -403,12 +500,14 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@userName",
                 Value = userName
             };
-            return GetDataFromDb<RoleDto>("SelectRolesNotInUser", param);
+            Func<DataRow, RoleDto> dt = CreateRoleDto;
+            return GetDataFromDb(dt, "SelectRolesNotInUser", param);
         }
 
         public List<RoleDto> GetRoles()
         {
-            return GetDataFromDb<RoleDto>("SelectRoles");
+            Func<DataRow, RoleDto> dt = CreateRoleDto;
+            return GetDataFromDb(dt, "SelectRoles");
         }
 
         public RoleDto GetRolesById(int roleId)
@@ -419,7 +518,8 @@ namespace EventsListService.Contracts.Contracts
                 ParameterName = "@roleId",
                 Value = roleId
             };
-            return GetDataFromDb<RoleDto>("SelectRoleById", param).SingleOrDefault();
+            Func<DataRow, RoleDto> dt = CreateRoleDto;
+            return GetDataFromDb(dt, "SelectRoleById", param).FirstOrDefault();
         }
 
         public bool IsValidUser(string username, string password)
@@ -438,41 +538,7 @@ namespace EventsListService.Contracts.Contracts
                     Value = password
                 }
             };
-
-            bool result = false;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "IsValidUser";
-
-                    command.Parameters.AddRange(param);
-
-                    SqlParameter resultParameter = new SqlParameter { Direction = ParameterDirection.ReturnValue };
-                    command.Parameters.Add(resultParameter);
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataSet dataSet = new DataSet();
-
-                    try
-                    {
-                        adapter.Fill(dataSet);
-                    }
-                    catch (SqlException ex)
-                    {
-                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message), new FaultReason(ex.Message));
-                    }
-
-                    if ((int)resultParameter.Value == 1)
-                    {
-                        result = true;
-                    }
-                }
-            }
-
-            return result;
+            return GetBoolFromDb("IsValidUser", param);
         }
 
         public bool IsUserNameFree(int userId, string name)
@@ -491,647 +557,310 @@ namespace EventsListService.Contracts.Contracts
                     Value = name
                 }
             };
-
-            bool result = false;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "IsUserNameFree";
-
-                    command.Parameters.AddRange(param);
-
-                    SqlParameter resultParameter = new SqlParameter { Direction = ParameterDirection.ReturnValue };
-                    command.Parameters.Add(resultParameter);
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataSet dataSet = new DataSet();
-
-                    try
-                    {
-                        adapter.Fill(dataSet);
-                    }
-                    catch (SqlException ex)
-                    {
-                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message), new FaultReason(ex.Message));
-                    }
-
-                    if ((int)resultParameter.Value == 1)
-                    {
-                        result = true;
-                    }
-                }
-            }
-
-            return result;
+            return GetBoolFromDb("IsUserNameFree", param);
         }
 
         public bool IsRoleNameFree(int? roleId, string name)
         {
-            bool result = false;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
+            SqlParameter[] param = {
+                new SqlParameter
                 {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "IsRoleNameFree";
-
-                    command.Parameters.AddRange(new[]{
-                        new SqlParameter
-                        {
-                            DbType = DbType.Int32,
-                            ParameterName = "@roleId",
-                            Value = roleId,
-                            IsNullable = true
-                        },
-                        new SqlParameter
-                        {
-                            DbType = DbType.String,
-                            ParameterName = "@name",
-                            Value = name
-                        }
-                        });
-
-                    SqlParameter resultParameter = new SqlParameter { Direction = ParameterDirection.ReturnValue };
-                    command.Parameters.Add(resultParameter);
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataSet dataSet = new DataSet();
-
-                    try
-                    {
-                        adapter.Fill(dataSet);
-                    }
-                    catch (SqlException ex)
-                    {
-                        throw new FaultException<ServiceFault>(new ServiceFault(ex.Message), new FaultReason(ex.Message));
-                    }
-
-                    if ((int)resultParameter.Value == 1)
-                    {
-                        result = true;
-                    }
+                    DbType = DbType.Int32,
+                    ParameterName = "@roleId",
+                    Value = roleId,
+                    IsNullable = true
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.String,
+                    ParameterName = "@name",
+                    Value = name
                 }
-            }
-
-            return result;
+            };
+            return GetBoolFromDb("IsRoleNameFree", param);
         }
 
         public void AddEvent(string name, DateTime date, int? organizerId, int? categoryId, string imageUrl, string description,
             int? addressId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "AddEvent";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
-                        new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@organizerId",Value = organizerId},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
-
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
+                new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@organizerId",Value = organizerId},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
+            };
+            ChangeDbData("AddEvent", param);
         }
 
         public void DeleteEvent(int eventId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlParameter param = new SqlParameter
             {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteEventById";
+                DbType = DbType.Int32,
+                ParameterName = "@eventId",
+                Value = eventId
+            };
 
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@eventId",
-                        Value = eventId
-                    });
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            ChangeDbData("DeleteEventById", param);
         }
 
         public void DeleteFutureEventByIdAndUserId(int eventId, int userId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
+            SqlParameter[] param = {
+                new SqlParameter
                 {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteFutureEventByIdAndUserId";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                    new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@eventId",
-                        Value = eventId
-                    },
-                    new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@userId",
-                        Value = userId
-                    }
-                    });
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
+                    DbType = DbType.Int32,
+                    ParameterName = "@eventId",
+                    Value = eventId
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@userId",
+                    Value = userId
                 }
-            }
+            };
+            ChangeDbData("DeleteFutureEventByIdAndUserId", param);
         }
 
         public void DeleteUser(int userId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlParameter param = new SqlParameter
             {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteUserById";
-
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@userId",
-                        Value = userId
-                    });
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+                DbType = DbType.Int32,
+                ParameterName = "@userId",
+                Value = userId
+            };
+            ChangeDbData("DeleteUserById", param);
         }
 
         public void DeleteRole(int roleId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlParameter param = new SqlParameter
             {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteRoleById";
+                DbType = DbType.Int32,
+                ParameterName = "@roleId",
+                Value = roleId
+            };
 
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@roleId",
-                        Value = roleId
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
+            ChangeDbData("DeleteRoleById", param);
         }
 
         public void DeleteUserRole(string userName, int roleId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
+            SqlParameter[] param = {
+                new SqlParameter
                 {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteUserRole";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@userName",Value = userName},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@roleId",Value = roleId}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
+                    DbType = DbType.String,
+                    ParameterName = "@userName",
+                    Value = userName
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@roleId",
+                    Value = roleId
                 }
-            }
+            };
+            ChangeDbData("DeleteUserRole", param);
         }
 
         public void DeleteEmailByUserIdAndEmailId(int userId, int emailId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
+            SqlParameter[] param = {
+                new SqlParameter
                 {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteEmailByUserIdAndEmailId";
-
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@userId",
-                        Value = userId
-                    });
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@emailId",
-                        Value = emailId
-                    });
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
+                    DbType = DbType.Int32,
+                    ParameterName = "@userId",
+                    Value = userId
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@emailId",
+                    Value = emailId
                 }
-            }
+            };
+            ChangeDbData("DeleteEmailByUserIdAndEmailId", param);
         }
 
         public void DeletePhoneByUserIdAndPhoneId(int userId, int phoneId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
+            SqlParameter[] param = {
+                new SqlParameter
                 {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeletePhoneByUserIdAndPhoneId";
-
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@userId",
-                        Value = userId
-                    });
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@phoneId",
-                        Value = phoneId
-                    });
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
+                    DbType = DbType.Int32,
+                    ParameterName = "@userId",
+                    Value = userId
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@phoneId",
+                    Value = phoneId
                 }
-            }
+            };
+            ChangeDbData("DeletePhoneByUserIdAndPhoneId", param);
         }
 
         public void DeleteAddress(int addressId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlParameter param = new SqlParameter
             {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteAddressById";
-
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@addressId",
-                        Value = addressId
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
+                DbType = DbType.Int32,
+                ParameterName = "@addressId",
+                Value = addressId
+            };
+            ChangeDbData("DeleteAddressById", param);
         }
 
         public void DeleteCategory(int categoryId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlParameter param = new SqlParameter
             {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "DeleteCategoryById";
-
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.Int32,
-                        ParameterName = "@categoryId",
-                        Value = categoryId
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
+                DbType = DbType.Int32,
+                ParameterName = "@categoryId",
+                Value = categoryId
+            };
+            ChangeDbData("DeleteCategoryById", param);
         }
 
         public void EditEvent(int eventId, string name, DateTime date, int? categoryId, string imageUrl, string description, int? addressId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "UpdateEvent";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@eventId",Value = eventId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
-                        new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@eventId",Value = eventId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
+                new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
+            };
+            ChangeDbData("UpdateEvent", param);
         }
 
         public void EditEventByUserId(int eventId, int userId, string name, DateTime date, int? categoryId, string imageUrl,
             string description, int? addressId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "UpdateEventByUserId";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@eventId",Value = eventId},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@userId",Value = userId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
-                        new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@eventId",Value = eventId},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@userId",Value = userId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
+                new SqlParameter{DbType = DbType.DateTime,ParameterName = "@date",Value = date},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@imageURL",Value = imageUrl},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@description",Value = description},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@addressId",Value = addressId}
+            };
+            ChangeDbData("UpdateEventByUserId", param);
         }
 
         public void AddUser(string name, string password, string email)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "AddUser";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@password",Value = password},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@email",Value = email}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@password",Value = password},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@email",Value = email}
+            };
+            ChangeDbData("AddUser", param);
         }
 
         public void AddRoleToUser(string userName, int roleId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "AddUserRole";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@userName",Value = userName},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@roleId",Value = roleId}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{
+                    DbType = DbType.String,
+                    ParameterName = "@userName",
+                    Value = userName},
+                new SqlParameter{
+                    DbType = DbType.Int32,
+                    ParameterName = "@roleId",
+                    Value = roleId}
+            };
+            ChangeDbData("AddUserRole", param);
         }
 
         public void AddRole(string roleName)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlParameter param = new SqlParameter
             {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "AddRole";
-
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.String,
-                        ParameterName = "@name",
-                        Value = roleName
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+                DbType = DbType.String,
+                ParameterName = "@name",
+                Value = roleName
+            };
+            ChangeDbData("AddRole", param);
         }
 
         public void AddAddress(string address)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            SqlParameter param = new SqlParameter
             {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "AddAddress";
-
-                    command.Parameters.Add(new SqlParameter
-                    {
-                        DbType = DbType.String,
-                        ParameterName = "@address",
-                        Value = address
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+                DbType = DbType.String,
+                ParameterName = "@address",
+                Value = address
+            };
+            ChangeDbData("AddAddress", param);
         }
 
         public void AddCategory(string categoryName, int? pid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
+            SqlParameter[] param = {
+                new SqlParameter
                 {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "AddCategory";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter
-                        {
-                        DbType = DbType.String,
-                        ParameterName = "@categoryName",
-                        Value = categoryName
-                        },
-                        new SqlParameter
-                        {
-                            DbType = DbType.Int32,
-                            ParameterName = "@pid",
-                            Value = pid,
-                            IsNullable = true
-                        }
-
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
+                    DbType = DbType.String,
+                    ParameterName = "@categoryName",
+                    Value = categoryName
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@pid",
+                    Value = pid,
+                    IsNullable = true
                 }
-            }
+            };
+            ChangeDbData("AddCategory", param);
         }
 
         public void EditUserInfo(int userId, string name, string email)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "UpdateUserInfo";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@userId",Value = userId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@email",Value = email}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.String,ParameterName = "@userId",Value = userId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@email",Value = email}
+            };
+            ChangeDbData("UpdateUserInfo", param);
         }
 
         public void EditRole(int roleId, string roleName)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "UpdateRole";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@roleId",Value = roleId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = roleName,IsNullable = true}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.String,ParameterName = "@roleId",Value = roleId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = roleName,IsNullable = true}
+            };
+            ChangeDbData("UpdateRole", param);
         }
 
         public void EditAddress(int addressId, string address)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "UpdateAddress";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@addressId",Value = addressId},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@address",Value = address,IsNullable = true}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.String,ParameterName = "@addressId",Value = addressId},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@address",Value = address,IsNullable = true}
+            };
+            ChangeDbData("UpdateAddress", param);
         }
 
         public void EditCategory(int categoryId, int? pid, string categoryName)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "UpdateCategory";
-
-                    command.Parameters.AddRange(new[]
-                    {
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
-                        new SqlParameter{DbType = DbType.Int32,ParameterName = "@pid",Value = pid,IsNullable = true},
-                        new SqlParameter{DbType = DbType.String,ParameterName = "@categoryName",Value = categoryName}
-                    });
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                }
-            }
+            SqlParameter[] param = {
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@categoryId",Value = categoryId},
+                new SqlParameter{DbType = DbType.Int32,ParameterName = "@pid",Value = pid,IsNullable = true},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@categoryName",Value = categoryName}
+            };
+            ChangeDbData("UpdateCategory", param);
         }
     }
 }

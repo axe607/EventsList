@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using EventsListCommon.Models;
+﻿using EventsListCommon.Models;
 using EventsListData.Repositories;
+using System.Collections.Generic;
 
 namespace EventsListBL.Providers
 {

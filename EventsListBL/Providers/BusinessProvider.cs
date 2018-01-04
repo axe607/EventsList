@@ -1,13 +1,13 @@
-﻿using System;
-using EventsListCommon.Models;
+﻿using EventsListCommon.Models;
 using EventsListData.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace EventsListBL.Providers
 {
     public class BusinessProvider : IBusinessProvider
     {
-        readonly IDataRepository _dataProvider;
+        private readonly IDataRepository _dataProvider;
 
         public BusinessProvider(IDataRepository provider)
         {

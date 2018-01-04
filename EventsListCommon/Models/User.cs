@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace EventsListCommon.Models
@@ -13,12 +12,12 @@ namespace EventsListCommon.Models
         [Required]
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<Role> Roles { get; set; }
+        public Role[] Roles { get; set; }
         [DisplayName("Organizer name")]
         public string OrganizerName { get; set; }
         [DisplayName("Organizer emails")]
-        public List<Email> OrganizerEmails { get; set; }
+        public Email[] OrganizerEmails { get; set; }
         [DisplayName("Organizer phones")]
-        public List<Phone> OrganizerPhones { get; set; }
+        public Phone[] OrganizerPhones { get; set; }
     }
 }
