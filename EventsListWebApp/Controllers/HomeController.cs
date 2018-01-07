@@ -1,15 +1,16 @@
 ﻿using EventsListBL.Providers;
 using log4net;
 using System.Web.Mvc;
+using EventsListBL.Providers.Interfaces;
 
 namespace EventsListWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IBusinessProvider _provider;
+        private readonly IEventProvider _provider;
         private static readonly ILog Log = LogManager.GetLogger("HomeController");
 
-        public HomeController(IBusinessProvider providerInput)
+        public HomeController(IEventProvider providerInput)
         {
             _provider = providerInput;
         }

@@ -1,5 +1,6 @@
-﻿using EventsListBL.Providers;
+﻿using EventsListBL.Providers.Interfaces;
 using EventsListBL.Services;
+using EventsListBL.Services.Interfaces;
 using EventsListCommon.Models;
 using EventsListWebApp.Models;
 using System;

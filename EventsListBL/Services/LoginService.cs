@@ -1,9 +1,10 @@
-﻿using EventsListBL.Providers;
+﻿using EventsListBL.Providers.Interfaces;
+using EventsListBL.Services.Interfaces;
 using EventsListCommon.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Web;
 using System.Web.Security;
-using Newtonsoft.Json;
 
 namespace EventsListBL.Services
 {

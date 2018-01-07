@@ -1,6 +1,6 @@
 ﻿using EventsListCommon.Enums;
 
-namespace EventsListBL.Services
+namespace EventsListBL.Services.Interfaces
 {
     public interface ILoginService
     {

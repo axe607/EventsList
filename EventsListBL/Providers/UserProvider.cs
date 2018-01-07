@@ -1,6 +1,7 @@
 ﻿using EventsListCommon.Models;
 using EventsListData.Repositories;
 using System.Collections.Generic;
+using EventsListBL.Providers.Interfaces;
 
 namespace EventsListBL.Providers
 {

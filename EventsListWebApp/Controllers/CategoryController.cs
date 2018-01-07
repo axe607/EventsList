@@ -1,35 +1,35 @@
-﻿using EventsListBL.Providers;
+﻿using EventsListBL.Providers.Interfaces;
+using EventsListBL.Services.Interfaces;
+using EventsListCommon.Models;
 using EventsListWebApp.Models;
 using log4net;
 using System;
 using System.Web.Mvc;
-using EventsListBL.Services;
-using EventsListCommon.Models;
 
 namespace EventsListWebApp.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IBusinessProvider _provider;
-        private readonly IEventOperation _eventOperation;
+        private readonly ICategoryProvider _categoryProvider;
+        private readonly ICategoryOperation _categoryOperation;
         private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
 
-        public CategoryController(IBusinessProvider businessProvider, IEventOperation eventOperation)
+        public CategoryController(ICategoryProvider categoryProvider, ICategoryOperation categoryOperation)
         {
-            _provider = businessProvider;
-            _eventOperation = eventOperation;
+            _categoryProvider = categoryProvider;
+            _categoryOperation = categoryOperation;
         }
 
         public ActionResult Index()
         {
-            return View(_provider.GetCategories());
+            return View(_categoryProvider.GetCategories());
         }
 
         public PartialViewResult CategoriesBar()
         {
             try
             {
-                return PartialView(_provider.GetCategories());
+                return PartialView(_categoryProvider.GetCategories());
             }
             catch (Exception ex)
             {
@@ -37,6 +37,11 @@ namespace EventsListWebApp.Controllers
                 ViewBag.Error = ex.Message;
                 return PartialView();
             }
+        }
+
+        public PartialViewResult SearchBar()
+        {
+            return PartialView();
         }
 
         [AllowTo(Roles = "Admin,Editor")]
@@ -52,7 +57,7 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _eventOperation.AddCategory(
+                _categoryOperation.AddCategory(
                     createdCategory.Name,
                     createdCategory.Pid);
                 return RedirectToAction("Index");
@@ -64,7 +69,7 @@ namespace EventsListWebApp.Controllers
         [HttpGet]
         public ActionResult EditCategory(int categoryId)
         {
-            return View(_provider.GetCategoryById(categoryId));
+            return View(_categoryProvider.GetCategoryById(categoryId));
         }
 
         [AllowTo(Roles = "Admin,Editor")]
@@ -73,7 +78,7 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _eventOperation.EditCategory(
+                _categoryOperation.EditCategory(
                     editedCategory.Id,
                     editedCategory.Pid,
                     editedCategory.Name);
@@ -85,7 +90,7 @@ namespace EventsListWebApp.Controllers
         [AllowTo(Roles = "Admin,Editor")]
         public RedirectToRouteResult DeleteCategory(int categoryId)
         {
-            _eventOperation.DeleteCategory(categoryId);
+            _categoryOperation.DeleteCategory(categoryId);
             return RedirectToAction("Index");
         }
     }

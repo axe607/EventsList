@@ -1,4 +1,4 @@
-﻿namespace EventsListBL.Services
+﻿namespace EventsListBL.Services.Interfaces
 {
     public interface IUserOperation
     {

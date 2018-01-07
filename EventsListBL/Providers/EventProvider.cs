@@ -2,14 +2,15 @@
 using EventsListData.Repositories;
 using System;
 using System.Collections.Generic;
+using EventsListBL.Providers.Interfaces;
 
 namespace EventsListBL.Providers
 {
-    public class BusinessProvider : IBusinessProvider
+    public class EventProvider : IEventProvider
     {
         private readonly IDataRepository _dataProvider;
 
-        public BusinessProvider(IDataRepository provider)
+        public EventProvider(IDataRepository provider)
         {
             _dataProvider = provider;
         }
@@ -17,21 +18,6 @@ namespace EventsListBL.Providers
         public IReadOnlyList<Event> GetEvents()
         {
             return _dataProvider.GetEvents();
-        }
-
-        public IReadOnlyList<Category> GetCategories()
-        {
-            return _dataProvider.GetCategories();
-        }
-        
-        public IReadOnlyList<Address> GetAddresses()
-        {
-            return _dataProvider.GetAddresses();
-        }
-
-        public Category GetCategoryById(int categoryId)
-        {
-            return _dataProvider.GetCategoryById(categoryId);
         }
 
         public IReadOnlyList<Event> GetEventsByCategoryId(int categoryId)
@@ -58,10 +44,6 @@ namespace EventsListBL.Providers
         {
            return _dataProvider.GetEventInfoDetailById(eventId);
         }
-
-        public Address GetAddressById(int addressId)
-        {
-            return _dataProvider.GetAddressById(addressId);
-        }
+     
     }
 }

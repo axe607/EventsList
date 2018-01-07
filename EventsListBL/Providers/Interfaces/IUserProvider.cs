@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EventsListCommon.Models;
 
-namespace EventsListBL.Providers
+namespace EventsListBL.Providers.Interfaces
 {
     public interface IUserProvider
     {

@@ -1,4 +1,5 @@
-﻿using EventsListData.Repositories;
+﻿using EventsListBL.Services.Interfaces;
+using EventsListData.Repositories;
 
 namespace EventsListBL.Services
 {

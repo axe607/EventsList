@@ -1,21 +1,22 @@
-﻿using System;
-using System.Web;
-using EventsListBL.Providers;
-using log4net;
-using System.Web.Mvc;
+﻿using EventsListBL.Providers.Interfaces;
 using EventsListWebApp.Models;
+using log4net;
+using System;
+using System.Web.Mvc;
 
 namespace EventsListWebApp.Controllers
 {
     public class JsonController : Controller
     {
-        private readonly IBusinessProvider _provider;
+        private readonly ICategoryProvider _categoryProvider;
+        private readonly IAddressProvider _addressProvider;
         private readonly IUserProvider _userProvider;
         private static readonly ILog Log = LogManager.GetLogger(typeof(JsonController));
 
-        public JsonController(IBusinessProvider providerInput, IUserProvider userProvider)
+        public JsonController(ICategoryProvider categoryProvider, IAddressProvider addressProvider, IUserProvider userProvider)
         {
-            _provider = providerInput;
+            _categoryProvider = categoryProvider;
+            _addressProvider = addressProvider;
             _userProvider = userProvider;
         }
 
@@ -24,7 +25,7 @@ namespace EventsListWebApp.Controllers
         {
             try
             {
-                return Json(_provider.GetCategories(), JsonRequestBehavior.AllowGet);
+                return Json(_categoryProvider.GetCategories(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -38,7 +39,7 @@ namespace EventsListWebApp.Controllers
         {
             try
             {
-                return Json(_provider.GetAddresses(), JsonRequestBehavior.AllowGet);
+                return Json(_addressProvider.GetAddresses(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

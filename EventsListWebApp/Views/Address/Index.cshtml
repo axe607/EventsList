@@ -7,7 +7,7 @@
 <hr />
 <div class="row">
     <div class="col-md-10">
-        <a href="/Event/AddAddress"><button type="button" class="btn btn-success">Create Address</button></a>
+        <a href="/Address/AddAddress"><button type="button" class="btn btn-success">Create Address</button></a>
     </div>
 </div>
 <hr />
@@ -19,7 +19,7 @@
             {
                 <div class="alert alert-warning">
                     <p id="@address.Id">@address.AddressString</p>
-                    <a href="/Event/EditAddress?addressId=@address.Id"><button type="button" id="btn_edit_user" class="btn btn-info">Edit</button></a>
+                    <a href="/Address/EditAddress?addressId=@address.Id"><button type="button" id="btn_edit_user" class="btn btn-info">Edit</button></a>
                     <button type="button" class="btn btn-danger" onclick="DeleteAddress(@address.Id)">Delete</button>
                 </div>
             }
@@ -35,7 +35,7 @@ else
     <script>
         function DeleteAddress(idToDel) {
             $.ajax({
-                url: "/Event/DeleteAddress",
+                url: "/Address/DeleteAddress",
                 data:
                 {
                     addressId: idToDel

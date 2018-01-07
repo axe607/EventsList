@@ -17,34 +17,34 @@
 <body>
     <div class="topbar">
         <div class="topbar-title"><a href="/Home/Index">Home</a></div>
-
-        <div><a href="/Event/CreateEvent">Create</a></div>
         @if (HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
         {
             <div>
                 <a href="#" onclick="loadSearchBar('categories')">Search</a>
             </div>
         }
-        @if (HttpContext.Current.User.IsInRole("Admin") || HttpContext.Current.User.IsInRole("Editor"))
+        @if (User.Identity.IsAuthenticated)
         {
-            <div>
-                <a href="#">Operations</a>
-                <div class="downdiv">
-                    <ul>
-                        <li><span><a href="/Event/AddressesList">Addresses</a></span></li>
-                        <li><span><a href="/Category/Index">Categories</a></span></li>
-                    @if (HttpContext.Current.User.IsInRole("Admin"))
-                    {
+            <div><a href="/Event/CreateEvent">Create</a></div>
 
-                        <li><span><a href="/Account/UsersList">Users</a></span></li>
-                        <li><span><a href="/Account/RolesList">Roles</a></span></li>
-                    }
-                    </ul>
+            if (HttpContext.Current.User.IsInRole("Admin") || HttpContext.Current.User.IsInRole("Editor"))
+            {
+                <div>
+                    <a href="#">Operations</a>
+                    <div class="downdiv">
+                        <ul>
+                            <li><span><a href="/Address/Index">Addresses</a></span></li>
+                            <li><span><a href="/Category/Index">Categories</a></span></li>
+                            @if (HttpContext.Current.User.IsInRole("Admin"))
+                            {
+
+                                <li><span><a href="/Account/UsersList">Users</a></span></li>
+                                <li><span><a href="/Account/RolesList">Roles</a></span></li>
+                            }
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        }
-        @if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-        {
+            }
             <div class="topbar-user"><a href="/Account/Index">@HttpContext.Current.User.Identity.Name.ToUpperInvariant()</a></div>
         }
         else
@@ -68,7 +68,7 @@
             });
 
             function loadSearchBar(idToLoad) {
-                $("#" + idToLoad).load("/Event/SearchBar");
+                $("#" + idToLoad).load("/Category/SearchBar");
             }
         </script>
     }

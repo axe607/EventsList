@@ -1,8 +1,8 @@
-﻿using EventsListBL.Services;
+﻿using EventsListBL.Services.Interfaces;
 using EventsListCommon.Enums;
 using EventsListWebApp.Models;
-using System.Web.Mvc;
 using log4net;
+using System.Web.Mvc;
 
 namespace EventsListWebApp.Controllers
 {
