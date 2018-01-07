@@ -6,7 +6,5 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[SelectCategories]
 AS
-SELECT [id],
-[pid]
-      ,[Name]
+SELECT [id],[pid],[Name]
   FROM [dbo].[Categories]

@@ -14,17 +14,17 @@ AS
 
 IF @state=-1
 BEGIN
-SELECT * FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date) WHERE CONVERT(DATE,Date) < CAST(GETDATE() AS DATE)
+SELECT id, Name, [Date], OrganizerId, CategoryId, ImageUrl, [Description], AddressId FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date) WHERE CONVERT(DATE,Date) < CAST(GETDATE() AS DATE)
 END
 ELSE IF @state=0
 BEGIN
-SELECT * FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date) WHERE CONVERT(DATE,Date)  = CAST(GETDATE() AS DATE)
+SELECT id, Name, [Date], OrganizerId, CategoryId, ImageUrl, [Description], AddressId FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date) WHERE CONVERT(DATE,Date)  = CAST(GETDATE() AS DATE)
 END
 ELSE IF @state=1
 BEGIN
-SELECT * FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date) WHERE CONVERT(DATE,Date)  > CAST(GETDATE() AS DATE)
+SELECT id, Name, [Date], OrganizerId, CategoryId, ImageUrl, [Description], AddressId FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date) WHERE CONVERT(DATE,Date)  > CAST(GETDATE() AS DATE)
 END
 ELSE
 BEGIN
-SELECT * FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date)
+SELECT id, Name, [Date], OrganizerId, CategoryId, ImageUrl, [Description], AddressId FROM dbo.SelectByCategoryIdAndDate(@categoryId,@date)
 END

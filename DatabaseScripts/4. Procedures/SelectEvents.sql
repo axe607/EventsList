@@ -6,5 +6,5 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[SelectEvents]
 AS
-SELECT*
+SELECT id, Name, [Date], OrganizerId, CategoryId, ImageUrl, [Description], AddressId
   FROM [dbo].[Events]

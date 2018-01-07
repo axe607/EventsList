@@ -7,5 +7,5 @@ GO
 CREATE PROCEDURE [dbo].[SelectAddressById]
 (@addressId int)
 AS
-SELECT*
+SELECT id,[Address]
   FROM [dbo].Addresses WHERE id=@addressId

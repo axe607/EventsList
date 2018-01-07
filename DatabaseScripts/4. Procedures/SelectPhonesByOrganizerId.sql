@@ -7,5 +7,5 @@ GO
 CREATE PROCEDURE [dbo].[SelectPhonesByOrganizerId]
 (@organizerId int)
 AS
-SELECT*
+SELECT id, OrganizerId, PhoneNumber
   FROM [dbo].Phones WHERE OrganizerId =@organizerId

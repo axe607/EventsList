@@ -8,6 +8,6 @@ CREATE PROCEDURE [dbo].[SelectEventById](
 @id int
 )
 AS
-SELECT*
+SELECT id, Name, [Date], OrganizerId, CategoryId, ImageUrl, [Description], AddressId
   FROM [dbo].[Events]
   WHERE id=@id

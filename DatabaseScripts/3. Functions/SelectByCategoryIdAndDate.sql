@@ -23,8 +23,8 @@ union all
 select c.id, c.pid, c.name
 FROM Categories c INNER JOIN Recursion r ON c.pid = r.id
 )
-SELECT distinct dbo.[Events].*
-FROM  (SELECT r.id
-From Recursion r) r1 INNER JOIN [Events] ON r1.id = [Events].CategoryId 
+SELECT distinct dbo.[Events].id, dbo.[Events].Name, dbo.[Events].[Date], dbo.[Events].OrganizerId, dbo.[Events].CategoryId, dbo.[Events].ImageUrl, dbo.[Events].[Description], dbo.[Events].AddressId
+FROM dbo.[Events] INNER JOIN  (SELECT r.id
+From Recursion r) categoryRecursion ON CASE WHEN @categoryId IS NULL THEN categoryRecursion.id ELSE [Events].CategoryId END = categoryRecursion.id   
 WHERE CONVERT(DATE,dbo.[Events].Date) = isnull(@date,CONVERT(DATE,dbo.[Events].Date))
 )

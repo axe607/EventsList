@@ -6,5 +6,5 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[SelectAddresses]
 AS
-SELECT *
+SELECT id,[Address]
   FROM [dbo].Addresses

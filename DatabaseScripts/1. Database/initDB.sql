@@ -111,5 +111,9 @@ GO
 
 ALTER DATABASE [EventsListDB] SET  READ_WRITE 
 GO
+
+ALTER DATABASE [EventsListDB] SET ENABLE_BROKER
+GO
+
 :On Error EXIT
 PRINT 'Database create:  OK'

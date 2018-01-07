@@ -7,5 +7,5 @@ GO
 CREATE PROCEDURE [dbo].[SelectEmailsByOrganizerId]
 (@organizerId int)
 AS
-SELECT*
-  FROM [dbo].Emails WHERE OrganizerId =@organizerId
+SELECT id, OrganizerId, Email
+  FROM [dbo].Emails WHERE OrganizerId = @organizerId

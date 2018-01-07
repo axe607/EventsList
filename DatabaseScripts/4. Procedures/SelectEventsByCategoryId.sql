@@ -21,7 +21,7 @@ union all
 select c.id, c.pid, c.name
 FROM Categories c INNER JOIN Recursion r ON c.pid = r.id
 )
-SELECT dbo.[Events].*
+SELECT dbo.[Events].id, dbo.[Events].Name, dbo.[Events].[Date], dbo.[Events].OrganizerId, dbo.[Events].CategoryId, dbo.[Events].ImageUrl, dbo.[Events].[Description], dbo.[Events].AddressId
 FROM  (SELECT r.id
 From Recursion r) r1 INNER JOIN [Events] ON r1.id = [Events].CategoryId
 END
