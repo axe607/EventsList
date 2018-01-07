@@ -240,7 +240,6 @@ namespace EventsListWebApp.Controllers
                 try
                 {
                     _eventOperation.AddAddress(createdAddress.AddressString);
-                    JsonController.ClearAddressesCache();
                     return RedirectToAction("AddressesList");
                 }
                 catch (Exception ex)
@@ -270,7 +269,6 @@ namespace EventsListWebApp.Controllers
                         editedAddress.Id,
                         editedAddress.AddressString
                     );
-                    JsonController.ClearAddressesCache();
                     return RedirectToAction("AddressesList");
                 }
                 catch (Exception ex)

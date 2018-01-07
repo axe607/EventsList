@@ -55,7 +55,6 @@ namespace EventsListWebApp.Controllers
                 _eventOperation.AddCategory(
                     createdCategory.Name,
                     createdCategory.Pid);
-                JsonController.ClearCategroriesCache();
                 return RedirectToAction("Index");
             }
             return View(createdCategory);
@@ -78,7 +77,6 @@ namespace EventsListWebApp.Controllers
                     editedCategory.Id,
                     editedCategory.Pid,
                     editedCategory.Name);
-                JsonController.ClearCategroriesCache();
                 return RedirectToAction("Index");
             }
             return View(editedCategory);

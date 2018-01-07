@@ -8,8 +8,6 @@ namespace EventsListData.Clients
 {
     public class Client : IClient
     {
-
-
         private List<T> ConvertDataFromService<T, TK>(IEnumerable<TK> dataFromService)
         {
             var result = new List<T>();

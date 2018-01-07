@@ -9,9 +9,6 @@ namespace EventsListWebApp.Controllers
 {
     public class JsonController : Controller
     {
-        private const string CATEGORIES_KEY = "categories";
-        private const string ADDRESSES_KEY = "addresses";
-
         private readonly IBusinessProvider _provider;
         private readonly IUserProvider _userProvider;
         private static readonly ILog Log = LogManager.GetLogger(typeof(JsonController));
@@ -27,12 +24,7 @@ namespace EventsListWebApp.Controllers
         {
             try
             {
-                if (HttpRuntime.Cache.Get(CATEGORIES_KEY) == null)
-                {
-
-                    HttpRuntime.Cache.Insert(CATEGORIES_KEY, _provider.GetCategories());
-                }
-                return Json(HttpRuntime.Cache.Get(CATEGORIES_KEY), JsonRequestBehavior.AllowGet);
+                return Json(_provider.GetCategories(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -46,11 +38,7 @@ namespace EventsListWebApp.Controllers
         {
             try
             {
-                if (HttpRuntime.Cache.Get(ADDRESSES_KEY) == null)
-                {
-                    HttpRuntime.Cache.Insert(ADDRESSES_KEY, _provider.GetAddresses());
-                }
-                return Json(HttpRuntime.Cache.Get(ADDRESSES_KEY), JsonRequestBehavior.AllowGet);
+                return Json(_provider.GetAddresses(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -72,16 +60,6 @@ namespace EventsListWebApp.Controllers
                 Log.Error(ex.Message);
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
-        }
-        
-        public static void ClearCategroriesCache()
-        {
-            HttpRuntime.Cache.Remove(CATEGORIES_KEY);
-        }
-        
-        public static void ClearAddressesCache()
-        {
-            HttpRuntime.Cache.Remove(ADDRESSES_KEY);
         }
 
     }

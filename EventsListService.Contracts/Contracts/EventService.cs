@@ -7,13 +7,20 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web.Caching;
 using System.ServiceModel;
+using System.Web.Configuration;
 
 namespace EventsListService.Contracts.Contracts
 {
     public class EventService : IGet, IAdd, IDelete, IUpdate
     {
         private readonly string _connectionString;
+
+        private readonly string _connectionStringDependency;
+
+        private readonly Cache _staticCache;
+
         private static readonly string DEFAULT_ERROR_MESSAGE_FOR_CLIENT = "Server is unavailable now. Try again later.";
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(EventService));
@@ -23,11 +30,69 @@ namespace EventsListService.Contracts.Contracts
             try
             {
                 _connectionString = ConfigurationManager.ConnectionStrings["DefDbConnect"].ConnectionString;
+                _connectionStringDependency = WebConfigurationManager.ConnectionStrings["DefDbConnect"].ConnectionString;
+                _staticCache = new Cache();
+                SqlDependency.Start(_connectionStringDependency);
             }
             catch (NullReferenceException e)
             {
                 Log.Error(e.Message);
             }
+        }
+
+        private void UpdateCache(string key, string tableName, object value)
+        {
+            SqlCacheDependency dependency = null;
+
+            try
+            {
+                dependency = new SqlCacheDependency("EventsDB", tableName);
+            }
+            catch (DatabaseNotEnabledForNotificationException exDbDis)
+            {
+                Log.Error(exDbDis.Message);
+                try
+                {
+                    SqlCacheDependencyAdmin.EnableNotifications(_connectionStringDependency);
+                    UpdateCache(key, tableName, value);
+                }
+                catch (UnauthorizedAccessException exPerm)
+                {
+                    Log.Error(exPerm.Message);
+                    throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                        new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
+                }
+            }
+            catch (TableNotEnabledForNotificationException exTabDis)
+            {
+                Log.Error(exTabDis.Message);
+                try
+                {
+                    SqlCacheDependencyAdmin.EnableTableForNotifications(_connectionStringDependency, tableName);
+                    UpdateCache(key, tableName, value);
+                }
+                catch (SqlException exc)
+                {
+                    Log.Error(exc.Message);
+                    throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
+                        new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
+                }
+            }
+            finally
+            {
+                if (_staticCache[key] == null)
+                {
+                    _staticCache.Insert(key, value, dependency);
+                }
+            }
+        }
+
+        private List<T> GetDataFromDb<T>(Func<DataRow, T> convertToDtoFunc, string procedureName, string key, string tableName,
+            params SqlParameter[] sqlParams)
+        {
+            List<T> resultList = GetDataFromDb(convertToDtoFunc, procedureName, sqlParams);
+            UpdateCache(key, tableName, resultList);
+            return resultList;
         }
 
         private List<T> GetDataFromDb<T>(Func<DataRow, T> convertToDtoFunc, string procedureName, params SqlParameter[] sqlParams)
@@ -56,7 +121,6 @@ namespace EventsListService.Contracts.Contracts
 
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     DataSet dataSet = new DataSet();
-
                     try
                     {
                         adapter.Fill(dataSet);
@@ -98,7 +162,6 @@ namespace EventsListService.Contracts.Contracts
                         throw new FaultException<ServiceFault>(new ServiceFault(DEFAULT_ERROR_MESSAGE_FOR_CLIENT),
                             new FaultReason(DEFAULT_ERROR_MESSAGE_FOR_CLIENT));
                     }
-
                     return resultList;
                 }
             }
@@ -320,8 +383,12 @@ namespace EventsListService.Contracts.Contracts
 
         public List<EventDto> GetEvents()
         {
-            Func<DataRow, EventDto> dt = CreateEventDto;
-            return GetDataFromDb(dt, "SelectEvents");
+            if (_staticCache["Events"] == null)
+            {
+                Func<DataRow, EventDto> dt = CreateEventDto;
+                return GetDataFromDb(dt, "SelectEvents", "Events", "Events");
+            }
+            return (List<EventDto>)_staticCache["Events"];
         }
 
         public List<EventDto> GetEventsByCategoryId(int categoryId)
@@ -404,8 +471,12 @@ namespace EventsListService.Contracts.Contracts
 
         public List<CategoryDto> GetCategories()
         {
-            Func<DataRow, CategoryDto> dt = CreateCategoryDto;
-            return GetDataFromDb(dt, "SelectCategories");
+            if (_staticCache["Categories"] == null)
+            {
+                Func<DataRow, CategoryDto> dt = CreateCategoryDto;
+                return GetDataFromDb(dt, "SelectCategories", "Categories", "Categories");
+            }
+            return (List<CategoryDto>)_staticCache["Categories"];
         }
 
         public CategoryDto GetCategoryById(int categoryId)
@@ -422,8 +493,12 @@ namespace EventsListService.Contracts.Contracts
 
         public List<AddressDto> GetAddresses()
         {
-            Func<DataRow, AddressDto> dt = CreateAddressDto;
-            return GetDataFromDb(dt, "SelectAddresses");
+            if (_staticCache["Addresses"] == null)
+            {
+                Func<DataRow, AddressDto> dt = CreateAddressDto;
+                return GetDataFromDb(dt, "SelectAddresses", "Addresses", "Addresses");
+            }
+            return (List<AddressDto>)_staticCache["Addresses"];
         }
 
         public AddressDto GetAddressById(int addressId)
