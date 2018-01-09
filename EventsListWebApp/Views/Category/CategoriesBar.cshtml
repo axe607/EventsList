@@ -5,21 +5,18 @@
     @DisplayTree(Model.Where(x => x.Pid == null).OrderBy(x => x.Name))
     @helper DisplayTree(IEnumerable<EventsListCommon.Models.Category> categories)
     {
+            foreach (var category in categories)
+            {
 
-foreach (var category in categories)
-{
+                <p class="category" id="@category.Id" onclick="getEventsByCategoryId(@category.Id)">@category.Name</p>
 
-        <p class="category" id="@category.Id" onclick="getEventsByCategoryId(@category.Id)">@category.Name</p>
-
-    var children = Model.Where(x => x.Pid == category.Id).ToList();
-    if (children.Any())
-    {
-            <div class="category-children">
-                @DisplayTree(children)
-            </div>
+                var children = Model.Where(x => x.Pid == category.Id).ToList();
+                if (children.Any())
+                {
+                    <div class="category-children">
+                        @DisplayTree(children)
+                    </div>
+                }
+            }
     }
-
-
-}
-}
 </div>

@@ -5,14 +5,18 @@
         success: function (result) {
             var defaultOption = document.createElement("option");
             defaultOption.value = "";
-            defaultOption.textContent = "";
+            defaultOption.textContent = "Default/All";
             $("#" + idToAddData).append(defaultOption);
             $.each(result,
                 function (key, value) {
                     if (value["Id"] != exceptId) {
                         var option = document.createElement("option");
                         option.value = value["Id"];
-                        option.textContent = value["Name"];
+                        if (value["Pid"] === null) {
+                            option.textContent = value["Name"];
+                        } else {
+                            option.textContent = "--- " + value["Name"];
+                        }
                         if (option.value === idCategorySelected) {
                             option.selected = true;
                         }

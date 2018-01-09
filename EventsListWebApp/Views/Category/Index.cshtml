@@ -3,7 +3,7 @@
     ViewBag.Title = "Categories";
 }
 
-<h4>Addresses</h4>
+<h4>Categories</h4>
 <hr />
 <div class="row">
     <div class="col-md-10">
@@ -13,18 +13,27 @@
 <hr />
 @if (Model != null && Model.Any())
 {
-    <div class="row">
-        <div class="col-md-12">
-            @foreach (var category in Model)
+    @DisplayTree(Model.Where(x => x.Pid == null).OrderBy(x => x.Name))
+    @helper DisplayTree(IEnumerable<EventsListCommon.Models.Category> categories)
+        {
+            foreach (var category in categories)
             {
-                <div class="alert alert-warning">
+                <div class="alert alert-info">
                     <p id="@category.Id">@category.Name</p>
                     <a href="/Category/EditCategory?categoryId=@category.Id" id="btn_edit_user" class="btn btn-info">Edit</a>
                     <button type="button" class="btn btn-danger" onclick="DeleteCategory(@category.Id)">Delete</button>
+                    @{
+                        var children = Model.Where(x => x.Pid == category.Id).ToList();
+                        if (children.Any())
+                        {
+                            <div class="alert alert-warning">
+                                @DisplayTree(children)
+                            </div>
+                        }
+                    }
                 </div>
             }
-        </div>
-    </div>
+        }
 }
 else
 {

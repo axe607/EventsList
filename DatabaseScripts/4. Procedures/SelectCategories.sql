@@ -6,5 +6,19 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[SelectCategories]
 AS
-SELECT [id],[pid],[Name]
-  FROM [dbo].[Categories]
+WITH CTE
+AS
+(
+SELECT id, Name, pid,
+CAST(id AS VARCHAR(255)) AS Path
+FROM dbo.Categories 
+WHERE pid IS NULL
+UNION ALL
+SELECT c1.id, c1.Name, c1.pid,
+CAST(Path + '.' + CAST(c1.id AS VARCHAR(255)) AS VARCHAR(255))
+FROM dbo.Categories c1
+INNER JOIN CTE ON CTE.id= c1.pid
+)
+SELECT [id],[pid],[Name] FROM CTE 
+ORDER BY PATH
+OPTION (MAXRECURSION 5)
