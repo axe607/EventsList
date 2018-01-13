@@ -62,81 +62,84 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script>
-    $(function () {
-        loadPhones();
-        loadEmails();
-    });
-
-    function loadPhones() {
-        $("#phones").load("/Account/GetOrganizerPhones");
-    }
-
-    function loadEmails() {
-        $("#emails").load("/Account/GetOrganizerEmails");
-    }
-
-    $("[name='addBtnEmail']").click(function () {
-        var emailInput = $(this).parent().siblings("input[name='emailText']")[0];
-        $.ajax({
-            url: "/Account/AddOrganizerEmail",
-            data: {
-                email: emailInput.value
-            },
-            success: function () {
-                emailInput.value = "";
-                loadEmails();
-            },
-            error: function (error) {
-                console.log(error.status + " - " + error.statusText);
-            }
+@section scripts
+{
+    <script>
+        $(function () {
+            loadPhones();
+            loadEmails();
         });
-    });
 
-    $("[name='addBtnPhone']").click(function () {
-        var phoneInput = $(this).parent().siblings("input[name='phoneText']")[0];
-        $.ajax({
-            url: "/Account/AddOrganizerPhone",
-            data: {
-                phone: phoneInput.value
-            },
-            success: function () {
-                phoneInput.value = "";
-                loadPhones();
-            },
-            error: function (error) {
-                console.log(error.status + " - " + error.statusText);
-            }
-        });
-    });
+        function loadPhones() {
+            $("#phones").load("/Account/GetOrganizerPhones");
+        }
 
-    function DeleteEmail(emailId) {
-        $.ajax({
-            url: "/Account/DeleteOrganizerEmail",
-            data: {
-                emailId: emailId
-            },
-            success: function () {
-                $("#email_" + emailId).remove();
-            },
-            error: function (error) {
-                console.log(error.status + " - " + error.statusText);
-            }
-        });
-    }
+        function loadEmails() {
+            $("#emails").load("/Account/GetOrganizerEmails");
+        }
 
-    function DeletePhone(phoneId) {
-        $.ajax({
-            url: "/Account/DeleteOrganizerPhone",
-            data: {
-                phoneId: phoneId
-            },
-            success: function () {
-                $("#phone_" + phoneId).remove();
-            },
-            error: function (error) {
-                console.log(error.status + " - " + error.statusText);
-            }
+        $("[name='addBtnEmail']").click(function () {
+            var emailInput = $(this).parent().siblings("input[name='emailText']")[0];
+            $.ajax({
+                url: "/Account/AddOrganizerEmail",
+                data: {
+                    email: emailInput.value
+                },
+                success: function () {
+                    emailInput.value = "";
+                    loadEmails();
+                },
+                error: function (error) {
+                    console.log(error.status + " - " + error.statusText);
+                }
+            });
         });
-    }
-</script>
+
+        $("[name='addBtnPhone']").click(function () {
+            var phoneInput = $(this).parent().siblings("input[name='phoneText']")[0];
+            $.ajax({
+                url: "/Account/AddOrganizerPhone",
+                data: {
+                    phone: phoneInput.value
+                },
+                success: function () {
+                    phoneInput.value = "";
+                    loadPhones();
+                },
+                error: function (error) {
+                    console.log(error.status + " - " + error.statusText);
+                }
+            });
+        });
+
+        function DeleteEmail(emailId) {
+            $.ajax({
+                url: "/Account/DeleteOrganizerEmail",
+                data: {
+                    emailId: emailId
+                },
+                success: function () {
+                    $("#email_" + emailId).remove();
+                },
+                error: function (error) {
+                    console.log(error.status + " - " + error.statusText);
+                }
+            });
+        }
+
+        function DeletePhone(phoneId) {
+            $.ajax({
+                url: "/Account/DeleteOrganizerPhone",
+                data: {
+                    phoneId: phoneId
+                },
+                success: function () {
+                    $("#phone_" + phoneId).remove();
+                },
+                error: function (error) {
+                    console.log(error.status + " - " + error.statusText);
+                }
+            });
+        }
+    </script>
+}

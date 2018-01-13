@@ -80,26 +80,26 @@ namespace EventsListWebApp.Controllers
 
         [Ajax]
         [Authorize]
-        public PartialViewResult GetOrganizerEmails()
+        public PartialViewResult GetOrganizerEmails(string name)
         {
-            return PartialView(_userProvider.GetUserByName(HttpContext.User.Identity.Name).OrganizerEmails);
+            return PartialView(_userProvider.GetUserByName(name ?? HttpContext.User.Identity.Name).OrganizerEmails);
         }
 
         [Ajax]
         [Authorize]
-        public PartialViewResult GetOrganizerPhones()
+        public PartialViewResult GetOrganizerPhones(string name)
         {
-            return PartialView(_userProvider.GetUserByName(HttpContext.User.Identity.Name).OrganizerPhones);
+            return PartialView(_userProvider.GetUserByName(name ?? HttpContext.User.Identity.Name).OrganizerPhones);
         }
 
         [Ajax]
         [Authorize]
-        public void AddOrganizerEmail(string email)
+        public void AddOrganizerEmail(string email, int? userId)
         {
             if (!string.IsNullOrEmpty(email))
             {
                 _userOperation.AddEmail(
-                    ((UserPrincipal) HttpContext.User).UserId,
+                    userId ?? ((UserPrincipal)HttpContext.User).UserId,
                     email
                 );
             }
@@ -107,12 +107,12 @@ namespace EventsListWebApp.Controllers
 
         [Ajax]
         [Authorize]
-        public void AddOrganizerPhone(string phone)
+        public void AddOrganizerPhone(string phone, int? userId)
         {
             if (!string.IsNullOrEmpty(phone))
             {
                 _userOperation.AddPhone(
-                    ((UserPrincipal) HttpContext.User).UserId,
+                    userId ?? ((UserPrincipal)HttpContext.User).UserId,
                     phone
                 );
             }
@@ -120,20 +120,20 @@ namespace EventsListWebApp.Controllers
 
         [Ajax]
         [Authorize]
-        public void DeleteOrganizerEmail(int emailId)
+        public void DeleteOrganizerEmail(int emailId, int? userId)
         {
             _userOperation.DeleteEmailByUserIdAndEmailId(
-                ((UserPrincipal)HttpContext.User).UserId,
+                userId ?? ((UserPrincipal)HttpContext.User).UserId,
                 emailId
-             );
+            );
         }
 
         [Ajax]
         [Authorize]
-        public void DeleteOrganizerPhone(int phoneId)
+        public void DeleteOrganizerPhone(int phoneId, int? userId)
         {
             _userOperation.DeletePhoneByUserIdAndPhoneId(
-                ((UserPrincipal)HttpContext.User).UserId,
+                userId ?? ((UserPrincipal)HttpContext.User).UserId,
                 phoneId
             );
         }

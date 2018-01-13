@@ -8,67 +8,101 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Edit User Info</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
-    <div class="form-group">
-        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-            <b id="check"></b>
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Password,"New Password", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            <b id="check">@ViewBag.PasswordErrorText</b>
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    @if (HttpContext.Current.User.IsInRole("Admin"))
-    {
+    <div class="form-horizontal">
+        <h4>Edit User Info</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
         <div class="form-group">
-            @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                <b id="check"></b>
+            </div>
         </div>
-        <div id="roles"></div>
+
         <div class="form-group">
-            <span><button class="btn btn-success" name="btn_role_add" type="button" onclick="AddRole()">Add</button></span>
-            <select class="form-control col-md-10 col-md-offset-2" id="roles_not_in_user"></select>
+            @Html.LabelFor(model => model.Password, "New Password", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                <b id="check">@ViewBag.PasswordErrorText</b>
+            </div>
         </div>
 
-    }
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-</div>
+        @if (HttpContext.Current.User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.OrganizerEmails, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div id="emails">
 
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" name="addBtnEmail" type="button">Add</button>
+                        </span>
+                        <input class="form-control" name="emailText" type="email">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OrganizerPhones, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div id="phones"></div>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" name="addBtnPhone" type="button">Add</button>
+                        </span>
+                        <input class="form-control" name="phoneText" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div id="roles"></div>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" name="btn_role_add" type="button" onclick="AddRole()">Add</button>
+                        </span>
+                        <select class="form-control" id="roles_not_in_user"></select>
+                    </div>
+                </div>
+            </div>
         }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
 @section scripts
 {
     @if (HttpContext.Current.User.IsInRole("Admin"))
     {
         <script src="~/Scripts/JsonToSelect.js"></script>
+
         <script>
             var userName = "@Model.UserName";
             $(function() {
                 loadRoles(userName);
                 setRolesNotInUser("roles_not_in_user", userName);
+                loadEmails();
+                loadPhones();
             });
 
             $("[name='UserName']").focusout(function () {
@@ -130,6 +164,82 @@
                     },
                     error: function(error) {
                         console.log(error);
+                    }
+                });
+            }
+
+            function loadPhones() {
+                $("#phones").load("/Account/GetOrganizerPhones", { name: userName});
+            }
+
+            function loadEmails() {
+                $("#emails").load("/Account/GetOrganizerEmails", { name: userName });
+            }
+
+            $("[name='addBtnEmail']").click(function () {
+                var emailInput = $(this).parent().siblings("input[name='emailText']")[0];
+                $.ajax({
+                    url: "/Account/AddOrganizerEmail",
+                    data: {
+                        email: emailInput.value,
+                        userId: @Model.Id
+                    },
+                    success: function () {
+                        emailInput.value = "";
+                        loadEmails();
+                    },
+                    error: function (error) {
+                        console.log(error.status + " - " + error.statusText);
+                    }
+                });
+            });
+
+            $("[name='addBtnPhone']").click(function () {
+                var phoneInput = $(this).parent().siblings("input[name='phoneText']")[0];
+                $.ajax({
+                    url: "/Account/AddOrganizerPhone",
+                    data: {
+                        phone: phoneInput.value,
+                        userId: @Model.Id
+                    },
+                    success: function () {
+                        phoneInput.value = "";
+                        loadPhones();
+                    },
+                    error: function (error) {
+                        console.log(error.status + " - " + error.statusText);
+                    }
+                });
+            });
+
+            function DeleteEmail(emailId) {
+                $.ajax({
+                    url: "/Account/DeleteOrganizerEmail",
+                    data: {
+                        emailId: emailId,
+                        userId: @Model.Id
+                    },
+                    success: function () {
+                        $("#email_" + emailId).remove();
+                    },
+                    error: function (error) {
+                        console.log(error.status + " - " + error.statusText);
+                    }
+                });
+            }
+
+            function DeletePhone(phoneId) {
+                $.ajax({
+                    url: "/Account/DeleteOrganizerPhone",
+                    data: {
+                        phoneId: phoneId,
+                        userId: @Model.Id
+                    },
+                    success: function () {
+                        $("#phone_" + phoneId).remove();
+                    },
+                    error: function (error) {
+                        console.log(error.status + " - " + error.statusText);
                     }
                 });
             }

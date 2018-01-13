@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<EventsListCommon.Models.Role>
-
-@foreach (var role in Model)
+@if (Model != null && Model.Any())
 {
-    <div class="col-md-10 col-md-offset-2">
+    foreach (var role in Model)
+    {
         <div class="input-group" role="group" aria-label="...">
             <span class="input-group-btn"><button class="btn btn-danger" name="btn_role_del" id="@role.Id" type="button" onclick="DeleteRole(@role.Id)">Delete</button></span>
             <input type="text" class="form-control" value="@role.RoleName" disabled="disabled" />
         </div>
-    </div>
+    }
 }
