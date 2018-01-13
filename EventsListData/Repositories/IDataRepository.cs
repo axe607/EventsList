@@ -22,7 +22,8 @@ namespace EventsListData.Repositories
         User GetUserByName(string name);
         Address GetAddressById(int addressId);
         bool IsValidUser(string username, string password);
-        bool IsUserNameFree(int userId, string name);
+        bool IsUserNameFreeForUserId(int userId, string name);
+        bool IsUserNameFree(string name);
         bool IsRoleNameFree(int? roleId, string name);
 
         void AddEvent(string name, DateTime date, int? organizerId, int? categoryId, string imageUrl, string description, int? addressId);
@@ -33,7 +34,8 @@ namespace EventsListData.Repositories
 
         void AddUser(string name, string password, string email);
         void AddRoleToUser(string userName, int roleId);
-        void EditUserInfo(int userId, string name, string email);
+        void EditUserInfo(int userId, string name, string password, string email);
+        void EditOrganizerInfo(int userId, string name);
         void DeleteUser(int userId);
         void DeleteUserRole(string userName, int roleId);
 
@@ -41,8 +43,10 @@ namespace EventsListData.Repositories
         void EditRole(int roleId, string roleName);
         void DeleteRole(int roleId);
 
-        void DeleteEmailByUserIdAndEmailId(int userId, int emailId);
+        void AddPhone(int userId, string phoneNumber);
+        void AddEmail(int userId, string email);
         void DeletePhoneByUserIdAndPhoneId(int userId, int phoneId);
+        void DeleteEmailByUserIdAndEmailId(int userId, int emailId);
 
         void AddAddress(string address);
         void EditAddress(int addressId, string address);

@@ -17,9 +17,14 @@ namespace EventsListBL.Services
             _dataProvider.AddUser(name, password, email);
         }
 
-        public void EditUserInfo(int userId, string name, string email)
+        public void EditUserInfo(int userId, string name, string password, string email)
         {
-            _dataProvider.EditUserInfo(userId, name, email);
+            _dataProvider.EditUserInfo(userId, name, password, email);
+        }
+
+        public void EditOrganizerInfo(int userId, string name)
+        {
+            _dataProvider.EditOrganizerInfo(userId,name);
         }
 
         public void DeleteUser(int userId)
@@ -50,6 +55,16 @@ namespace EventsListBL.Services
         public void DeleteRole(int roleId)
         {
             _dataProvider.DeleteRole(roleId);
+        }
+
+        public void AddPhone(int userId, string phoneNumber)
+        {
+            _dataProvider.AddPhone(userId, phoneNumber);
+        }
+
+        public void AddEmail(int userId, string email)
+        {
+            _dataProvider.AddEmail(userId, email);
         }
 
         public void DeleteEmailByUserIdAndEmailId(int userId, int emailId)

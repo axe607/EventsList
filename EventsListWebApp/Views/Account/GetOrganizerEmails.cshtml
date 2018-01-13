@@ -1,0 +1,13 @@
+﻿@model IEnumerable<EventsListCommon.Models.Email>
+@if (Model != null && Model.Any())
+{
+    foreach (var email in Model)
+    {
+        <div id="email_@email.Id" class="input-group" role="group" aria-label="...">
+            <span class="input-group-btn">
+                <button class="btn btn-danger" type="button" onclick="DeleteEmail(@email.Id)">Delete</button>
+            </span>
+            <input class="form-control" type="text" value="@email.EmailString" />
+        </div>
+    }
+}

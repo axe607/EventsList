@@ -189,6 +189,8 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\EditCategory.cshtml" />
     <Content Include="Views\Category\AddCategory.cshtml" />
+    <Content Include="Views\Account\GetOrganizerEmails.cshtml" />
+    <Content Include="Views\Account\GetOrganizerPhones.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

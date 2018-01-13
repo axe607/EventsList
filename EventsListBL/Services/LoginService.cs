@@ -11,10 +11,12 @@ namespace EventsListBL.Services
     public class LoginService : ILoginService
     {
         private readonly IUserProvider _userProvider;
+        private readonly IEncryptService _encryptService;
 
-        public LoginService(IUserProvider userProvider)
+        public LoginService(IUserProvider userProvider, IEncryptService encryptService)
         {
             _userProvider = userProvider;
+            _encryptService = encryptService;
         }
         public LoginResult Login(string userName, string password)
         {
@@ -23,7 +25,7 @@ namespace EventsListBL.Services
                 return LoginResult.EmptyCredentials;
             }
 
-            if (_userProvider.IsValidUser(userName, password))
+            if (_userProvider.IsValidUser(userName, _encryptService.GetEncryptedPassword(password)))
             {
                 var user = _userProvider.GetUserByName(userName);
                 var userData = JsonConvert.SerializeObject(user);

@@ -6,7 +6,8 @@ namespace EventsListBL.Providers.Interfaces
     public interface IUserProvider
     {
         bool IsValidUser(string userName, string password);
-        bool IsUserNameFree(int userId, string name);
+        bool IsUserNameFreeForUserId(int userId, string name);
+        bool IsUserNameFree(string name);
         bool IsRoleNameFree(int? roleId, string name);
         User GetUserByName(string userName);
         IReadOnlyList<User> GetUsers();

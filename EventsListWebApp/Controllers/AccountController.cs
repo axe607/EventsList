@@ -12,21 +12,17 @@ namespace EventsListWebApp.Controllers
     {
         private readonly IUserOperation _userOperation;
         private readonly IUserProvider _userProvider;
+        private readonly IEncryptService _encryptService;
 
-        public AccountController(IUserOperation userOperation, IUserProvider userProvider)
+        public AccountController(IUserOperation userOperation, IUserProvider userProvider, IEncryptService encryptService)
         {
             _userOperation = userOperation;
             _userProvider = userProvider;
+            _encryptService = encryptService;
         }
 
         [Authorize]
         public ActionResult Index()
-        {
-            return View(_userProvider.GetUserByName(HttpContext.User.Identity.Name));
-        }
-
-        [Authorize]
-        public ActionResult EditOrganizerInfo()
         {
             return View(_userProvider.GetUserByName(HttpContext.User.Identity.Name));
         }
@@ -40,17 +36,18 @@ namespace EventsListWebApp.Controllers
         [HttpPost]
         public ActionResult EditAccount(User user)
         {
-            if (ModelState.IsValid && IsUserNameFree(null, user.UserName))
+            if (ModelState.IsValid && IsUserNameFreeForUserId(null, user.UserName))
             {
                 _userOperation.EditUserInfo(
                     ((UserPrincipal)HttpContext.User).UserId,
                     user.UserName,
+                    string.IsNullOrEmpty(user.Password) ? null : _encryptService.GetEncryptedPassword(user.Password),
                     user.Email
                 );
                 if (user.UserName != ((UserPrincipal)HttpContext.User).UserName)
                 {
                     HttpContext.Response.Cookies.Clear();
-                    LoginService loginService = new LoginService(_userProvider);
+                    LoginService loginService = new LoginService(_userProvider, _encryptService);
                     loginService.Logout();
                     return RedirectToAction("Login", "Login");
                 }
@@ -59,8 +56,90 @@ namespace EventsListWebApp.Controllers
             return View("EditUserInfo", user);
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult EditOrganizerInfo()
+        {
+            return View(_userProvider.GetUserByName(HttpContext.User.Identity.Name));
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditOrganizerInfo(User user)
+        {
+            if (!string.IsNullOrEmpty(user.OrganizerName))
+            {
+                _userOperation.EditOrganizerInfo(
+                    ((UserPrincipal)HttpContext.User).UserId,
+                    user.OrganizerName
+                    );
+                return RedirectToAction("Index");
+            }
+            return View("EditOrganizerInfo", user);
+        }
+
         [Ajax]
-        public bool IsUserNameFree(int? userId, string nameToCheck)
+        [Authorize]
+        public PartialViewResult GetOrganizerEmails()
+        {
+            return PartialView(_userProvider.GetUserByName(HttpContext.User.Identity.Name).OrganizerEmails);
+        }
+
+        [Ajax]
+        [Authorize]
+        public PartialViewResult GetOrganizerPhones()
+        {
+            return PartialView(_userProvider.GetUserByName(HttpContext.User.Identity.Name).OrganizerPhones);
+        }
+
+        [Ajax]
+        [Authorize]
+        public void AddOrganizerEmail(string email)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                _userOperation.AddEmail(
+                    ((UserPrincipal) HttpContext.User).UserId,
+                    email
+                );
+            }
+        }
+
+        [Ajax]
+        [Authorize]
+        public void AddOrganizerPhone(string phone)
+        {
+            if (!string.IsNullOrEmpty(phone))
+            {
+                _userOperation.AddPhone(
+                    ((UserPrincipal) HttpContext.User).UserId,
+                    phone
+                );
+            }
+        }
+
+        [Ajax]
+        [Authorize]
+        public void DeleteOrganizerEmail(int emailId)
+        {
+            _userOperation.DeleteEmailByUserIdAndEmailId(
+                ((UserPrincipal)HttpContext.User).UserId,
+                emailId
+             );
+        }
+
+        [Ajax]
+        [Authorize]
+        public void DeleteOrganizerPhone(int phoneId)
+        {
+            _userOperation.DeletePhoneByUserIdAndPhoneId(
+                ((UserPrincipal)HttpContext.User).UserId,
+                phoneId
+            );
+        }
+
+        [Ajax]
+        public bool IsUserNameFreeForUserId(int? userId, string nameToCheck)
         {
             if (string.IsNullOrEmpty(nameToCheck) || string.IsNullOrWhiteSpace(nameToCheck))
             {
@@ -70,7 +149,17 @@ namespace EventsListWebApp.Controllers
             {
                 userId = ((UserPrincipal)HttpContext.User).UserId;
             }
-            return _userProvider.IsUserNameFree(userId is int ? (int)userId : 0, nameToCheck);
+            return _userProvider.IsUserNameFreeForUserId((int)userId, nameToCheck);
+        }
+
+        [Ajax]
+        public bool IsUserNameFree(string nameToCheck)
+        {
+            if (string.IsNullOrEmpty(nameToCheck) || string.IsNullOrWhiteSpace(nameToCheck))
+            {
+                return false;
+            }
+            return _userProvider.IsUserNameFree(nameToCheck);
         }
 
         [Ajax]
@@ -78,20 +167,6 @@ namespace EventsListWebApp.Controllers
         public bool IsRoleNameFree(int? roleId, string nameToCheck)
         {
             return _userProvider.IsRoleNameFree(roleId, nameToCheck);
-        }
-
-        [Ajax]
-        [Authorize]
-        public void DeleteOrganizerEmail(int emailId)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Ajax]
-        [Authorize]
-        public void DeleteOrganizerPhone(int phoneId)
-        {
-            throw new NotImplementedException();
         }
 
         [Admin]
@@ -132,13 +207,17 @@ namespace EventsListWebApp.Controllers
         [HttpPost]
         public ActionResult AddUser(User user)
         {
-            if (ModelState.IsValid && IsUserNameFree(null, user.UserName))
+            if (ModelState.IsValid && IsUserNameFree(user.UserName))
             {
-                _userOperation.AddUser(
-                    user.UserName,
-                    user.Password,
-                    user.Email);
-                return RedirectToAction("UsersList");
+                if (!string.IsNullOrEmpty(user.Password))
+                {
+                    _userOperation.AddUser(
+                        user.UserName,
+                        _encryptService.GetEncryptedPassword(user.Password),
+                        user.Email);
+                    return RedirectToAction("UsersList");
+                }
+                ViewBag.PasswordErrorText = "Password is empty!";
             }
             return View(user);
         }
@@ -154,11 +233,12 @@ namespace EventsListWebApp.Controllers
         [Admin]
         public ActionResult EditUser(User user)
         {
-            if (ModelState.IsValid && IsUserNameFree(user.Id, user.UserName))
+            if (ModelState.IsValid && IsUserNameFreeForUserId(user.Id, user.UserName))
             {
                 _userOperation.EditUserInfo(
                     user.Id,
                     user.UserName,
+                    string.IsNullOrEmpty(user.Password) ? null : _encryptService.GetEncryptedPassword(user.Password),
                     user.Email
                 );
                 return RedirectToAction("UsersList");

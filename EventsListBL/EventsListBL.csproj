@@ -70,9 +70,11 @@
     <Compile Include="Providers\UserProvider.cs" />
     <Compile Include="Services\AddressOperation.cs" />
     <Compile Include="Services\CategoryOperation.cs" />
+    <Compile Include="Services\EncryptService.cs" />
     <Compile Include="Services\EventOperation.cs" />
     <Compile Include="Services\Interfaces\IAddressOperation.cs" />
     <Compile Include="Services\Interfaces\ICategoryOperation.cs" />
+    <Compile Include="Services\Interfaces\IEncryptService.cs" />
     <Compile Include="Services\Interfaces\IEventOperation.cs" />
     <Compile Include="Services\Interfaces\ILoginService.cs" />
     <Compile Include="Providers\Interfaces\IUserProvider.cs" />

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<EventsListCommon.Models.Phone>
+@if (Model != null && Model.Any())
+{
+    foreach (var phone in Model)
+    {
+        <div aria-label="..." class="input-group" id="phone_@phone.Id" role="group">
+            <span class="input-group-btn">
+                <button class="btn btn-danger" type="button" onclick="DeletePhone(@phone.Id)">Delete</button>
+            </span>
+            <input class="form-control" type="text" value="@phone.PhoneNumber" />
+        </div>
+
+    }
+}

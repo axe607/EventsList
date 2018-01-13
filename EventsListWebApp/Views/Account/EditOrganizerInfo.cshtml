@@ -20,37 +20,36 @@
                 @Html.ValidationMessageFor(model => model.OrganizerName, "", new { @class = "text-danger" })
             </div>
         </div>
-        @if (Model.OrganizerEmails != null && Model.OrganizerEmails.Any())
-        {
-            <div class="form-group">
-                @Html.LabelFor(model => model.OrganizerEmails, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @foreach (var email in Model.OrganizerEmails)
-                    {
-                        <div id="email_@email.Id" class="input-group" role="group" aria-label="...">
-                            <span class="input-group-btn"><button name="delBtn_email" type="button" class="btn btn-danger">Delete</button></span>
-                            <input type="text" class="form-control" value="@email.EmailString" />
-                        </div>
-                    }
-                </div>
-            </div>
-        }
-        @if (Model.OrganizerPhones != null && Model.OrganizerPhones.Any())
-        {
-            <div class="form-group">
-                @Html.LabelFor(model => model.OrganizerPhones, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @foreach (var phone in Model.OrganizerPhones)
-                    {
-                        <div id="phone_@phone.Id" class="input-group" role="group" aria-label="...">
-                            <span class="input-group-btn"><button name="delBtn_phone" type="button" class="btn btn-danger">Delete</button></span>
-                            <input type="text" class="form-control" value="@phone.PhoneNumber" />
-                        </div>
 
-                    }
+        <div class="form-group">
+            @Html.LabelFor(model => model.OrganizerEmails, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="emails">
+
+                </div>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" name="addBtnEmail" type="button">Add</button>
+                    </span>
+                    <input class="form-control" name="emailText" type="email">
                 </div>
             </div>
-        }
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OrganizerPhones, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="phones">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" name="addBtnPhone" type="button">Add</button>
+                    </span>
+                    <input class="form-control" name="phoneText" type="text">
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -64,8 +63,54 @@
 </div>
 
 <script>
-    $("[name='delBtn_email']").click(function () {
-        var emailId = $(this).closest("div.input-group").attr("id").split("_").pop();
+    $(function () {
+        loadPhones();
+        loadEmails();
+    });
+
+    function loadPhones() {
+        $("#phones").load("/Account/GetOrganizerPhones");
+    }
+
+    function loadEmails() {
+        $("#emails").load("/Account/GetOrganizerEmails");
+    }
+
+    $("[name='addBtnEmail']").click(function () {
+        var emailInput = $(this).parent().siblings("input[name='emailText']")[0];
+        $.ajax({
+            url: "/Account/AddOrganizerEmail",
+            data: {
+                email: emailInput.value
+            },
+            success: function () {
+                emailInput.value = "";
+                loadEmails();
+            },
+            error: function (error) {
+                console.log(error.status + " - " + error.statusText);
+            }
+        });
+    });
+
+    $("[name='addBtnPhone']").click(function () {
+        var phoneInput = $(this).parent().siblings("input[name='phoneText']")[0];
+        $.ajax({
+            url: "/Account/AddOrganizerPhone",
+            data: {
+                phone: phoneInput.value
+            },
+            success: function () {
+                phoneInput.value = "";
+                loadPhones();
+            },
+            error: function (error) {
+                console.log(error.status + " - " + error.statusText);
+            }
+        });
+    });
+
+    function DeleteEmail(emailId) {
         $.ajax({
             url: "/Account/DeleteOrganizerEmail",
             data: {
@@ -78,10 +123,9 @@
                 console.log(error.status + " - " + error.statusText);
             }
         });
-    });
+    }
 
-    $("[name='delBtn_phone']").click(function () {
-        var phoneId = $(this).closest("div.input-group").attr("id").split("_").pop();
+    function DeletePhone(phoneId) {
         $.ajax({
             url: "/Account/DeleteOrganizerPhone",
             data: {
@@ -94,5 +138,5 @@
                 console.log(error.status + " - " + error.statusText);
             }
         });
-    });
+    }
 </script>

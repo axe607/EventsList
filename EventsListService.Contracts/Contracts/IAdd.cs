@@ -23,5 +23,11 @@ namespace EventsListService.Contracts.Contracts
 
         [OperationContract]
         void AddCategory(string categoryName, int? pid);
+
+        [OperationContract]
+        void AddPhone(int userId, string phoneNumber);
+
+        [OperationContract]
+        void AddEmail(int userId, string email);
     }
 }

@@ -167,6 +167,12 @@
   <wsdl:message name="IGet_IsValidUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsValidUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IGet_IsUserNameFreeForUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserNameFreeForUserId" />
+  </wsdl:message>
+  <wsdl:message name="IGet_IsUserNameFreeForUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserNameFreeForUserIdResponse" />
+  </wsdl:message>
   <wsdl:message name="IGet_IsUserNameFree_InputMessage">
     <wsdl:part name="parameters" element="tns:IsUserNameFree" />
   </wsdl:message>
@@ -214,6 +220,18 @@
   </wsdl:message>
   <wsdl:message name="IAdd_AddCategory_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddPhone_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPhone" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddPhone_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPhoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmail" />
+  </wsdl:message>
+  <wsdl:message name="IAdd_AddEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmailResponse" />
   </wsdl:message>
   <wsdl:message name="IDelete_DeleteEvent_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteEvent" />
@@ -286,6 +304,12 @@
   </wsdl:message>
   <wsdl:message name="IUpdate_EditUserInfo_OutputMessage">
     <wsdl:part name="parameters" element="tns:EditUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditOrganizerInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditOrganizerInfo" />
+  </wsdl:message>
+  <wsdl:message name="IUpdate_EditOrganizerInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditOrganizerInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IUpdate_EditRole_InputMessage">
     <wsdl:part name="parameters" element="tns:EditRole" />
@@ -395,6 +419,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/IsValidUser" message="tns:IGet_IsValidUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/IsValidUserResponse" message="tns:IGet_IsValidUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="IsUserNameFreeForUserId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGet/IsUserNameFreeForUserId" message="tns:IGet_IsUserNameFreeForUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGet/IsUserNameFreeForUserIdResponse" message="tns:IGet_IsUserNameFreeForUserId_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="IsUserNameFree">
       <wsdl:input wsaw:Action="http://tempuri.org/IGet/IsUserNameFree" message="tns:IGet_IsUserNameFree_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGet/IsUserNameFreeResponse" message="tns:IGet_IsUserNameFree_OutputMessage" />
@@ -428,6 +456,14 @@
     <wsdl:operation name="AddCategory">
       <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddCategory" message="tns:IAdd_AddCategory_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddCategoryResponse" message="tns:IAdd_AddCategory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPhone">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddPhone" message="tns:IAdd_AddPhone_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddPhoneResponse" message="tns:IAdd_AddPhone_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdd/AddEmail" message="tns:IAdd_AddEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdd/AddEmailResponse" message="tns:IAdd_AddEmail_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IDelete">
@@ -480,6 +516,10 @@
     <wsdl:operation name="EditUserInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditUserInfo" message="tns:IUpdate_EditUserInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditUserInfoResponse" message="tns:IUpdate_EditUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditOrganizerInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditOrganizerInfo" message="tns:IUpdate_EditOrganizerInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUpdate/EditOrganizerInfoResponse" message="tns:IUpdate_EditOrganizerInfo_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EditRole">
       <wsdl:input wsaw:Action="http://tempuri.org/IUpdate/EditRole" message="tns:IUpdate_EditRole_InputMessage" />
@@ -709,6 +749,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IsUserNameFreeForUserId">
+      <soap:operation soapAction="http://tempuri.org/IGet/IsUserNameFreeForUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="IsUserNameFree">
       <soap:operation soapAction="http://tempuri.org/IGet/IsUserNameFree" style="document" />
       <wsdl:input>
@@ -777,6 +826,24 @@
     </wsdl:operation>
     <wsdl:operation name="AddCategory">
       <soap:operation soapAction="http://tempuri.org/IAdd/AddCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPhone">
+      <soap:operation soapAction="http://tempuri.org/IAdd/AddPhone" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddEmail">
+      <soap:operation soapAction="http://tempuri.org/IAdd/AddEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -891,6 +958,15 @@
     </wsdl:operation>
     <wsdl:operation name="EditUserInfo">
       <soap:operation soapAction="http://tempuri.org/IUpdate/EditUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditOrganizerInfo">
+      <soap:operation soapAction="http://tempuri.org/IUpdate/EditOrganizerInfo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

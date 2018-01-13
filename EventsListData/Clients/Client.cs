@@ -558,7 +558,7 @@ namespace EventsListData.Clients
             return result;
         }
 
-        public bool IsUserNameFree(int userId, string name)
+        public bool IsUserNameFreeForUserId(int userId, string name)
         {
             var isClosed = false;
             var result = false;
@@ -566,7 +566,34 @@ namespace EventsListData.Clients
             try
             {
                 client.Open();
-                result = ConvertDataFromService<bool, bool>(client.IsUserNameFree(userId, name)).First();
+                result = ConvertDataFromService<bool, bool>(client.IsUserNameFreeForUserId(userId,name)).First();
+                client.Close();
+                isClosed = true;
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                if (!isClosed)
+                {
+                    client.Abort();
+                }
+            }
+
+            return result;
+        }
+
+        public bool IsUserNameFree(string name)
+        {
+            var isClosed = false;
+            var result = false;
+            var client = new EventService.GetClient();
+            try
+            {
+                client.Open();
+                result = ConvertDataFromService<bool, bool>(client.IsUserNameFree(name)).First();
                 client.Close();
                 isClosed = true;
             }
@@ -751,14 +778,38 @@ namespace EventsListData.Clients
             }
         }
 
-        public void EditUserInfo(int userId, string name, string email)
+        public void EditUserInfo(int userId, string name, string password, string email)
         {
             var isClosed = false;
             var client = new EventService.UpdateClient();
             try
             {
                 client.Open();
-                client.EditUserInfo(userId, name, email);
+                client.EditUserInfo(userId, name,password, email);
+                client.Close();
+                isClosed = true;
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                if (!isClosed)
+                {
+                    client.Abort();
+                }
+            }
+        }
+
+        public void EditOrganizerInfo(int userId, string name)
+        {
+            var isClosed = false;
+            var client = new EventService.UpdateClient();
+            try
+            {
+                client.Open();
+                client.EditOrganizerInfo(userId, name);
                 client.Close();
                 isClosed = true;
             }
@@ -910,6 +961,48 @@ namespace EventsListData.Clients
             finally
             {
                 if (!isClosed){client.Abort();}
+            }
+        }
+
+        public void AddPhone(int userId, string phoneNumber)
+        {
+            var isClosed = false;
+            var client = new EventService.AddClient();
+            try
+            {
+                client.Open();
+                client.AddPhone(userId,phoneNumber);
+                client.Close();
+                isClosed = true;
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                if (!isClosed) { client.Abort(); }
+            }
+        }
+
+        public void AddEmail(int userId, string email)
+        {
+            var isClosed = false;
+            var client = new EventService.AddClient();
+            try
+            {
+                client.Open();
+                client.AddEmail(userId, email);
+                client.Close();
+                isClosed = true;
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new Exception("Сервер не отвечает. Попробуйте позже.");
+            }
+            finally
+            {
+                if (!isClosed) { client.Abort(); }
             }
         }
 

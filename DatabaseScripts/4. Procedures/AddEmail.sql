@@ -5,11 +5,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[AddEmail](
-@organizerId int,
+@userId int,
 @email nvarchar(50)
 )
 AS
 INSERT dbo.Emails
 VALUES(
-@organizerId,
+@userId,
 @email)

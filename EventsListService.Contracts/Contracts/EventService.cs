@@ -616,7 +616,7 @@ namespace EventsListService.Contracts.Contracts
             return GetBoolFromDb("IsValidUser", param);
         }
 
-        public bool IsUserNameFree(int userId, string name)
+        public bool IsUserNameFreeForUserId(int userId, string name)
         {
             SqlParameter[] param = {
                 new SqlParameter
@@ -631,6 +631,17 @@ namespace EventsListService.Contracts.Contracts
                     ParameterName = "@name",
                     Value = name
                 }
+            };
+            return GetBoolFromDb("IsUserNameFreeForUserId", param);
+        }
+
+        public bool IsUserNameFree(string name)
+        {
+            SqlParameter param = new SqlParameter
+            {
+                DbType = DbType.String,
+                ParameterName = "@name",
+                Value = name
             };
             return GetBoolFromDb("IsUserNameFree", param);
         }
@@ -900,14 +911,70 @@ namespace EventsListService.Contracts.Contracts
             ChangeDbData("AddCategory", param);
         }
 
-        public void EditUserInfo(int userId, string name, string email)
+        public void AddPhone(int userId, string phoneNumber)
+        {
+            SqlParameter[] param = {
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@userId",
+                    Value = userId
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.String,
+                    ParameterName = "@phoneNumber",
+                    Value = phoneNumber
+                }
+            };
+            ChangeDbData("AddPhone", param);
+        }
+
+        public void AddEmail(int userId, string email)
+        {
+            SqlParameter[] param = {
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@userId",
+                    Value = userId
+                },
+                new SqlParameter
+                {
+                    DbType = DbType.String,
+                    ParameterName = "@email",
+                    Value = email
+                }
+            };
+            ChangeDbData("AddEmail", param);
+        }
+
+        public void EditUserInfo(int userId, string name, string password, string email)
         {
             SqlParameter[] param = {
                 new SqlParameter{DbType = DbType.String,ParameterName = "@userId",Value = userId},
-                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name},
-                new SqlParameter{DbType = DbType.String,ParameterName = "@email",Value = email}
+                new SqlParameter{DbType = DbType.String,ParameterName = "@name",Value = name, IsNullable = true},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@password",Value = password, IsNullable = true},
+                new SqlParameter{DbType = DbType.String,ParameterName = "@email",Value = email, IsNullable = true}
             };
             ChangeDbData("UpdateUserInfo", param);
+        }
+
+        public void EditOrganizerInfo(int userId, string name)
+        {
+            SqlParameter[] param = {
+                new SqlParameter
+                {
+                    DbType = DbType.Int32,
+                    ParameterName = "@organizerId",
+                    Value = userId
+                },
+                new SqlParameter{DbType = DbType.String,
+                    ParameterName = "@name",
+                    Value = name,
+                    IsNullable = true}
+            };
+            ChangeDbData("UpdateOrganizerInfo", param);
         }
 
         public void EditRole(int roleId, string roleName)

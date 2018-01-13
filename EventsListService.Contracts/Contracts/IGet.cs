@@ -83,7 +83,10 @@ namespace EventsListService.Contracts.Contracts
         bool IsValidUser(string username, string password);
 
         [OperationContract]
-        bool IsUserNameFree(int userId, string name);
+        bool IsUserNameFreeForUserId(int userId, string name);
+
+        [OperationContract]
+        bool IsUserNameFree(string name);
 
         [OperationContract]
         bool IsRoleNameFree(int? roleId, string name);

@@ -54,9 +54,14 @@ namespace EventsListData.Repositories
             return _client.IsValidUser(username, password);
         }
 
-        public bool IsUserNameFree(int userId, string name)
+        public bool IsUserNameFreeForUserId(int userId, string name)
         {
-            return _client.IsUserNameFree(userId, name);
+            return _client.IsUserNameFreeForUserId(userId, name);
+        }
+
+        public bool IsUserNameFree(string name)
+        {
+            return _client.IsUserNameFree(name);
         }
 
         public bool IsRoleNameFree(int? roleId, string name)
@@ -97,9 +102,14 @@ namespace EventsListData.Repositories
             _client.AddUser(name, password, email);
         }
 
-        public void EditUserInfo(int userId, string name, string email)
+        public void EditUserInfo(int userId, string name, string password, string email)
         {
-            _client.EditUserInfo(userId, name, email);
+            _client.EditUserInfo(userId, name, password, email);
+        }
+
+        public void EditOrganizerInfo(int userId, string name)
+        {
+            _client.EditOrganizerInfo(userId,name);
         }
 
         public void DeleteUser(int userId)
@@ -130,6 +140,16 @@ namespace EventsListData.Repositories
         public void DeleteRole(int roleId)
         {
             _client.DeleteRole(roleId);
+        }
+
+        public void AddPhone(int userId, string phoneNumber)
+        {
+            _client.AddPhone(userId, phoneNumber);
+        }
+
+        public void AddEmail(int userId, string email)
+        {
+            _client.AddEmail(userId, email);
         }
 
         public void DeleteEmailByUserIdAndEmailId(int userId, int emailId)

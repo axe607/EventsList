@@ -13,7 +13,10 @@ namespace EventsListService.Contracts.Contracts
         void EditEventByUserId(int eventId, int userId, string name, DateTime date, int? categoryId, string imageUrl, string description, int? addressId);
 
         [OperationContract]
-        void EditUserInfo(int userId, string name, string email);
+        void EditUserInfo(int userId, string name, string password, string email);
+
+        [OperationContract]
+        void EditOrganizerInfo(int userId, string name);
 
         [OperationContract]
         void EditRole(int roleId, string roleName);

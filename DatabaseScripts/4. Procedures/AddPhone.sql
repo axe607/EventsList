@@ -5,11 +5,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[AddPhone](
-@organizerId int,
+@userId int,
 @phoneNumber nvarchar(20)
 )
 AS
 INSERT dbo.Phones
 VALUES(
-@organizerId,
+@userId,
 @phoneNumber)

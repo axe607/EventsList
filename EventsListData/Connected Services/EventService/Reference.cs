@@ -1045,11 +1045,17 @@ namespace EventsListData.EventService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsValidUser", ReplyAction="http://tempuri.org/IGet/IsValidUserResponse")]
         System.Threading.Tasks.Task<bool> IsValidUserAsync(string username, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsUserNameFree", ReplyAction="http://tempuri.org/IGet/IsUserNameFreeResponse")]
-        bool IsUserNameFree(int userId, string name);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsUserNameFreeForUserId", ReplyAction="http://tempuri.org/IGet/IsUserNameFreeForUserIdResponse")]
+        bool IsUserNameFreeForUserId(int userId, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsUserNameFreeForUserId", ReplyAction="http://tempuri.org/IGet/IsUserNameFreeForUserIdResponse")]
+        System.Threading.Tasks.Task<bool> IsUserNameFreeForUserIdAsync(int userId, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsUserNameFree", ReplyAction="http://tempuri.org/IGet/IsUserNameFreeResponse")]
-        System.Threading.Tasks.Task<bool> IsUserNameFreeAsync(int userId, string name);
+        bool IsUserNameFree(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsUserNameFree", ReplyAction="http://tempuri.org/IGet/IsUserNameFreeResponse")]
+        System.Threading.Tasks.Task<bool> IsUserNameFreeAsync(string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGet/IsRoleNameFree", ReplyAction="http://tempuri.org/IGet/IsRoleNameFreeResponse")]
         bool IsRoleNameFree(System.Nullable<int> roleId, string name);
@@ -1229,12 +1235,20 @@ namespace EventsListData.EventService {
             return base.Channel.IsValidUserAsync(username, password);
         }
         
-        public bool IsUserNameFree(int userId, string name) {
-            return base.Channel.IsUserNameFree(userId, name);
+        public bool IsUserNameFreeForUserId(int userId, string name) {
+            return base.Channel.IsUserNameFreeForUserId(userId, name);
         }
         
-        public System.Threading.Tasks.Task<bool> IsUserNameFreeAsync(int userId, string name) {
-            return base.Channel.IsUserNameFreeAsync(userId, name);
+        public System.Threading.Tasks.Task<bool> IsUserNameFreeForUserIdAsync(int userId, string name) {
+            return base.Channel.IsUserNameFreeForUserIdAsync(userId, name);
+        }
+        
+        public bool IsUserNameFree(string name) {
+            return base.Channel.IsUserNameFree(name);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsUserNameFreeAsync(string name) {
+            return base.Channel.IsUserNameFreeAsync(name);
         }
         
         public bool IsRoleNameFree(System.Nullable<int> roleId, string name) {
@@ -1285,6 +1299,18 @@ namespace EventsListData.EventService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddCategory", ReplyAction="http://tempuri.org/IAdd/AddCategoryResponse")]
         System.Threading.Tasks.Task AddCategoryAsync(string categoryName, System.Nullable<int> pid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddPhone", ReplyAction="http://tempuri.org/IAdd/AddPhoneResponse")]
+        void AddPhone(int userId, string phoneNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddPhone", ReplyAction="http://tempuri.org/IAdd/AddPhoneResponse")]
+        System.Threading.Tasks.Task AddPhoneAsync(int userId, string phoneNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddEmail", ReplyAction="http://tempuri.org/IAdd/AddEmailResponse")]
+        void AddEmail(int userId, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdd/AddEmail", ReplyAction="http://tempuri.org/IAdd/AddEmailResponse")]
+        System.Threading.Tasks.Task AddEmailAsync(int userId, string email);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1360,6 +1386,22 @@ namespace EventsListData.EventService {
         
         public System.Threading.Tasks.Task AddCategoryAsync(string categoryName, System.Nullable<int> pid) {
             return base.Channel.AddCategoryAsync(categoryName, pid);
+        }
+        
+        public void AddPhone(int userId, string phoneNumber) {
+            base.Channel.AddPhone(userId, phoneNumber);
+        }
+        
+        public System.Threading.Tasks.Task AddPhoneAsync(int userId, string phoneNumber) {
+            return base.Channel.AddPhoneAsync(userId, phoneNumber);
+        }
+        
+        public void AddEmail(int userId, string email) {
+            base.Channel.AddEmail(userId, email);
+        }
+        
+        public System.Threading.Tasks.Task AddEmailAsync(int userId, string email) {
+            return base.Channel.AddEmailAsync(userId, email);
         }
     }
     
@@ -1539,10 +1581,16 @@ namespace EventsListData.EventService {
         System.Threading.Tasks.Task EditEventByUserIdAsync(int eventId, int userId, string name, System.DateTime date, System.Nullable<int> categoryId, string imageUrl, string description, System.Nullable<int> addressId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditUserInfo", ReplyAction="http://tempuri.org/IUpdate/EditUserInfoResponse")]
-        void EditUserInfo(int userId, string name, string email);
+        void EditUserInfo(int userId, string name, string password, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditUserInfo", ReplyAction="http://tempuri.org/IUpdate/EditUserInfoResponse")]
-        System.Threading.Tasks.Task EditUserInfoAsync(int userId, string name, string email);
+        System.Threading.Tasks.Task EditUserInfoAsync(int userId, string name, string password, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditOrganizerInfo", ReplyAction="http://tempuri.org/IUpdate/EditOrganizerInfoResponse")]
+        void EditOrganizerInfo(int userId, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditOrganizerInfo", ReplyAction="http://tempuri.org/IUpdate/EditOrganizerInfoResponse")]
+        System.Threading.Tasks.Task EditOrganizerInfoAsync(int userId, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUpdate/EditRole", ReplyAction="http://tempuri.org/IUpdate/EditRoleResponse")]
         void EditRole(int roleId, string roleName);
@@ -1606,12 +1654,20 @@ namespace EventsListData.EventService {
             return base.Channel.EditEventByUserIdAsync(eventId, userId, name, date, categoryId, imageUrl, description, addressId);
         }
         
-        public void EditUserInfo(int userId, string name, string email) {
-            base.Channel.EditUserInfo(userId, name, email);
+        public void EditUserInfo(int userId, string name, string password, string email) {
+            base.Channel.EditUserInfo(userId, name, password, email);
         }
         
-        public System.Threading.Tasks.Task EditUserInfoAsync(int userId, string name, string email) {
-            return base.Channel.EditUserInfoAsync(userId, name, email);
+        public System.Threading.Tasks.Task EditUserInfoAsync(int userId, string name, string password, string email) {
+            return base.Channel.EditUserInfoAsync(userId, name, password, email);
+        }
+        
+        public void EditOrganizerInfo(int userId, string name) {
+            base.Channel.EditOrganizerInfo(userId, name);
+        }
+        
+        public System.Threading.Tasks.Task EditOrganizerInfoAsync(int userId, string name) {
+            return base.Channel.EditOrganizerInfoAsync(userId, name);
         }
         
         public void EditRole(int roleId, string roleName) {

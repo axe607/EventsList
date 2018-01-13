@@ -5,12 +5,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[IsUserNameFree]
-(@userId int,
-@name nvarchar(20)
+(@name nvarchar(20)
 )
 AS
 IF EXISTS (SELECT Users.Name
-  FROM [dbo].Users WHERE Name=@name and id !=@userId)
+  FROM [dbo].Users WHERE Name=@name)
   return 0
   ELSE
   return 1
