@@ -3,6 +3,7 @@ using EventsListBL.Services;
 using EventsListBL.Services.Interfaces;
 using EventsListCommon.Models;
 using EventsListWebApp.Models;
+using log4net;
 using System;
 using System.Web.Mvc;
 
@@ -13,6 +14,7 @@ namespace EventsListWebApp.Controllers
         private readonly IUserOperation _userOperation;
         private readonly IUserProvider _userProvider;
         private readonly IEncryptService _encryptService;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(AccountController));
 
         public AccountController(IUserOperation userOperation, IUserProvider userProvider, IEncryptService encryptService)
         {
@@ -38,20 +40,27 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid && IsUserNameFreeForUserId(null, user.UserName))
             {
-                _userOperation.EditUserInfo(
-                    ((UserPrincipal)HttpContext.User).UserId,
-                    user.UserName,
-                    string.IsNullOrEmpty(user.Password) ? null : _encryptService.GetEncryptedPassword(user.Password),
-                    user.Email
-                );
-                if (user.UserName != ((UserPrincipal)HttpContext.User).UserName)
+                try
                 {
-                    HttpContext.Response.Cookies.Clear();
-                    LoginService loginService = new LoginService(_userProvider, _encryptService);
-                    loginService.Logout();
-                    return RedirectToAction("Login", "Login");
+                    _userOperation.EditUserInfo(
+                        ((UserPrincipal)HttpContext.User).UserId,
+                        user.UserName,
+                        string.IsNullOrEmpty(user.Password) ? null : _encryptService.GetEncryptedPassword(user.Password),
+                        user.Email
+                    );
+                    if (user.UserName != ((UserPrincipal)HttpContext.User).UserName)
+                    {
+                        HttpContext.Response.Cookies.Clear();
+                        LoginService loginService = new LoginService(_userProvider, _encryptService);
+                        loginService.Logout();
+                        return RedirectToAction("Login", "Login");
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                catch (Exception exception)
+                {
+                    Log.Error(exception.Message);
+                }
             }
             return View("EditUserInfo", user);
         }
@@ -69,11 +78,18 @@ namespace EventsListWebApp.Controllers
         {
             if (!string.IsNullOrEmpty(user.OrganizerName))
             {
-                _userOperation.EditOrganizerInfo(
-                    ((UserPrincipal)HttpContext.User).UserId,
-                    user.OrganizerName
-                    );
-                return RedirectToAction("Index");
+                try
+                {
+                    _userOperation.EditOrganizerInfo(
+                        ((UserPrincipal)HttpContext.User).UserId,
+                        user.OrganizerName
+                        );
+                    return RedirectToAction("Index");
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(exception.Message);
+                }
             }
             return View("EditOrganizerInfo", user);
         }
@@ -145,11 +161,21 @@ namespace EventsListWebApp.Controllers
             {
                 return false;
             }
-            if (userId == null)
+
+            try
             {
-                userId = ((UserPrincipal)HttpContext.User).UserId;
+                if (userId == null)
+                {
+                    userId = ((UserPrincipal)HttpContext.User).UserId;
+                }
+
+                return _userProvider.IsUserNameFreeForUserId((int)userId, nameToCheck);
             }
-            return _userProvider.IsUserNameFreeForUserId((int)userId, nameToCheck);
+            catch (Exception exception)
+            {
+                Log.Error(exception.Message);
+                return false;
+            }
         }
 
         [Ajax]
@@ -159,7 +185,15 @@ namespace EventsListWebApp.Controllers
             {
                 return false;
             }
-            return _userProvider.IsUserNameFree(nameToCheck);
+            try
+            {
+                return _userProvider.IsUserNameFree(nameToCheck);
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception.Message);
+                return false;
+            }
         }
 
         [Ajax]
@@ -209,15 +243,22 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid && IsUserNameFree(user.UserName))
             {
-                if (!string.IsNullOrEmpty(user.Password))
+                try
                 {
-                    _userOperation.AddUser(
-                        user.UserName,
-                        _encryptService.GetEncryptedPassword(user.Password),
-                        user.Email);
-                    return RedirectToAction("UsersList");
+                    if (!string.IsNullOrEmpty(user.Password))
+                    {
+                        _userOperation.AddUser(
+                            user.UserName,
+                            _encryptService.GetEncryptedPassword(user.Password),
+                            user.Email);
+                        return RedirectToAction("UsersList");
+                    }
+                    ViewBag.PasswordErrorText = "Password is empty!";
                 }
-                ViewBag.PasswordErrorText = "Password is empty!";
+                catch (Exception exception)
+                {
+                    Log.Error(exception.Message);
+                }
             }
             return View(user);
         }
@@ -235,13 +276,27 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid && IsUserNameFreeForUserId(user.Id, user.UserName))
             {
-                _userOperation.EditUserInfo(
-                    user.Id,
-                    user.UserName,
-                    string.IsNullOrEmpty(user.Password) ? null : _encryptService.GetEncryptedPassword(user.Password),
-                    user.Email
-                );
-                return RedirectToAction("UsersList");
+                try
+                {
+                    _userOperation.EditUserInfo(
+                        user.Id,
+                        user.UserName,
+                        string.IsNullOrEmpty(user.Password) ? null : _encryptService.GetEncryptedPassword(user.Password),
+                        user.Email
+                    );
+                    if (!string.IsNullOrEmpty(user.OrganizerName))
+                    {
+                        _userOperation.EditOrganizerInfo(
+                            user.Id,
+                            user.OrganizerName
+                        );
+                    }
+                    return RedirectToAction("UsersList");
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(exception.Message);
+                }
             }
             return View("EditUserInfo", user);
         }
@@ -279,9 +334,16 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid && IsRoleNameFree(null, role.RoleName))
             {
-                _userOperation.AddRole(
-                    role.RoleName);
-                return RedirectToAction("RolesList");
+                try
+                {
+                    _userOperation.AddRole(
+                        role.RoleName);
+                    return RedirectToAction("RolesList");
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(exception.Message);
+                }
             }
             return View(role);
         }
@@ -299,11 +361,18 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid && IsRoleNameFree(role.Id, role.RoleName))
             {
-                _userOperation.EditRole(
-                    role.Id,
-                    role.RoleName
-                    );
-                return RedirectToAction("RolesList");
+                try
+                {
+                    _userOperation.EditRole(
+                        role.Id,
+                        role.RoleName
+                        );
+                    return RedirectToAction("RolesList");
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(exception.Message);
+                }
             }
             return View(role);
         }

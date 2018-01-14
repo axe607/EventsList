@@ -32,7 +32,6 @@ namespace EventsListWebApp.Controllers
             catch (Exception ex)
             {
                 Log.Error("[categoryId = " + categoryId + " ]; " + ex.Message);
-                ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
             }
         }
@@ -47,7 +46,6 @@ namespace EventsListWebApp.Controllers
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
-                ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
             }
         }
@@ -61,7 +59,6 @@ namespace EventsListWebApp.Controllers
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
-                ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
             }
         }
@@ -77,7 +74,6 @@ namespace EventsListWebApp.Controllers
             catch (Exception ex)
             {
                 Log.Error("[Current userId = " + ((UserPrincipal)HttpContext.User).UserId + " ]; " + ex.Message);
-                ViewBag.Error = ex.Message;
                 return PartialView();
             }
         }
@@ -91,7 +87,6 @@ namespace EventsListWebApp.Controllers
             catch (Exception ex)
             {
                 Log.Error("[id = " + id + " ]; " + ex.Message);
-                ViewBag.Error = ex.Message;
                 return PartialView(EVENTS_VIEW);
             }
         }
@@ -166,15 +161,22 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _eventOperation.EditEvent(
-                    eventModel.Id,
-                    eventModel.Name,
-                    eventModel.Date,
-                    eventModel.CategoryId,
-                    eventModel.ImageUrl,
-                    eventModel.Description,
-                    eventModel.AddressId);
-                return RedirectToAction("Index", "Home");
+                try
+                {
+                    _eventOperation.EditEvent(
+                        eventModel.Id,
+                        eventModel.Name,
+                        eventModel.Date,
+                        eventModel.CategoryId,
+                        eventModel.ImageUrl,
+                        eventModel.Description,
+                        eventModel.AddressId);
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                }
             }
             return View(eventModel);
         }
@@ -200,15 +202,22 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _eventOperation.EditEvent(
-                    eventModel.Id,
-                    eventModel.Name,
-                    eventModel.Date,
-                    eventModel.CategoryId,
-                    eventModel.ImageUrl,
-                    eventModel.Description,
-                    eventModel.AddressId);
-                return RedirectToAction("Index", "Account");
+                try
+                {
+                    _eventOperation.EditEvent(
+                        eventModel.Id,
+                        eventModel.Name,
+                        eventModel.Date,
+                        eventModel.CategoryId,
+                        eventModel.ImageUrl,
+                        eventModel.Description,
+                        eventModel.AddressId);
+                    return RedirectToAction("Index", "Account");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                }
             }
             return View(EDIT_EVENT_VIEW, eventModel);
         }

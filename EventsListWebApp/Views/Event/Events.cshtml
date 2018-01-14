@@ -28,7 +28,7 @@
                             <div class="event-block-edit">
                                 <a href="/Event/EditEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-edit">
                                     <button class="btn btn-info">Edit</button>
-</a><a href="/Event/DeleteEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-delete"><button class="btn btn-danger">Delete</button></a>
+                                </a><a href="/Event/DeleteEvent?eventId=@itemEvent.Id" class="event-block-btn event-block-btn-delete"><button class="btn btn-danger">Delete</button></a>
                             </div>
                         }
                     </div>
@@ -38,12 +38,12 @@
         }
         else
         {
-            <p> Событий нет </p>
+            <p>No data</p>
         }
     }
     else
     {
-        <b>@ViewBag.Error</b>
+        <b>Server error. Try again later.</b>
     }
 </div>
 

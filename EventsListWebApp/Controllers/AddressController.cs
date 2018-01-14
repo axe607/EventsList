@@ -44,9 +44,9 @@ namespace EventsListWebApp.Controllers
                     _addressOperation.AddAddress(createdAddress.AddressString);
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
-                    Log.Error(ex.Message);
+                    Log.Error(exception.Message);
                 }
             }
             return View(createdAddress);
@@ -56,7 +56,16 @@ namespace EventsListWebApp.Controllers
         [HttpGet]
         public ActionResult EditAddress(int addressId)
         {
-            return View(_addressProvider.GetAddressById(addressId));
+            try
+            {
+                return View(_addressProvider.GetAddressById(addressId));
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception.Message);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [AllowTo(Roles = "Admin,Editor")]
@@ -82,10 +91,10 @@ namespace EventsListWebApp.Controllers
         }
 
         [AllowTo(Roles = "Admin,Editor")]
-        public RedirectToRouteResult DeleteAddress(int addressId)
+        [Ajax]
+        public void DeleteAddress(int addressId)
         {
             _addressOperation.DeleteAddress(addressId);
-            return RedirectToAction("Index");
         }
     }
 }

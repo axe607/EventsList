@@ -12,16 +12,23 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-12">
-        @foreach (var user in Model)
-        {
-            <div class="alert alert-warning">
-                <p id="@user.Id">@user.UserName (@user.OrganizerName) [@string.Join(";", user.Roles.Select(x => x.RoleName))] @user.Email</p>
-                <a href="/Account/EditUser?userName=@user.UserName"><button type="button" id="btn_edit_user" class="btn btn-info">Edit</button></a>
-                <button type="button" id="btn_del_user" class="btn btn-danger" onclick="DeleteUser(@user.Id)">Delete</button>
-            </div>
-        }
-    </div>
+    @if (Model != null && Model.Any())
+    {
+        <div class="col-md-12">
+            @foreach (var user in Model)
+            {
+                <div class="alert alert-warning">
+                    <p id="@user.Id">@user.UserName (@user.OrganizerName) [@string.Join(";", user.Roles.Select(x => x.RoleName))] @user.Email</p>
+                    <a href="/Account/EditUser?userName=@user.UserName"><button type="button" id="btn_edit_user" class="btn btn-info">Edit</button></a>
+                    <button type="button" id="btn_del_user" class="btn btn-danger" onclick="DeleteUser(@user.Id)">Delete</button>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <b>Server error. Try again later.</b>
+    }
 </div>
 @section scripts
 {

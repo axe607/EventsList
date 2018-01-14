@@ -57,10 +57,17 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _categoryOperation.AddCategory(
-                    createdCategory.Name,
-                    createdCategory.Pid);
-                return RedirectToAction("Index");
+                try
+                {
+                    _categoryOperation.AddCategory(
+                        createdCategory.Name,
+                        createdCategory.Pid);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                }
             }
             return View(createdCategory);
         }
@@ -78,20 +85,27 @@ namespace EventsListWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _categoryOperation.EditCategory(
-                    editedCategory.Id,
-                    editedCategory.Pid,
-                    editedCategory.Name);
-                return RedirectToAction("Index");
+                try
+                {
+                    _categoryOperation.EditCategory(
+                        editedCategory.Id,
+                        editedCategory.Pid,
+                        editedCategory.Name);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                }
             }
             return View(editedCategory);
         }
 
         [AllowTo(Roles = "Admin,Editor")]
-        public RedirectToRouteResult DeleteCategory(int categoryId)
+        [Ajax]
+        public void DeleteCategory(int categoryId)
         {
             _categoryOperation.DeleteCategory(categoryId);
-            return RedirectToAction("Index");
         }
     }
 }

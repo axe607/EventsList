@@ -2,6 +2,7 @@
 using EventsListCommon.Enums;
 using EventsListWebApp.Models;
 using log4net;
+using System;
 using System.Web.Mvc;
 
 namespace EventsListWebApp.Controllers
@@ -37,22 +38,31 @@ namespace EventsListWebApp.Controllers
             }
             else
             {
-                var result = _loginService.Login(userName, password);
-                if (result == LoginResult.NoError)
+                try
                 {
-                    Log.Info(userName + " No error");
-                    return RedirectToAction("Index", "Home");
-                }
+                    var result = _loginService.Login(userName, password);
+                    if (result == LoginResult.NoError)
+                    {
+                        Log.Info(userName + " No error");
+                        return RedirectToAction("Index", "Home");
+                    }
 
-                if (result == LoginResult.EmptyCredentials)
-                {
-                    Log.Info(userName+ " Empty Credentials");
-                    model.Message = "Check user name and password";
+                    if (result == LoginResult.EmptyCredentials)
+                    {
+                        Log.Info(userName + " Empty Credentials");
+                        model.Message = "Check user name and password";
+                    }
+
+                    if (result == LoginResult.InvalidCredentials)
+                    {
+                        Log.Info(userName + " Invalid Credentials");
+                        model.Message = "The user is not valid";
+                    }
                 }
-                if (result == LoginResult.InvalidCredentials)
+                catch (Exception ex)
                 {
-                    Log.Info(userName + " Invalid Credentials");
-                    model.Message = "The user is not valid";
+                    Log.Error(ex.Message);
+                    model.Message = "Server error. Try again later.";
                 }
             }
             return View(model);
