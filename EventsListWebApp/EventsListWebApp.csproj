@@ -109,9 +109,11 @@
     <Content Include="Content\check.css" />
     <Content Include="Content\event-block.css" />
     <Content Include="Content\event-detail.css" />
-    <Content Include="Content\Images\15056501883900.jpg" />
-    <Content Include="Content\Images\baf3edbdfd6d719febed5.png" />
+    <Content Include="Content\Images\bc.png" />
     <Content Include="Content\Images\no-image.png" />
+    <Content Include="Content\Images\web1.png" />
+    <Content Include="Content\Images\web2.png" />
+    <Content Include="Content\Images\www.jpg" />
     <Content Include="Content\loginpage.css" />
     <Content Include="Content\searchbar.css" />
     <Content Include="Content\Site.css" />
